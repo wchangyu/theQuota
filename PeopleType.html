@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>能源管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link rel="stylesheet" href="./button/bootstrap.css">
+    <link rel="stylesheet" href="./button/buttons.dataTables.min.css">
+    <link href="./admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="./css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="./css/PeopleType.css">
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <!--外部包裹-->
+            <div class="out-content">
+                <!--内部包裹-->
+                <div class="inner-content">
+                    <!--页面主体-->
+                    <div class="main-content">
+                        <!--头部横条-->
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">人员类别列表</li>
+                        </ul>
+
+                        <!--具体内容-->
+                        <!--搜索部分-->
+                        <div class="main-content-body row">
+
+                            <div class="col-md-3" style="margin-bottom:20px;">
+                                <button class="top-btn window-btn" data-toggle='modal' data-target='#add-people'
+                                 style="margin-left:30px;">添加</button>
+
+                            </div>
+                        </div>
+                        <!--表格部分-->
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 col-sm-10 col-xs-10 main-content-table" style="overflow: auto;margin-left:40px">
+                                <table class="table table-striped" id="dateTables">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--新增人员类别弹窗-->
+    <div class='modal fade' id='add-people' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:30%;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">新增人员类别</div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-input">
+                            <label for="" class="input-label" style="width:95px;">人员类别：</label>
+
+                            <div class="add-input-block">
+                                <input type="text" class="add-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--修改人员类别弹窗-->
+    <div class='modal fade' id='alter-people' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:30%;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">修改人员类别</div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-input">
+                            <label for="" class="input-label" style="width:95px;">人员类别：</label>
+
+                            <div class="add-input-block">
+                                <input type="text" class="add-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/lib/jquery-3.0.0.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/jquery.dataTables.min.js"></script>
+    <script src="./button/dataTables.buttons.min.js"></script>
+    <script src="./button/dataTables.tableTools.min.js"></script>
+    <script src="./button/jszip.min.js"></script>
+    <script src="js/lib/vfs_fonts.js"></script>
+    <script src="./button/buttons.html5.min.js"></script>
+    <script src="js/PeopleType.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+	"data":[{
+			"time":"水","serialNumber":"000","name":"门诊和急诊（2）","alarmType":"环境报警","warningCondition":"x<30 or x>60","seeing":""
+		},
+		{
+			"time":"火","serialNumber":"001","name":"儿童住院部（1）","alarmType":"环境报警","warningCondition":"x<30 or x>60","seeing":""
+		},
+		{
+			"time":"冷","serialNumber":"002","name":"门诊和急诊（2）","alarmType":"环境报警","warningCondition":"x<30 or x>60","seeing":""
+		},
+		{
+			"time":"暖","serialNumber":"003","name":"外科楼（3）","alarmType":"环境报警","warningCondition":"x<30 or x>60","seeing":""
+		}
+
+		]
+}
