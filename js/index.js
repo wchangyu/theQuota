@@ -511,7 +511,12 @@ $(document).ready(function(){
         }
     } );
 
-
+    $('.top-refer').on('click',function(){
+        console.log('11');
+       //$('#theLoading').css({
+       //    display:'block'
+       //})
+    });
 
         // Event listener to the two range filtering inputs to redraw on input
 })

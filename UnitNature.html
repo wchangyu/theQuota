@@ -32,7 +32,7 @@
                         <div class="main-content-body row">
 
                             <div class="col-md-3" style="margin-bottom:20px;">
-                                <button class="top-btn window-btn" data-toggle='modal' data-target='#add-people'
+                                <button class="top-btn window-btn top-add" data-toggle='modal' data-target='#add-people'
                                         style="margin-left:30px;">添加</button>
 
                             </div>
@@ -68,8 +68,11 @@
                             <label for="" class="input-label" style="width:95px;">单位性质：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input" maxlength="50">
                             </div>
+                            <span class="hooks hooks1"></span>
+                            <span class="marks marks1"></span>
+                            <span class="hint-text hint-text1"></span>
                         </div>
                     </div>
                     <div class='modal-footer'>
@@ -93,8 +96,11 @@
                             <label for="" class="input-label" style="width:95px;">单位性质：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input" maxlength="50">
                             </div>
+                            <span class="hooks hooks1"></span>
+                            <span class="marks marks1"></span>
+                            <span class="hint-text hint-text1"></span>
                         </div>
                     </div>
                     <div class='modal-footer'>
@@ -105,6 +111,30 @@
             </div>
         </div>
     </div>
+
+    <!--删除单位性质弹窗-->
+    <div class='modal fade' id='remove-people' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">确定删除数据？</h3>
+
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--loading页面-->
+    <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>
+
+        </div>
+    </div>
+
     <script src="js/lib/jquery-3.0.0.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/jquery.dataTables.min.js"></script>

@@ -157,3 +157,23 @@ label {
 #dateTables_info{
     display:none;
 }
+
+/*验证表单提示字样式*/
+.hooks{
+    background:url("../img/hook.png") no-repeat center center #6bc827;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    display:none;
+}
+.marks{
+    background:url("../img/mark.png") no-repeat center center;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    display:none;
+}
+.hint-text{
+    display:none;
+    line-height:30px;
+}
