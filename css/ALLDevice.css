@@ -3,11 +3,11 @@ body,html,div,dl,dt,dd,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea,p
     padding:0;
     font-family:'微软雅黑'
 }
+/*外层包裹div*/
 li{
     list-style-type: none;
 }
 
-/*外层包裹div*/
 .out-content{
     width: 100%;
     height: auto;
@@ -42,9 +42,8 @@ label {
     display: inline-block;
     max-width: 100%;
     margin-bottom: 5px;
-    font-weight: 700;
     font-size:14px;
-
+    font-weight:100;
 }
 .rct-form-control {
     position: relative;
@@ -59,7 +58,6 @@ label {
     vertical-align: middle;
     outline: 0;
 }
-
 .button-block{
     margin-top: 20px;
 }
@@ -89,7 +87,7 @@ label {
     margin-top: 4px;
     margin-bottom: 14px;
     float:left;
-    margin-right: 25px;
+    margin-right: 10px;
     color:#333 !important;
 }
 /*上方按钮样式*/
@@ -126,6 +124,56 @@ label {
     outline: none;
 }
 
+add-input-arrow {
+    width: 10px;
+    height: 10px;
+    background: url(../img/down-arrow.png) no-repeat;
+    background-size: 10px;
+    background-position: 95% center;
+    float: right;
+    margin-top: 10px;
+}
+.add-input-father {
+    width: 202px;
+    position: relative;
+    display: inline-block;
+}
+.add-input-block {
+    width: 202px;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 0 5px 0 5px;
+    vertical-align: middle;
+}
+.add-input {
+    width: 190px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    line-height: 30px;
+    height: 30px;
+    text-align: left;
+}
+.add-select-block {
+    margin: 0;
+    width: 202px;
+    padding: 0 5px 0 5px;
+    position: absolute;
+    border: 1px solid #ccc;
+    border-bottom-left-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    background: white;
+    display: none;
+    top: 29px;
+}
+.add-select-block li {
+    list-style: none;
+    line-height: 25px;
+    cursor: pointer;
+    text-align: left;
+}
 /*表格部分*/
 .main-contents-table {
     text-align: center;
@@ -133,18 +181,21 @@ label {
 }
 .dataTables_length {
     float: right !important;
+    margin-right:10px;
+    font-weight: 700;
 }
-#dateTables th, td{
+.dataTables_length label{
+    font-weight: 700;
+}
+#dateTables th, td {
     text-align: center;
 }
-
-/*新增二级单位弹窗*/
-.add-window{
-    width:80%;
-    min-height:500px;
-    margin:50px auto;
+#dateTables_wrapper{
+    overflow: auto;
+    min-width:500px;
 }
 
+/*弹窗样式*/
 .add-title {
     font-size: 26px;
     line-height: 50px;
@@ -158,6 +209,7 @@ label {
 }
 .add-input-block {
     width: 202px;
+    margin-left: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     display: inline-block;
@@ -170,12 +222,16 @@ label {
     outline: none;
     line-height: 30px;
     height: 30px;
-    text-align:left;
+    text-align: left;
+    cursor:pointer;
+}
+.add-input span{
+    cursor: pointer;
 }
 .inner-input{
-    text-align:center;
+    text-align:left;
     margin-top:15px;
-
+    margin-bottom:20px;
 }
 .input-label{
     background:url("../img/asterisk.png") no-repeat 0 center;
@@ -187,11 +243,19 @@ label {
     padding-left:20px;
 
 }
-/*手动调整配置框*/
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size:14px;
+
+}
+
+/*select 优化样式*/
 .add-deploy{
     border:1px solid #c1c6ce;
     width:100%;
-    height:540px;
     margin-top:40px;
     margin-bottom:10px;
     position:relative;
@@ -209,10 +273,10 @@ label {
     width:160px;
 }
 .deploy-form{
-    padding-left:80px;
+    padding-left:5px;
 }
 .deploy-form label{
-    margin-right:40px;
+    margin-right:5px;
     font-size:16px;
 }
 .deploy-form label input{
@@ -220,9 +284,6 @@ label {
 }
 .add-deploy .inner-input{
     text-align: left;
-}
-.add-deploy .row{
-    margin-bottom:20px;
 }
 .add-input option{
     width:302px;
@@ -274,109 +335,46 @@ label {
     cursor: pointer;
     text-align: left;
 }
-/*左侧表格样式*/
-.main-content-table{
-    margin-bottom:20px
+.deploy-form .row{
+    padding-left:20px;
 }
 
-#dateTables1{
-    width:80%;
-}
-#dateTables1_info{
-    display:none;
-}
-#dateTables1 th, td{
-    text-align:center
-}
-.bottom-div{
-    height:595px;
-    overflow: auto;
-}
-/*右侧表格样式*/
-#dateTables2_info{
-    display: none;
-}
-#dateTables2{
-    width:80%;
-}
-#dateTables2 th, td{
-    text-align:center
-}
-.table-heads{
-    margin-left:20px;
-    margin-bottom:20px;
-    width:90%;
-    text-align:center;
-}
-.bottom-div label{
-    width:120px;
-}
-.add-sign img{
+/*搜索框样式*/
+#ul1{
+    width:92%;
+    padding-left:10px;
+    border: 1px solid #999;
     margin-left:10px;
+    border-radius:5px;
+    margin-bottom:20px;
+    max-height:280px;
+    overflow-y: auto;
 }
-/*定额弹窗样式*/
-.quota-window{
-    width:50%;
-    min-height: 300px;
-    margin:200px auto;
+#ul1 li{
+    cursor:pointer;
+    font-size:14px;
+    line-height:30px;
+    color: #4c4c4c;
 }
-.quota-main-content {
-    margin-bottom: 10px;
-    padding-left:30px;
+#ul1 li:hover{
+
 }
-.quota-data{
-    font-size:18px;
+.search-value-list{
+    width:92%;
+    padding-left:10px;
+    margin-left:10px;
+    border-radius:5px;
+    margin-bottom:20px;
+    max-height:280px;
+    overflow-y: auto;
 }
-.quota-data table{
-    width:80%;
+.search-value-list li{
+    cursor:pointer;
+    font-size:14px;
+    line-height:30px;
+    color: #4c4c4c;
 }
-.quota-data-table td{
-    border:1px solid #999999;
-}
-/*上面的表格*/
-#dateTables3_info{
-    display:none;
-}
-.table th,td{
-    text-align:center
-}
-/*下方的表格*/
-#dateTables4_info{
-    display: none;
-}
-.quota-data-bottom{
-    overflow-x: auto;
-}
-#dateTables5_info{
-    display: none;
-}
-.ament-data{
-    padding-left:20px;
-    font-size:16px;
-    margin-bottom:10px;
-}
-.ament-data b{
-    margin-right:15px;
-}
-/*人工修订定额弹窗*/
-.revise-form{
-    padding-left:20px;
-}
-.revise-form .revise-checkbox{
-    margin-left:30px;
-}
-.revise-form .input-label{
-    width:165px;
-}
-.revise-form .inner-input{
-    text-align:left;
-}
-#dateTables7_info{
-    display: none;
-}
-#dateTables8_info {
-    display: none;
-}
-.modal-dialog{
-    min-width:250px;
+.chooseDate{
+    background:url("../img/times.png") no-repeat 160px center;
+    background-size: auto 80%;
 }

@@ -3,6 +3,10 @@ body,html,div,dl,dt,dd,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea,p
     padding:0;
     font-family:'微软雅黑'
 }
+li{
+    list-style-type: none;
+}
+
 /*外层包裹div*/
 .out-content{
     width: 100%;
@@ -54,6 +58,44 @@ label {
     background-color: #fff;
     vertical-align: middle;
     outline: 0;
+}
+.button-block{
+    margin-top: 20px;
+}
+
+.input-blocked{
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    height: 30px;
+    vertical-align: middle;
+}
+.input-blocked input{
+    border: none;
+    height: 28px !important;
+    outline: none;
+    margin: 0 5px;
+}
+.condition-query select{
+    border: none;
+    height: 30px !important;
+    outline: none;
+    margin: 0 5px;
+}
+.condition-query li select{
+    width:160px;
+    border: 1px solid #a9a9a9;
+    height: 30px;
+}
+.input-blocked select option{
+
+}
+.condition-query li{
+    line-height: 26px !important;
+    margin-top: 4px;
+    margin-bottom: 14px;
+    float:left;
+    margin-right: 25px;
+    color:#333 !important;
 }
 /*上方按钮样式*/
 .top-btn {

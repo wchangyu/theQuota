@@ -24,47 +24,43 @@
                     <div class="main-content">
                         <!--头部横条-->
                         <ul class="main-content-header">
-                            <li class="main-content-header-lists0">二级单位用能指标信息</li>
+                            <li class="main-content-header-lists0">指标信息操作</li>
                         </ul>
 
                         <!--具体内容-->
+
                         <!--搜索部分-->
-                        <div class="main-content-body row">
-                            <div class="col-md-3">
-                                <label style="font-size:18px;margin-right:10px">人员类别: </label>
-                                <input id="orgNameInput" style="width:190px;" value="" class="rct-form-control" type="text">
-                            </div>
+                        <ul class="condition-query">
+                            <li>
+                                <label for="">人员类别：</label>
+                                <div class="input-blocked">
+                                    <input type="text" class="datatimeblock">
+                                </div>
+                            </li>
+                            <li>
 
-                            <div class="col-lg-3 col-sm-3 col-xs-3 inner-input" style="">
-                                    <label for=""   style="font-size:18px">能耗类型:</label>
+                                <label for="">能耗类型：</label>
+                                <select name="" id="" class="datatimeblock">
+                                    <option value="">全部</option>
+                                    <option value="">电</option>
+                                    <option value="">水</option>
+                                    <option value="">气</option>
+                                </select>
+                            </li>
 
-                                    <div class="add-input-father" style="margin-left:10px">
-                                        <div class="add-input-block" style="margin-left:0">
-                                            <div type="text" class="add-input add-input-select" style="">
-                                                <span></span>
-                                                <div class="add-input-arrow" style="transform: rotate(180deg);"></div>
-                                            </div>
-                                        </div>
-                                        <ul class="add-select-block" style="display: none;z-index:1000">
-                                            <li>电</li>
-                                            <li>水</li>
-                                            <li>气</li>
-                                            <li>冷</li>
-                                            <li>暖</li>
-                                        </ul>
-                                    </div>
-                            </div>
+                            <li><button class="top-btn" style="margin-right:20px">查询</button></li>
+                            <li> <button class="top-btn window-btn" data-toggle='modal' data-target='#add-type'>添加</button></li>
 
-                            <div class="col-md-3">
-                                <button class="top-btn" style="margin-right:20px">查询</button>
-                                <button class="top-btn window-btn" data-toggle='modal' data-target='#add-type'>添加</button>
-
-                            </div>
-                        </div>
+                            <div class="clearfix"></div>
+                        </ul>
 
                         <!--表格部分-->
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">指标信息数据</li>
+                        </ul>
+
                         <div class="row" style="margin-top:0px">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-content-table" style="overflow: auto;margin-left:40px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-content-table" style="overflow: auto;">
                                 <table class="table table-striped" id="dateTables" style="overflow: auto;min-width:300px;">
                                     <thead>
 

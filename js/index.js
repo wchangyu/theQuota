@@ -10,6 +10,7 @@ $(document).ready(function(){
             display:'block'
         })
     });
+    //select 优化动画
     var rotateNum = 1;
     $('.add-input-select').click(function(){
         rotateNum++;

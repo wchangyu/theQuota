@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>能源管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link rel="stylesheet" href="./button/bootstrap.css">
+    <link rel="stylesheet" href="./button/buttons.dataTables.min.css">
+    <link href="./admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="./css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-datepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-datepicker.standalone.css">
+    <link rel="stylesheet" href="./css/ALLDevice.css">
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-12">
+            <!--外部包裹-->
+            <div class="out-content">
+                <!--内部包裹-->
+                <div class="inner-content">
+                    <!--页面主体-->
+                    <div class="main-content">
+                        <!--头部横条-->
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">仪表操作</li>
+                        </ul>
+
+                        <!--具体内容-->
+                        <!--搜索部分-->
+                        <ul class="condition-query">
+                            <li>
+                                <label for="">仪表类型：</label>
+                                    <select name="" id="">
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                        <option value=""></option>
+                                    </select>
+                            </li>
+                            <li>
+                                <label for="">能耗类型：</label>
+                                    <select name="" id="" class="datatimeblock">
+                                        <option value="">全部</option>
+                                        <option value="">电</option>
+                                        <option value="">水</option>
+                                        <option value="">气</option>
+                                    </select>
+                            </li>
+                            <li>
+                                <label for="">仪表在线：</label>
+                                <select name="" id="" class="datatimeblock">
+                                    <option value="">全部</option>
+                                    <option value="">在线</option>
+                                    <option value="">手抄表</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label for="">表号或代号：</label>
+                                <div class="input-blocked">
+                                    <input type="text" class="datatimeblock">
+                                </div>
+                            </li>
+                            <li><button class="top-btn" style="margin-right:20px">查询</button></li>
+                            <li> <button class="top-btn window-btn" data-toggle='modal' data-target='#add-meter'>添加</button></li>
+
+                            <div class="clearfix"></div>
+                        </ul>
+
+
+
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">计量仪表设备</li>
+                        </ul>
+                        <!--计量仪表设备表格-->
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-content-table" style="overflow: auto;">
+                                <table class="table table-striped" id="dateTables" style="min-width:500px">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--新增仪表设备弹窗-->
+    <div class='modal fade' id='add-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:60%;margin:10% auto; min-width:430px;'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">新增仪表设备</div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="min-height:430px">
+                            <div class="add-deploy" style="border:none;margin-top:0;min-height:410px">
+                                <form action="" method="get" class="deploy-form" style="margin-bottom:20px">
+
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="input-label">仪表类型：</label>
+
+                                            <div class="add-input-father" style="margin-left:10px">
+                                                <div class="add-input-block" style="margin-left:0">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span>从仪表类型列表中选择</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(180deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="display: none;z-index:1000">
+                                                    <li>手抄表</li>
+                                                    <li>在线表</li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:125px">表号或代号：</label>
+                                            <div class="add-input-block" style="margin-left:0">
+                                                <input type="text" class="add-input">
+                                            </div>
+                                            <div class="add-input-father" style="width:70px;display:inline-block">
+                                                <div class="add-input-block" style="margin-left:0;width:71px">
+                                                    <div type="text" class="add-input add-input-select" style="width:60px">
+                                                        <span>表号</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(540deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="z-index: 1000; width: 71px; display: none;">
+                                                    <li>表号</li>
+                                                    <li>代号</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="input-label">楼宇编号：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="从楼宇列表中搜索">
+                                            </div>
+                                            <img src="img/fdj.png" alt="" data-toggle='modal' data-target='#choose-building'>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:125px">数采仪编号：</label>
+
+                                            <div class="add-input-father">
+                                                <div class="add-input-block" style="margin-left:0">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span>从数采仪列表中选择</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(180deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="display: none;z-index:1000">
+                                                    <li>电</li>
+                                                    <li>水</li>
+                                                    <li>气</li>
+                                                    <li>冷</li>
+                                                    <li>暖</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" >出厂编号：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="">安装位置：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" >计算区域：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="" class="input-label">倍率：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label">建档日期：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input chooseDate" value=""  placeholder='选择时间'>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="" class="input-label">建档起数：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label">报警上限：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="" class="input-label">报警下限：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--修改仪表设备弹窗-->
+    <div class='modal fade' id='alter-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:60%;margin:10% auto; min-width:430px;'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">修改仪表设备</div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="min-height:430px">
+                            <div class="add-deploy" style="border:none;margin-top:0;min-height:410px">
+                                <form action="" method="get" class="deploy-form" style="margin-bottom:20px">
+
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="input-label">仪表类型：</label>
+
+                                            <div class="add-input-father" style="margin-left:10px">
+                                                <div class="add-input-block" style="margin-left:0">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span>从仪表类型列表中选择</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(180deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="display: none;z-index:1000">
+                                                    <li>手抄表</li>
+                                                    <li>在线表</li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:125px">表号或代号：</label>
+                                            <div class="add-input-block" style="margin-left:0">
+                                                <input type="text" class="add-input">
+                                            </div>
+                                            <div class="add-input-father" style="width:70px;display:inline-block">
+                                                <div class="add-input-block" style="margin-left:0;width:71px">
+                                                    <div type="text" class="add-input add-input-select" style="width:60px">
+                                                        <span>表号</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(540deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="z-index: 1000; width: 71px; display: none;">
+                                                    <li>表号</li>
+                                                    <li>代号</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="input-label">楼宇编号：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="从楼宇列表中搜索">
+                                            </div>
+                                            <img src="img/fdj.png" alt="" data-toggle='modal' data-target='#choose-building'>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:125px">数采仪编号：</label>
+
+                                            <div class="add-input-father">
+                                                <div class="add-input-block" style="margin-left:0">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span>从数采仪列表中选择</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(180deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="display: none;z-index:1000">
+                                                    <li>电</li>
+                                                    <li>水</li>
+                                                    <li>气</li>
+                                                    <li>冷</li>
+                                                    <li>暖</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" >出厂编号：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="">安装位置：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" >计算区域：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="" class="input-label">倍率：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label">建档日期：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="" class="input-label">建档起数：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label">报警上限：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                            <label for="" class="input-label">报警下限：</label>
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--选择楼宇弹窗-->
+    <div class='modal fade' id='choose-building' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:430px;margin:10% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">选择楼宇</div>
+
+                    <div class="showCompany search-test-inner row">
+                        <!-- 搜索框结构 -->
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="add-input-block">
+                                <input type="text" class="add-input search-value" value="" placeholder="请输入楼宇名称">
+                            </div>
+                            <button class="top-btn search-build-btn">搜索</button>
+                            <button class="top-btn" onclick='showAll()'>显示全部</button>
+                            <div style="height:6px"></div>
+                            <ul class="search-value-list" style="background:white"></ul>
+
+                            <ul id='ul1'>
+                                <li class="titles search-li" data-name='综合楼'>综合楼</li>
+                                <li class="titles search-li" data-name='科技楼' >科技楼</li>
+                                <li class="titles search-li" data-name='美术楼'>美术楼</li>
+                                <li class="titles search-li" data-name='书法楼'>书法楼</li>
+                                <li class="titles search-li" data-name='办公楼'>办公楼</li>
+                                <li class="titles search-li" data-name='美术楼'>美术楼</li>
+                                <li class="titles search-li" data-name='书法楼'>书法楼</li>
+                                <li class="titles search-li" data-name='办公楼'>办公楼</li>
+                                <li class="titles search-li" data-name='美术楼'>美术楼</li>
+                                <li class="titles search-li" data-name='书法楼'>书法楼</li>
+                                <li class="titles search-li" data-name='办公楼'>办公楼</li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--删除仪表弹窗-->
+    <div class='modal fade' id='remove-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">确定删除数据？</h3>
+
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--loading图-->
+    <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>
+
+        </div>
+    </div>
+    <script src="js/lib/jquery-3.0.0.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/jquery.dataTables.min.js"></script>
+    <script src="./button/dataTables.buttons.min.js"></script>
+    <script src="./button/dataTables.tableTools.min.js"></script>
+    <script src="./button/jszip.min.js"></script>
+    <script src="js/lib/vfs_fonts.js"></script>
+    <script src="./button/buttons.html5.min.js"></script>
+    <script src="js/lib/jQuery.Hz2Py-min.js"  type="text/javascript"></script>
+    <script src="js/lib/bootstrap-datepicker.js"></script>
+    <script src="js/ALLDevice.js"></script>
+
+</body>
+</html>
