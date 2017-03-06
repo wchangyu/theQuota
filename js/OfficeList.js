@@ -304,12 +304,12 @@ $(document).ready(function(){
     });
     $('.add-select-block li').on('click',function(){
         var text = $(this).html();
-        var num = $(this).attr('ids');
+        var num0 = $(this).attr('ids');
         var num1 = $(this).attr('factor');
         var num2 = $(this).attr('unit');
         $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').html(text);
-        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('ids',num);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('ids',num0);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('factor',num1);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('unit',num2);
         rotateNum++;
@@ -324,9 +324,7 @@ $(document).ready(function(){
     //调用获取后台数据方法，进行数据获取
     alarmHistory();
     //初始化页面table表单
-    var table = $('#dateTables').DataTable(
-
-        {
+    var table = $('#dateTables').DataTable({
             //文字，格式初始化
             "bProcessing" : true,
             "autoWidth": false,  //用来启用或禁用自动列的宽度计算
@@ -493,8 +491,28 @@ $(document).ready(function(){
     });
 
     //添加操作
+
+    $('.top-btn1').on('click',function(){
+        var personNum = $('#add-unit .person-type .add-input-select').find('span').attr('unit');
+        var personUnits = getPersonUnit(personNum);
+        $('#add-unit .person-type').next().children('label').html(personUnits +":");
+    });
+
     $('#add-unit .btn-primary').on('click',function(){
 
+        checkedText1();
+        if(!checkedText1()){
+            console.log(11);
+            return false;
+        };
+        checkedText2('#add-unit .first-row');
+        if(!checkedText2('#add-unit .first-row')){
+            return false;
+        };
+        checkedPhone('#add-unit');
+        if(!checkedPhone('#add-unit')){
+            return false;
+        };
         //生成对应参数
        var code = $('#add-unit .first-row .inner-input').eq(0).find('.add-input').val();
         var unitName = $('#add-unit .first-row .inner-input').eq(1).find('.add-input').val();
@@ -562,71 +580,71 @@ $(document).ready(function(){
         console.log(data4);
 
 
-        $.ajax({
-            type: "post",
-            url: IP + "/SecondUnit/AddSecondUnit",
-//      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
-            timeout:theTimes,
-            data:{
-                "pK_Unit": 0,
-                "fK_Specialty_Unit": SpecialtyID,
-                "f_CoefficientK": factor,
-                "f_Code": code,
-                "f_UnitName": unitName,
-                "fK_Nature_Unit": natureID,
-                "f_DirectorName": DirectorName,
-                "f_DirectorPhone": telNum,
-                "f_UnitRoom": unitRoom,
-                "f_UnitArea":unitArea,
-                "f_Comment1": remark1,
-                "f_Comment2": remark2,
-                "f_Comment3": remark3,
-                "f_Comment4": remark4,
-                "f_Comment5": remark5,
-                "f_PercentageReduction":  reduction,
-                "f_QuotaEditState": editState,
-                "unitQuotaEdits":data2,
-                "unitQuotaRevises":data3,
-                "unitPeopleRelations":data1,
-                "unitPrices":data4,
-                "userID": userName
-            },
-            cache: false,
-            async : false,
-            dataType: "json",
-            beforeSend:function(){
-                $('#add-unit').modal('hide');
-            },
-            complete:function(){
-                $('#theLoading').modal('hide');
-            },
-
-            success: function (data)
-            {
-
-                console.log(data);
-
-                _table = $('#dateTables').dataTable();
-                ajaxSuccess();
-                $('#add-unit').modal('hide');
-                $('#theLoading').modal('hide');
-                if(data == 2){
-                    alert('二级单位已存在')
-                }
-
-            },
-            error:function (data, textStatus, errorThrown) {
-                //var num = data.responseText.split('"')[3];
-                $('#theLoading').modal('hide');
-                if(textStatus=='timeout'){//超时,status还有success,error等值的情况
-                    ajaxTimeoutTest.abort();
-                    alert("超时");
-                }
-
-                $('#add-unit').modal('hide');
-                alert('执行失败');
-            }
-        });
+//        $.ajax({
+//            type: "post",
+//            url: IP + "/SecondUnit/AddSecondUnit",
+////      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
+//            timeout:theTimes,
+//            data:{
+//                "pK_Unit": 0,
+//                "fK_Specialty_Unit": SpecialtyID,
+//                "f_CoefficientK": factor,
+//                "f_Code": code,
+//                "f_UnitName": unitName,
+//                "fK_Nature_Unit": natureID,
+//                "f_DirectorName": DirectorName,
+//                "f_DirectorPhone": telNum,
+//                "f_UnitRoom": unitRoom,
+//                "f_UnitArea":unitArea,
+//                "f_Comment1": remark1,
+//                "f_Comment2": remark2,
+//                "f_Comment3": remark3,
+//                "f_Comment4": remark4,
+//                "f_Comment5": remark5,
+//                "f_PercentageReduction":  reduction,
+//                "f_QuotaEditState": editState,
+//                "unitQuotaEdits":data2,
+//                "unitQuotaRevises":data3,
+//                "unitPeopleRelations":data1,
+//                "unitPrices":data4,
+//                "userID": userName
+//            },
+//            cache: false,
+//            async : false,
+//            dataType: "json",
+//            beforeSend:function(){
+//                $('#add-unit').modal('hide');
+//            },
+//            complete:function(){
+//                $('#theLoading').modal('hide');
+//            },
+//
+//            success: function (data)
+//            {
+//
+//                console.log(data);
+//
+//                _table = $('#dateTables').dataTable();
+//                ajaxSuccess();
+//                $('#add-unit').modal('hide');
+//                $('#theLoading').modal('hide');
+//                if(data == 2){
+//                    alert('二级单位已存在')
+//                }
+//
+//            },
+//            error:function (data, textStatus, errorThrown) {
+//                //var num = data.responseText.split('"')[3];
+//                $('#theLoading').modal('hide');
+//                if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+//                    ajaxTimeoutTest.abort();
+//                    alert("超时");
+//                }
+//
+//                $('#add-unit').modal('hide');
+//                alert('执行失败');
+//            }
+//        });
         //完成后清空input框
         $(this).parent().parent().parent().find('input').val('');
         removeTable();
@@ -757,7 +775,7 @@ $(document).ready(function(){
         setTimeout(function(){
             var id = that.parent().parent().children().eq(1).html();
             var txt = that.parent().parent().children().eq(0).html();
-            $('#quota .add-title span').html(txt);
+            $('#quota .add-title span').html(txt + ' ');
 
             //    获取数据
             $.ajax({
@@ -1672,6 +1690,10 @@ $(document).ready(function(){
             var id = dom.children().eq(1).html();
             var datas;
             var postData = [];
+
+            var personNum = $('#index-class .person-type .add-input-select').find('span').attr('unit');
+            var personUnits = getPersonUnit(personNum);
+            $('#index-class .person-type').next().children('label').html(personUnits +":");
             //获取后台数据
             $.ajax({
                 type: "get",
@@ -2197,7 +2219,7 @@ $(document).ready(function(){
 
                        },
                        {
-                           title:'人数或人时',
+                           title:'人年或人时',
                            data:'f_PeopleNum'
 
                        },
@@ -3291,9 +3313,89 @@ function checkedText(){
                     return false;
                 };
 
-            })
+            });
         })(i);
 
     }
 }
+
+function checkedText1(){
+    var num = $('#add-unit .first-row .input-label').length;
+    console.log(num);
+    for(var i=0; i< num; i++){
+        if( $('#add-unit .first-row .input-label').eq(i).next().children('input').val() == ''){
+            var txt = $('#add-unit .first-row .input-label').eq(i).next().children('input').parent().prev().html().split('：')[0];
+
+            console.log(txt);
+            $('#check-text').modal('show');
+            $('#check-text p b').html(txt);
+           getFocus($('#add-unit .first-row .input-label').eq(i).next().children('input'));
+            return false;
+        };
+        if($('#add-unit .first-row .input-label').eq(i).next().find('.add-input-select').children('span').html() == ''){
+            var txt = $('#add-unit .first-row .input-label').eq(i).html().split('：')[0];
+            $('#check-text').modal('show');
+            $('#check-text p b').html(txt);
+            return false;
+        }
+    }
+    return true;
+}
+
+//判断输入内容是否为数字
+function checkedText2(dom){
+    var num = $(dom).find('.type-number').length;
+   for(var i=0; i<num; i++){
+       var txt = $(dom).find('.type-number').eq(i).find('input').val() / 1;
+       console.log( txt / 1);
+       if(isNaN(txt)){
+          var txt1 = $(dom).find('.type-number').eq(i).children('label').html().split('：')[0];
+           console.log(txt1);
+           $('#check-text').modal('show');
+           $('#check-text p b').html(txt1);
+           $('#check-text p span').html('必须为数字');
+           getFocus($(dom).find('.type-number').eq(i).find('input'));
+           return false;
+       }
+   }
+    return true;
+}
+
+//判断输入是否为电话号码
+
+function checkedPhone(dom){
+    var txt = $(dom).find('.type-phone').find('input').val();
+    if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(txt))){
+        $('#check-text').modal('show');
+        $('#check-text p b').html('手机号');
+        $('#check-text p span').html('输入错误');
+        getFocus($(dom).find('.type-phone').find('input'));
+        return false
+    }
+    return true;
+}
+
+
+$('#add-unit .add-title').on('click',function(){
+    checkedText2('#add-unit .first-row');
+    checkedPhone('#add-unit');
+});
+
+function getFocus(dom){
+    $('#check-text').on('click','.btn-primary',function(){
+        dom.focus();
+    });
+
+}
+//当人员类别改变时 对应的单位进行改变
+$('.person-type .add-select-block li').on('click',function(){
+    var num = $(this).attr('unit');
+
+    var txt = getPersonUnit(num);
+
+    $(this).parents('.person-type').next().children('label').html(txt + ":");
+
+});
+
+
 

@@ -258,9 +258,17 @@ $(document).ready(function(){
 
                 {
                     $('#remove-people').modal('hide');
+                    $('#theLoading').modal('hide');
                     ajaxSuccess();
+                    if(data == 4){
+                        alert('已被二级单位使用，无法删除')
+                    }
+                    if(data == 3){
+                        alert('删除失败')
+                    };
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#remove-people').modal('hide');
                     $('#theLoading').modal('hide');
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
@@ -283,7 +291,7 @@ function alarmHistory(){
         async:false,
         timeout:1000,
         beforeSend:function(){
-            $('#theLoading').modal('show');
+
         },
         complete:function(){
             $('#theLoading').modal('hide');

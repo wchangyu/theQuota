@@ -295,11 +295,11 @@ $(document).ready(function(){
 
                 {
                     if(data == 4){
-                        alert('删除失败 有关联')
+                        alert('已被二级单位使用，无法删除')
                     }
                     if(data == 3){
                         alert('删除失败')
-                    }
+                    };
                     $('#remove-people').modal('hide');
                     ajaxSuccess();
                 },

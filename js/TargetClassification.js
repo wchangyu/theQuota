@@ -450,7 +450,7 @@ $(document).ready(function(){
             url: IP + "/SecondUnit/GetIndexClassByID",
 //      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
             data: {
-                "PK_IndexClass": id,
+                "PK_IndexClass": id
             },
             cache: false,
             async : false,
