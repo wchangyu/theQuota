@@ -113,7 +113,7 @@ $(document).ready(function(){
         }
         $.ajax({
             type: "post",
-            url: "http://192.168.1.102/BEEWebAPI/api/SecondUnit/AddUnitNature",
+            url: IP + "/SecondUnit/AddUnitNature",
 //      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
             timeout:theTimes,
             data:{
@@ -143,20 +143,20 @@ $(document).ready(function(){
                 }
 
             },
-            error:function (data) {
-                var num = parseInt(data.responseText.split('"')[3]);
+
+            error:function (data, textStatus, errorThrown) {
+                var num = data.responseText.split('"')[3];
                 console.log(data.responseText);
-                if(num == 2){
-                    alert('单位性质已存在')
-                }
-                if(textStatus=='timeout'){//超时,status还有success,error等值的情况
-                    ajaxTimeoutTest.abort();
-                    alert("超时");
-                }
-                console.log(num);
-                //$('#add-people').modal('hide');
-                //alert("请求失败！");
+                    if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                        ajaxTimeoutTest.abort();
+                        alert("超时");
+                    }
+
+                    $('#add-people').modal('hide');
+                    alert(num);
             }
+
+
         });
         //完成后清空input框
         $(this).parent().parent().parent().find('input').val('');

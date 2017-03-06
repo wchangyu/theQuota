@@ -411,6 +411,7 @@ $(document).ready(function(){
                     }
 
                     ajaxSuccess();
+                    $('#theLoading').modal('hide');
 
                 },
                 error:function (data, textStatus, errorThrown) {
@@ -423,6 +424,7 @@ $(document).ready(function(){
                     }
 
                     $('#alter-type').modal('hide');
+                    $('#theLoading').modal('hide');
                 },
 
             });
@@ -509,6 +511,8 @@ $(document).ready(function(){
 
 
                     ajaxSuccess();
+                    $('#theLoading').modal('hide');
+                    $('#remove-type').modal('hide');
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
 
@@ -516,6 +520,7 @@ $(document).ready(function(){
                         ajaxTimeoutTest.abort();
                         alert("超时");
                     }
+                    $('#theLoading').modal('hide');
                     $('#remove-type').modal('hide');
                     alert("请求失败！");
 

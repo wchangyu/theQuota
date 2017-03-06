@@ -494,6 +494,7 @@ $(document).ready(function(){
 
     //添加操作
     $('#add-unit .btn-primary').on('click',function(){
+
         //生成对应参数
        var code = $('#add-unit .first-row .inner-input').eq(0).find('.add-input').val();
         var unitName = $('#add-unit .first-row .inner-input').eq(1).find('.add-input').val();
@@ -582,7 +583,7 @@ $(document).ready(function(){
                 "f_Comment3": remark3,
                 "f_Comment4": remark4,
                 "f_Comment5": remark5,
-                "f_PercentageReduction": 0,
+                "f_PercentageReduction":  reduction,
                 "f_QuotaEditState": editState,
                 "unitQuotaEdits":data2,
                 "unitQuotaRevises":data3,
@@ -1005,7 +1006,7 @@ $(document).ready(function(){
             postData.f_Comment1 = remark4;
             postData.f_Comment1 = remark5;
             postData.f_UnitArea = unitArea;
-
+            postData.userID = userName;
 
             console.log(postData);
 
@@ -1211,8 +1212,10 @@ $(document).ready(function(){
     var tableNumber = 0;
 
     $('.top-btn4').on('click',function(){
+
         //获取当前ID
         setTimeout(function(){
+
             var dom = $('.onFocus');
             var id = dom.children().eq(1).html();
             var datas;
@@ -1503,6 +1506,8 @@ $(document).ready(function(){
             $('#adjust-deploy .btn-primary').on('click',function(){
                 var length = $('#adjust-deploy .choose-radio1 label').length;
                 console.log(datas);
+                console.log(postData1);
+                console.log(postData2);
                 var editState;
                 for(var i=0; i<length; i++){
 
@@ -1510,6 +1515,7 @@ $(document).ready(function(){
                         editState = i;
                     }
                 }
+
                 datas.f_QuotaEditState =  editState;
                 if(editState == 0){
                     datas.unitQuotaEdits = [];
@@ -1521,6 +1527,7 @@ $(document).ready(function(){
                         delete  arr[i].f_EnergyName;
                     }
                     datas.unitQuotaRevises = [];
+                    console.log('ok');
                 }else if(editState == 2){
                     datas.unitQuotaRevises = postData2;
                     var arr = datas.unitQuotaRevises;
@@ -1528,6 +1535,7 @@ $(document).ready(function(){
                         delete  arr[i].f_EnergyName;
                     }
                     datas.unitQuotaEdits = [];
+                    console.log('ok1');
                 };
                 datas.userID = userName;
                 console.log(datas);
@@ -1561,7 +1569,8 @@ $(document).ready(function(){
                         _table = $('#dateTables').dataTable();
                         ajaxSuccess();
                         $('#dateTables tr').eq(id).addClass('onFocus');
-
+                        $('#dateTables1-1').dataTable().fnClearTable();
+                        $('#dateTables11-1').dataTable().fnClearTable();
 
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1583,6 +1592,11 @@ $(document).ready(function(){
 
 
     });
+
+    //$('#adjust-deploy .close').on('click',function(){
+    //    $('#dateTables1-1').dataTable().fnClearTable();
+    //    $('#dateTables11-1').dataTable().fnClearTable();
+    //});
 
     //修改人员类别
 
@@ -1681,10 +1695,7 @@ $(document).ready(function(){
                 {
                     console.log(data);
                     datas = data;
-                    if(datas[0].f_PersonType == ''){
-                        datas = [];
 
-                    }
                     $('#theLoading').modal('hide');
 
 
@@ -3198,6 +3209,7 @@ $('#dateTables9').on('click','.remove',function(){
 
 });
 
+//删除表单中的数据
 function removeTable(){
     if(thePerson.length != 0){
         $('#dateTables2').dataTable().fnClearTable();
@@ -3218,7 +3230,11 @@ function removeTable(){
         thePriceAd = [];
         postPrice = [];
     };
-}
+};
+
+$('#add-unit .btn-default').on('click',function(){
+    removeTable();
+});
 
 $('.choose-education').eq(0).on('click',function(){
     $('.row-left').css({
@@ -3237,7 +3253,7 @@ $('.choose-education').eq(1).on('click',function(){
         display:'none'
     });
 
-})
+});
 
 //判断当前手工调整状态
 function judgeState(num){
@@ -3262,15 +3278,17 @@ function getCountName(num){
     }
 };
 
+//判断必填项是否填写
 function checkedText(){
-    var num = $('.input-label').length;
+    var num = $('#add-unit .first-row .input-label').length;
     for(var i=0; i < num; i++){
         (function (i) {
-            $('.input-label').eq(i).next().children('input').on('blur',function(){
-                if( $('.input-label').eq(i).next().children('input').val() == ''){
+            $('#add-unit .first-row .input-label').eq(i).next().children('input').on('blur',function(){
+                if( $('#add-unit .first-row .input-label').eq(i).next().children('input').val() == ''){
                     var txt = $(this).parent().prev().html().split('：')[0];
                     $('#check-text').modal('show');
                     $('#check-text p b').html(txt);
+                    return false;
                 };
 
             })
@@ -3278,4 +3296,4 @@ function checkedText(){
 
     }
 }
-checkedText();
+

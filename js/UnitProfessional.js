@@ -151,7 +151,7 @@ $(document).ready(function(){
         }
         $.ajax({
             type: "post",
-            url: "http://192.168.1.102/BEEWebAPI/api/SecondUnit/AddUnitSpecialty",
+            url: IP + "/SecondUnit/AddUnitSpecialty",
 //      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
             timeout:theTimes,
             data:{
@@ -176,7 +176,7 @@ $(document).ready(function(){
                 console.log(data);
                 $('#add-people').modal('hide');
                 ajaxSuccess();
-
+                $('#theLoading').modal('hide');
                 if(data == 2){
                     alert('单位专业已存在')
                 }
@@ -189,6 +189,7 @@ $(document).ready(function(){
                     ajaxTimeoutTest.abort();
                     alert("超时");
                 }
+                $('#theLoading').modal('hide');
 
                 $('#add-people').modal('hide');
                 alert(num);
