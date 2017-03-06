@@ -3,11 +3,11 @@
 
 
 $(document).ready(function(){
-
-
+    //限定input框长度
+    $('input').attr('maxlength','50');
 
         $(".tabs0 a").on('touchstart mousedown',function(e){
-            e.preventDefault()
+            e.preventDefault();
             $(".tabs0 .active").removeClass('active');
             $(this).addClass('active');
             $('#add-unit .swiper-container .add-deploy').css({
