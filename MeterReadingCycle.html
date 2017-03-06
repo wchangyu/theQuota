@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>能源管理系统—单位性质</title>
+    <title>能源管理系统</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta content="" name="description"/>
@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="./button/buttons.dataTables.min.css">
     <link href="./admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="./css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="./css/UnitNature.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-datepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-datepicker.standalone.css">
+    <link rel="stylesheet" href="./css/MeterReadingCycle.css">
 </head>
 <body>
     <div class="row">
@@ -24,7 +26,7 @@
                     <div class="main-content">
                         <!--头部横条-->
                         <ul class="main-content-header">
-                            <li class="main-content-header-lists0">单位性质列表</li>
+                            <li class="main-content-header-lists0">手工抄表信息表</li>
                         </ul>
 
                         <!--具体内容-->
@@ -32,14 +34,14 @@
                         <div class="main-content-body row">
 
                             <div class="col-md-3" style="margin-bottom:20px;">
-                                <button class="top-btn window-btn top-add" data-toggle='modal' data-target='#add-people'
+                                <button class="top-btn window-btn" data-toggle='modal' data-target='#add-deploy'
                                         style="margin-left:30px;">添加</button>
 
                             </div>
                         </div>
                         <!--表格部分-->
                         <div class="row">
-                            <div class="col-lg-4 col-md-6 col-sm-10 col-xs-10 main-content-table" style="overflow: auto;">
+                            <div class="col-lg-8 col-md-10 col-sm-10 col-xs-10 main-content-table" style="overflow: auto;margin-left:40px">
                                 <table class="table table-striped" id="dateTables">
                                     <thead>
 
@@ -56,23 +58,27 @@
         </div>
     </div>
 
-    <!--新增单位性质弹窗-->
-    <div class='modal fade' id='add-people' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+    <!--新增抄表配置弹窗-->
+    <div class='modal fade' id='add-deploy' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
         <div class='modal-dialog'style='width:30%;margin:15% auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">新增单位性质</div>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">新增抄表配置</div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-input">
-                            <label for="" class="input-label" style="width:95px;">单位性质：</label>
+                            <label for="" class="input-label" style="width:95px;">抄表名称：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input" maxlength="50">
+                                <input type="text" class="add-input">
                             </div>
-                            <span class="hooks hooks1"></span>
-                            <span class="marks marks1"></span>
-                            <span class="hint-text hint-text1"></span>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-input">
+                            <label for="" class="input-label" style="width:95px;">抄表日期：</label>
+
+                            <div class="add-input-block">
+                                <input type="text" class="add-input chooseDate" value="" placeholder="选择时间">
+                            </div>
                         </div>
                     </div>
                     <div class='modal-footer'>
@@ -84,23 +90,28 @@
         </div>
     </div>
 
-    <!--修改单位性质弹窗-->
-    <div class='modal fade' id='alter-people' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+    <!--修改抄表配置弹窗-->
+    <div class='modal fade' id='remove-deploy' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
         <div class='modal-dialog'style='width:30%;margin:15% auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">修改单位性质</div>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">修改抄表配置</div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-input">
-                            <label for="" class="input-label" style="width:95px;">单位性质：</label>
+                            <label for="" class="input-label" style="width:95px;">人员类别：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input" maxlength="50">
+                                <input type="text" class="add-input">
                             </div>
-                            <span class="hooks hooks1"></span>
-                            <span class="marks marks1"></span>
-                            <span class="hint-text hint-text1"></span>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-input">
+                            <label for="" class="input-label" style="width:95px;">抄表日期：</label>
+
+                            <div class="add-input-block">
+                                <input type="text" class="add-input chooseDate" value="" placeholder="选择时间">
+                            </div>
                         </div>
                     </div>
                     <div class='modal-footer'>
@@ -111,30 +122,6 @@
             </div>
         </div>
     </div>
-
-    <!--删除单位性质弹窗-->
-    <div class='modal fade' id='remove-people' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:300px;margin:15% auto'>
-            <div class='modal-content'>
-                <div class='modal-header'>
-                    <h3 style="margin-bottom:20px">提示</h3>
-                    <p style="font-size:16px">真的要删除数据 <b></b> 吗？</p>
-                    <div class='modal-footer' style="border:none">
-                        <button type='button' class='btn btn-primary top-btn'>确定</button>
-                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--loading图-->
-    <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>
-
-        </div>
-    </div>
-
     <script src="js/lib/jquery-3.0.0.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/jquery.dataTables.min.js"></script>
@@ -143,7 +130,8 @@
     <script src="./button/jszip.min.js"></script>
     <script src="js/lib/vfs_fonts.js"></script>
     <script src="./button/buttons.html5.min.js"></script>
-    <script src="./js/commonIP.js"></script>
-    <script src="js/UnitNature.js"></script>
+    <script src="js/lib/jQuery.Hz2Py-min.js"  type="text/javascript"></script>
+    <script src="js/lib/bootstrap-datepicker.js"></script>
+    <script src="js/MeterReadingCycle.js"></script>
 </body>
 </html>

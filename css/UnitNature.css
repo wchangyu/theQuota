@@ -100,7 +100,9 @@ label {
 #dateTables th, td{
     text-align: center;
 }
-
+table th,td{
+    text-align: center;
+}
 /*弹窗样式*/
 .add-title {
     font-size: 26px;

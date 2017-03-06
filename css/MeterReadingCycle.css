@@ -3,10 +3,6 @@ body,html,div,dl,dt,dd,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea,p
     padding:0;
     font-family:'微软雅黑'
 }
-li{
-    list-style-type: none;
-}
-
 /*外层包裹div*/
 .out-content{
     width: 100%;
@@ -59,44 +55,6 @@ label {
     vertical-align: middle;
     outline: 0;
 }
-.button-block{
-    margin-top: 20px;
-}
-
-.input-blocked{
-    display: inline-block;
-    border: 1px solid #a9a9a9;
-    height: 30px;
-    vertical-align: middle;
-}
-.input-blocked input{
-    border: none;
-    height: 28px !important;
-    outline: none;
-    margin: 0 5px;
-}
-.condition-query select{
-    border: none;
-    height: 30px !important;
-    outline: none;
-    margin: 0 5px;
-}
-.condition-query li select{
-    width:160px;
-    border: 1px solid #a9a9a9;
-    height: 30px;
-}
-.input-blocked select option{
-
-}
-.condition-query li{
-    line-height: 26px !important;
-    margin-top: 4px;
-    margin-bottom: 14px;
-    float:left;
-    margin-right: 25px;
-    color:#333 !important;
-}
 /*上方按钮样式*/
 .top-btn {
     border-width: 0;
@@ -130,65 +88,20 @@ label {
     border-color: #307f7a;
     outline: none;
 }
-.add-input-arrow {
-    width: 10px;
-    height: 10px;
-    background: url(../img/down-arrow.png) no-repeat;
-    background-size: 10px;
-    background-position: 95% center;
-    float: right;
-    margin-top: 10px;
+
+/*表格部分*/
+.main-contents-table {
+    text-align: center;
+    margin-top: 30px;
 }
-.add-input-father {
-    width: 202px;
-    position: relative;
-    display: inline-block;
+.dataTables_length {
+    float: right !important;
 }
-.add-input-block {
-    width: 202px;
-    margin-left: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 0 5px 0 5px;
-    vertical-align: middle;
-}
-.add-input {
-    width: 190px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    line-height: 30px;
-    height: 30px;
-    text-align: left;
-}
-.add-select-block {
-    margin: 0;
-    width: 202px;
-    padding: 0 5px 0 5px;
-    position: absolute;
-    border: 1px solid #ccc;
-    border-bottom-left-radius: 5px !important;
-    border-bottom-right-radius: 5px !important;
-    background: white;
-    display: none;
-    top: 29px;
-}
-.add-select-block li {
-    list-style: none;
-    line-height: 25px;
-    cursor: pointer;
-    text-align: left;
-}
-#dateTables th, td {
+#dateTables th, td{
     text-align: center;
 }
 
-
 /*弹窗样式*/
-.modal-dialog{
-    min-width:250px;
-}
 .add-title {
     font-size: 26px;
     line-height: 50px;
@@ -217,15 +130,15 @@ label {
     height: 30px;
     text-align: left;
 }
-
+.inner-input{
+    text-align:left;
+    margin-top:15px;
+    margin-bottom:20px;
+    margin-left:20px;
+}
 .input-label{
     background:url("../img/asterisk.png") no-repeat 0 center;
 
-}
-.inner-input {
-    text-align: left;
-    margin-bottom: 20px;
-    margin-left: 20px;
 }
 .inner-input label{
     width:115px;
@@ -239,14 +152,12 @@ label {
     margin-bottom: 5px;
     font-weight: 700;
     font-size:14px;
+
 }
-select option{
-    margin-bottom:10px;
+#dateTables_info {
+    display: none;
 }
-select{
-    max-height:50px;
-}
-/*table分页*/
-.dataTables_length {
-    float: right !important;
+.chooseDate {
+    background: url(../img/times.png) no-repeat 160px center;
+    background-size: auto 80%;
 }

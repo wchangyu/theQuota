@@ -20,5 +20,36 @@
             </div>
         </div>
     </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 inner-input">
+        <label for="" class="input-label" style="width:135px;">单位性质：</label>
+
+        <div class="add-input-father" style="margin-left:10px">
+            <div class="add-input-block" style="margin-left:0">
+                <div type="text" class="add-input add-input-select" style="">
+                    <span></span>
+                    <div class="add-input-arrow" style="transform: rotate(180deg);"></div>
+                </div>
+            </div>
+            <ul class="add-select-block" style="display: none;z-index:1000">
+                <li>电</li>
+                <li>水</li>
+                <li>气</li>
+                <li>冷</li>
+                <li>暖</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var txt = $(this).parent().parent().children().eq(0).html();
+        $('#remove-people p b').html(txt);
+        $('#remove-people p span').html("注：本次操作将在提交更改后生效");
+
+        $('#remove-people .btn-primary').one('click',function(){
+            $('#remove-people').modal('hide');
+
+        });
+    </script>
+
 </body>
 </html>

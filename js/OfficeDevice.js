@@ -1,10 +1,152 @@
 /**
- * Created by admin on 2017/2/13.
+ * Created by admin on 2017/2/15.
  */
 
-
 $(document).ready(function(){
+    //初始化表格
+    var table = $('#dateTables').DataTable({
+        "autoWidth": false,  //用来启用或禁用自动列的宽度计算
+        //是否分页
+        "destroy": true,//还原初始化了的datatable
+        "paging":true,
+        "ordering": false,
+        'searching':false,
+        'language': {
+            'emptyTable': '没有数据',
+            'loadingRecords': '加载中...',
+            'processing': '查询中...',
+            'lengthMenu': '每页 _MENU_ 件',
+            'zeroRecords': '没有数据',
+            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+            'paginate': {
+                'first':      '第一页',
+                'last':       '最后一页',
+                'next':       '下一页',
+                'previous':   '上一页'
+            },
+            'infoEmpty': ''
+        },
+        'buttons': [
 
+        ],
+        "dom":'B<"clear">lfrtip',
+        //数据源
+        'ajax': './data/history.json',
+        'columns':[
+            {
+                title:'选择',
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<input type='checkbox' class='tableCheck'/>"
+
+            },
+            {
+                title:'仪表类型',
+                data:'time'
+
+            },
+            {
+                title:'能耗类型',
+                data:'alarmType'
+
+            },
+            {
+                title:'表号或代号',
+                data:'serialNumber'
+
+            },
+            {
+                title:'出场编号',
+                data:'serialNumber'
+
+            },
+            {
+                title:'倍率',
+                data:'seeing'
+
+            },
+            {
+                title:'建档日期',
+                data:'seeing'
+
+            },
+            {
+                title:'建档起数',
+                data:'seeing'
+
+            },
+            {
+                title:'最后止数',
+                data:'seeing'
+
+            },
+            {
+                title:'抄表日期',
+                data:'seeing'
+
+            },
+            {
+                title:'子账户标识',
+                data:'seeing'
+
+            },
+            {
+                title:'公摊比例',
+                data:'seeing'
+
+            },
+            {
+                title:'安装位置',
+                data:'seeing'
+
+            },
+            {
+                title:'计量区域',
+                data:'seeing'
+
+            },
+            {
+                title:'操作',
+                "targets": -1,
+                "data": null,
+                "defaultContent": "<button class='top-btn' data-toggle='modal' data-target='#change-meter'>更换</button>"
+            }
+
+        ]
+    });
+    var table1 = $('#dateTables1').DataTable({
+        "autoWidth": false,  //用来启用或禁用自动列的宽度计算
+        //是否分页
+        "destroy": false,//还原初始化了的datatable
+        "paging":false,
+        "ordering": false,
+        'searching':false,
+        'buttons': [
+
+        ],
+        "dom":'B<"clear">lfrtip',
+        //数据源
+        'ajax': './data/history.json',
+        'columns':[
+            {
+                title:'表名或代号',
+                data:'time'
+
+            },
+            {
+                title:'设备终止读数',
+                data:'seeing'
+
+            },
+            {
+                title:'注销原因',
+                "targets": -1,
+                "data": null,
+                "class":'theReson',
+                "defaultContent": '<textarea name="yj" cols="40" rows="2" style="resize:none;">'
+            },
+        ]
+    });
     //select 优化动画
     var rotateNum = 1;
     $('.add-input-select').click(function(){
@@ -34,127 +176,17 @@ $(document).ready(function(){
         })
     });
 
-    //初始化表格
-    var table = $('#dateTables').DataTable({
-        "autoWidth": false,  //用来启用或禁用自动列的宽度计算
-        //是否分页
-        "destroy": true,//还原初始化了的datatable
-        "paging":true,
-        "ordering": false,
-        'searching':false,
-        'language': {
-            'emptyTable': '没有数据',
-            'loadingRecords': '加载中...',
-            'processing': '查询中...',
-            'lengthMenu': '每页 _MENU_ 件',
-            'zeroRecords': '没有数据',
-            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
-            'paginate': {
-                'first':      '第一页',
-                'last':       '最后一页',
-                'next':       '下一页',
-                'previous':   '上一页'
-            },
-            'infoEmpty': ''
-        },
-        'buttons': [
-
-        ],
-        "dom":'B<"clear">lfrtip',
-        //数据源
-        'ajax': './data/araming.json',
-        'columns':[
-            {
-                title:'仪表类型',
-                data:'name'
-
-            },
-            {
-                title:'能耗类型',
-                data:'alarmType'
-
-            },
-            {
-                title:'表号或代号',
-                data:'warningCondition'
-
-            },
-            {
-                title:'出场编号',
-                data:'serialNumber'
-
-            },
-            {
-                title:'倍率',
-                data:'atThisPointThedata'
-
-            },
-            {
-                title:'建档日期',
-                data:'seeing'
-
-            },
-            {
-                title:'建档起数',
-                data:'seeing'
-
-            },
-            {
-                title:'最后止数',
-                data:'seeing'
-
-            },
-            {
-                title:'抄表日期',
-                data:'seeing'
-
-            },
-            {
-                title:'报警上限',
-                data:'seeing'
-
-            },
-            {
-                title:'报警下限',
-                data:'seeing'
-
-            },
-            {
-                title:'安装位置',
-                data:'seeing'
-
-            },
-            {
-                title:'计量区域',
-                data:'seeing'
-
-            },
-            {
-                title:'编辑操作',
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button class='top-btn' data-toggle='modal' data-target='#alter-meter'>修改</button>"
-            },
-            {
-                title:'删除操作',
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button class='top-btn' data-toggle='modal' data-target='#remove-meter'>删除</button>"
-            },
-        ]
-    })
+})
 
 
-});
-
-//楼宇搜索功能
+//二级单位搜索功能
 $(function(){
     // search-test-inner --->  最外层div
     // search-value --->  input 输入框
     // search-value-list --->  搜索结果显示div
     // search-li --->  搜索条目
-    new SEARCH_ENGINE("search-test-inner","search-value","search-value-list","search-li");
-
+    new SEARCH_ENGINE("search-test-inner0","search-value0","search-value-list0","search-li0");
+    new SEARCH_ENGINE("search-test-inner1","search-value1","search-value-list1","search-li1");
 
 });
 
@@ -255,7 +287,7 @@ SEARCH_ENGINE.prototype = {
             for(var i=0;i<tempArray.length;i++){
                 var sArray = tempArray[i].split("&");
 
-                html += '<li>';
+                html += '<li class="theResult">';
 
                 //判断是否在线
                 var color;
@@ -266,7 +298,7 @@ SEARCH_ENGINE.prototype = {
                     color = 'red'
                 }
 
-                html += '<span class="ifOnline" style="background:' + color + '"></span>';
+                html += '<span class="ifOnline"></span>';
                 html += '<span class="name">' + sArray[1] + '</span>';
                 html += '</li>';
 
@@ -282,6 +314,7 @@ SEARCH_ENGINE.prototype = {
             }
         }
         this.searchResultInner.html(html);
+        showResult();
     },
 
     //-----------------------------【绑定搜索事件】
@@ -291,11 +324,15 @@ SEARCH_ENGINE.prototype = {
 
         $(document).on('keyup',this.searchInput,function(){
             //使默认的展示项关闭
-            $('#ul1').css({
-                'display':'none'
+
+            $(this).parent().parent().children('.search-show-list').css({
+                display:'none'
             });
             $(this).parent().parent().children('.search-value-list').css({
                 display:'block'
+            });
+            $(this).parent().parent().children('h4').css({
+                display:'none',
             });
             //临时存放找到的数组
             var tempArray = [];
@@ -375,45 +412,46 @@ SEARCH_ENGINE.prototype = {
         })
     }
 };
-
-function showAll(){
-    $('.search-value-list').css({
+//显示全部按钮
+$('.show-all').on('click',function(){
+    $(this).parent().children('.search-show-list').css({
+        display:'block'
+    });
+    $(this).parent().children('.search-value-list').css({
         display:'none'
     });
-    $('#ul1').css({
-        display:'block'
-    });
-    $('#ul1 li').css({
-        display:'block'
+    $(this).parent().children('h4').css({
+        display:'block',
     });
 
-}
+});
+
 
 $('.search-value').on('focus',function(){
     if($(this).val() != ""){
-        $('.search-value-list').css({
-            display:'block'
-        });
-        $("#ul1").css({
+        $(this).parent().children('.search-show-list').css({
             display:'none'
+        });
+        $(this).parent().children('.search-value-list').css({
+            display:'block'
         })
     }
 });
 
-//当点击楼宇时触发
+//当点击二级单位时触发
 $('#ul1 li').on('click',function(){
     var txt = $(this).html();
     $('.search-value').val(txt);
 });
 
 function buildClick(){
-    $('.search-value-list li').on('click',function(){
+    $('.search-value-list0 li').on('click',function(){
         console.log('ok');
         var txt = $(this).children().eq(1).html();
         $('.search-value').val(txt);
     });
 }
-
+//选择日期插件
 $('.chooseDate').datepicker(
     {
         language:  'zh-CN',
@@ -422,3 +460,71 @@ $('.chooseDate').datepicker(
         format: 'yyyy-mm-dd'
     }
 )
+setInterval(function(){
+    addMeasure();
+    removeMeasure();
+    addMeasure1();
+    removeMeasure1();
+},300)
+function addMeasure(){
+    $('#ul2 li').off('click');
+    $('#ul2 li').on('click',function(){
+
+        var txt1 = $(this).html().split('<')[0];
+        $(this).remove();
+        var txt2 = $('<li class="search-li search-li2">'+txt1+'<span></span></li>');
+        txt2.appendTo('#ul3');
+
+    });
+}
+function removeMeasure(){
+    $('#ul3 li').off('click');
+    $('#ul3 li').on('click',function(){
+
+        var txt1 = $(this).html().split('<')[0];
+        $(this).remove();
+        var txt2 = $('<li class="search-li search-li1 search-li-add">'+txt1+'<span></span></li>');
+        txt2.appendTo('#ul2');
+    });
+}
+//点击弹窗中的搜索结果时
+function showResult(){
+    $('.search-value-list1 .theResult').on('click',function(){
+        var txt = $(this).children('.name').html();
+        console.log(txt);
+        var txt2 = $('<li class="search-li search-li2">'+txt+'<span></span></li>');
+        txt2.appendTo('#ul3');
+        for(var i = 0 ; i < $('.search-li1').length; i++){
+            if(txt == $('.search-li1').eq(i).attr('data-name')){
+                $('.search-li1').eq(i).remove();
+            }
+        }
+    });
+}
+function addMeasure1(){
+    $('#ul4 li').off('click');
+    $('#ul4 li').on('click',function(){
+
+        var txt1 = $(this).html().split('<')[0];
+        $(this).remove();
+        var txt2 = $('<li class="search-li search-li2 search-li-input">'+txt1+'<span></span><input type="text" placeholder="请输入定额" /></li>');
+        txt2.appendTo('#ul5');
+
+    });
+}
+
+function removeMeasure1(){
+    $('#ul5 li').off('click');
+    $('#ul5 li').on('click',function(){
+        if($('.search-li-input input').is(':focus')){
+            $('.search-li-input input').css({
+                color:'#333'
+            })
+          return false;
+        }
+        var txt1 = $(this).html().split('<')[0];
+        $(this).remove();
+        var txt2 = $('<li class="search-li search-li1 search-li-add">'+txt1+'<span></span></li>');
+        txt2.appendTo('#ul4');
+    });
+}

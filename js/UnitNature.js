@@ -3,7 +3,7 @@
  */
 
 
-$('#theLoading').modal('show');
+
 $(document).ready(function(){
     //调用获取后台数据方法，进行数据获取
     alarmHistory();
@@ -14,6 +14,9 @@ $(document).ready(function(){
         //是否分页
         "destroy": false,//还原初始化了的datatable
         "paging":false,
+        "sScrollY": '700px',
+        "bPaginate": false,
+        "scrollCollapse": true,
         "ordering": false,
         'searching':false,
         'language': {
@@ -43,7 +46,7 @@ $(document).ready(function(){
             },
             {
                 title:'单位ID',
-                data:"f_id",
+                data:"pK_Nature",
                 class:'theHidden'
             },
             {
@@ -64,10 +67,24 @@ $(document).ready(function(){
     //给表格添加后台获取到的数据
     setData();
     hiddrenId();
-    $('#theLoading').modal('hide');
+
+
     //添加操作
+    $("#add-people").on('click',function(){
+        $('#add-people .marks').css({
+            display:'none'
+        });
+        $('#add-people .hint-text').css({
+            display:'none'
+        });
+        $('#add-people .hooks').css({
+            display:'none'
+        });
+    });
     $('#add-people .btn-primary').on('click',function(){
+
         var text = $("#add-people .add-input").val();
+        console.log(text);
         $('#add-people .add-input').on('focus',function(){
             $('#add-people .marks').css({
                 display:'none'
@@ -94,25 +111,37 @@ $(document).ready(function(){
         }else{
 
         }
-
         $.ajax({
             type: "post",
-            url: "http://192.168.1.113/BEEWebAPI/api/SecondUnit/AddUnitNature",
+            url: "http://192.168.1.102/BEEWebAPI/api/SecondUnit/AddUnitNature",
 //      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
-            data: {
-                "f_id": 0,
+            timeout:theTimes,
+            data:{
+                "pK_Nature": 0,
                 "f_UnitNatureName": text,
                 "f_Order": 0,
-                "userID": "string"
+                "userID": userName
             },
             cache: false,
             async : false,
             dataType: "json",
+            beforeSend:function(){
+                $('#theLoading').modal('show');
+            },
+            complete:function(){
+                $('#theLoading').modal('hide');
+            },
+
             success: function (data)
             {
                 console.log(data);
                 $('#add-people').modal('hide');
                 ajaxSuccess();
+
+                if(data == 2){
+                    alert('单位性质已存在')
+                }
+
             },
             error:function (data) {
                 var num = parseInt(data.responseText.split('"')[3]);
@@ -120,12 +149,17 @@ $(document).ready(function(){
                 if(num == 2){
                     alert('单位性质已存在')
                 }
+                if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                    ajaxTimeoutTest.abort();
+                    alert("超时");
+                }
                 console.log(num);
-                $('#add-people').modal('hide');
+                //$('#add-people').modal('hide');
                 //alert("请求失败！");
             }
         });
-
+        //完成后清空input框
+        $(this).parent().parent().parent().find('input').val('');
     })
 
 
@@ -135,24 +169,34 @@ $(document).ready(function(){
         e = e || window.event;
         var tar = e.target || e.srcElement;
         var id = $(tar).parent().parent().children().eq(1).html();
+        var txt = $(tar).parent().parent().children().eq(0).html();
+        $('#alter-people .add-input').val(txt);
         console.log(id);
        //点击提交按钮
        $('#alter-people .btn-primary').one('click',function(){
            console.log(id);
+           $('#theLoading').modal('show');
             var txt = $('#alter-people .add-input').val();
            $.ajax({
                type: "post",
-               url: "http://192.168.1.113/BEEWebAPI/api/SecondUnit/EditUnitNature",
+               timeout:theTimes,
+               url: IP + "/SecondUnit/EditUnitNature",
 //      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
                data: {
-                   "f_id": id,
+                   "pK_Nature": id,
                    "f_UnitNatureName": txt,
                    "f_Order": 0,
-                   "userID": "string"
+                   "userID": userName
                },
                cache: false,
                async : false,
                dataType: "json",
+               beforeSend:function(){
+                   $('#theLoading').modal('show');
+               },
+               complete:function(){
+                   $('#theLoading').modal('hide');
+               },
                success: function (data)
 
                {
@@ -161,9 +205,18 @@ $(document).ready(function(){
                    ajaxSuccess();
 
                },
-               error:function (XMLHttpRequest, textStatus, errorThrown) {
-                   alert("请求失败！");
-               }
+               error:function (data, textStatus, errorThrown) {
+                    console.log(textStatus);
+                   if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                       ajaxTimeoutTest.abort();
+                       alert("超时");
+                   }else{
+                       alert(data.responseText.split('"')[3]);
+                   }
+
+                   $('#alter-people').modal('hide');
+               },
+
            });
        })
 
@@ -173,23 +226,34 @@ $(document).ready(function(){
 
     $('#dateTables').on('click','.remove',function(){
         //获取要传的ID;
+
         var id = parseInt($(this).parent().parent().children().eq(1).html());
-        console.log(id)
+        var txt = $(this).parent().parent().children().eq(0).html();
+        $('#remove-people p b').html(txt);
+        console.log(txt);
         //点击提交按钮
         $('#remove-people .btn-primary').one('click',function(){
+            $('#theLoading').modal('show');
             $.ajax({
                 type: "post",
-                url: "http://192.168.1.113/BEEWebAPI/api/SecondUnit/DelUnitNature",
+                timeout:theTimes,
+                url:IP + "/SecondUnit/DelUnitNature",
 //      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
                 data:{
-                    "f_id": id,
+                    "pK_Nature": id,
                     "f_UnitNatureName": "string",
                     "f_Order": 0,
-                    "userID": "string"
+                    "userID": userName
                 },
                 cache: false,
                 async : false,
                 dataType: "json",
+                beforeSend:function(){
+                    $('#theLoading').modal('show');
+                },
+                complete:function(){
+                    $('#theLoading').modal('hide');
+                },
                 success: function (data)
 
                 {
@@ -197,6 +261,11 @@ $(document).ready(function(){
                     ajaxSuccess();
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#theLoading').modal('hide');
+                    if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                        ajaxTimeoutTest.abort();
+                        alert("超时");
+                    }
                     alert("请求失败！");
                 }
             });
@@ -210,40 +279,32 @@ function alarmHistory(){
     dataArr=[];
     $.ajax({
         type:'get',
-        url:'http://192.168.1.113/BEEWebAPI/api/SecondUnit/GetAllUnitNature',
+        url:IP + "/SecondUnit/GetAllUnitNature",
         async:false,
+        timeout:1000,
         beforeSend:function(){
-            $('.main-contents-table').children('img').show();
+            $('#theLoading').modal('show');
+        },
+        complete:function(){
+            $('#theLoading').modal('hide');
         },
         success:function(result){
+            console.log(result);
             for(var i=0;i<result.length;i++){
                 dataArr.push(result[i]);
             }
-        }
+
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log(textStatus);
+            console.log(XMLHttpRequest);
+            if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                ajaxTimeoutTest.abort();
+                alert("超时");
+            }
+            alert("请求失败！");
+        },
+
     });
 }
 
-//给表格加入数据
-function setData(){
-    if(dataArr && dataArr.length>0){
-        _table.fnAddData(dataArr);
-        _table.fnDraw();
-
-    }
-}
-//隐藏ID属性
-function hiddrenId(){
-    $('.theHidden').css({
-        display:'none'
-    })
-}
-//调用对应接口成功后
-function ajaxSuccess(){
-
-    $('#theLoading').modal('show');
-    _table.fnClearTable();
-    alarmHistory();
-    setData();
-    hiddrenId();
-    $('#theLoading').modal('hide');
-}

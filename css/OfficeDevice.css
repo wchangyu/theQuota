@@ -3,11 +3,11 @@ body,html,div,dl,dt,dd,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea,p
     padding:0;
     font-family:'微软雅黑'
 }
-/*外层包裹div*/
 li{
     list-style-type: none;
 }
 
+/*外层包裹div*/
 .out-content{
     width: 100%;
     height: auto;
@@ -18,9 +18,14 @@ li{
     height: 100%;
 }
 /*主体内容*/
-.main-content{
+.main-content {
     height: 100%;
     left: 0 !important;
+}
+
+.main-content-left {
+    border: 1px solid #ccc;
+    /* position: relative; */
 }
 
 /*头部横条*/
@@ -37,31 +42,118 @@ li{
     text-indent: 10px !important;
 }
 
-/*单位搜索部分*/
-label {
-    display: inline-block;
-    max-width: 100%;
-    margin-bottom: 5px;
+/*搜索框样式*/
+.search-show-list{
+    width:92%;
+    padding-left:10px;
+    border: 1px solid #999;
+    margin-left:10px;
+    border-radius:5px;
+    margin-bottom:20px;
+    height:380px;
+    overflow-y: auto;
+}
+.search-show-list li{
+    cursor:pointer;
     font-size:14px;
-    font-weight:100;
+    line-height:30px;
+    color: #4c4c4c;
 }
-.rct-form-control {
-    position: relative;
-    padding: 6px 9px;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-shadow: inset 0 1px 3px #e3e3e3;
-    border-radius: 4px;
-    line-height: normal;
-    box-sizing: border-box;
-    background-color: #fff;
-    vertical-align: middle;
-    outline: 0;
+.search-show-list li:hover{
+    color: #e66100;
+    text-decoration: underline;
 }
-.button-block{
-    margin-top: 20px;
+.search-li-add:hover span{
+    background:url("../img/plus-sign1.png") no-repeat center center;
+}
+.window-show li:hover span{
+    background:url("../img/minus1.png") no-repeat center center;
+}
+.search-value-list{
+    width:92%;
+    padding-left:10px;
+    margin-left:10px;
+    border-radius:5px;
+    max-height:280px;
+    overflow-y: auto;
+}
+.search-value-list li{
+    cursor:pointer;
+    font-size:14px;
+    line-height:30px;
+    color: #4c4c4c;
 }
 
+.add-input {
+    width: 190px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    line-height: 30px;
+    height: 30px;
+    text-align: left;
+    cursor:pointer;
+}
+
+
+/*按钮样式*/
+.top-btn {
+    border-width: 0;
+    font-size: 14px;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #45B6AF;
+    border-color: #3ea49d;
+    width: 80px;
+}
+/*用能量展示*/
+.use-level{
+    height:120px;
+    overflow-y: auto;
+}
+.use-level li{
+    font-size: 16px;
+    line-height: 30px;
+    color: #4c4c4c;
+   padding-left:10%;
+    padding-right:10%;
+}
+
+.use-level li span{
+    float:right;
+}
+
+
+/*右侧上方搜索样式*/
+.condition-query li select{
+    width:160px;
+    border: 1px solid #a9a9a9;
+    height: 30px;
+}
+
+.condition-query li {
+    line-height: 26px !important;
+    margin-top: 4px;
+    margin-bottom: 14px;
+    float: left;
+    margin-right: 25px;
+    color: #333 !important;
+}
 .input-blocked{
     display: inline-block;
     border: 1px solid #a9a9a9;
@@ -74,127 +166,105 @@ label {
     outline: none;
     margin: 0 5px;
 }
-.condition-query li select{
-    width:160px;
-    border: 1px solid #a9a9a9;
-    height: 30px;
-}
-.input-blocked select option{
 
-}
-.condition-query li{
-    line-height: 26px !important;
-    margin-top: 4px;
-    margin-bottom: 14px;
-    float:left;
-    margin-right: 10px;
-    color:#333 !important;
-}
-/*上方按钮样式*/
-.top-btn {
-    border-width: 0;
-    font-size: 14px;
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-
-    border-radius: 4px;
-    color: #fff;
-    background-color: #45B6AF;
-    border-color: #3ea49d;
-    width:80px;
-}
-.top-btn:hover{
-    color: #fff;
-    background-color: #3b9c96;
-    border-color: #307f7a;
-    outline: none;
+/*右侧账户维护按钮*/
+.window-btn{
+    width:200px;
 }
 
-add-input-arrow {
-    width: 10px;
-    height: 10px;
-    background: url(../img/down-arrow.png) no-repeat;
-    background-size: 10px;
-    background-position: 95% center;
-    float: right;
-    margin-top: 10px;
-}
-.add-input-father {
-    width: 202px;
-    position: relative;
-    display: inline-block;
-}
-.add-input-block {
-    width: 202px;
-    margin-left: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 0 5px 0 5px;
-    vertical-align: middle;
-}
-.add-input {
-    width: 190px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    line-height: 30px;
-    height: 30px;
-    text-align: left;
-}
-.add-select-block {
-    margin: 0;
-    width: 202px;
-    padding: 0 5px 0 5px;
-    position: absolute;
-    border: 1px solid #ccc;
-    border-bottom-left-radius: 5px !important;
-    border-bottom-right-radius: 5px !important;
-    background: white;
-    display: none;
-    top: 29px;
-}
-.add-select-block li {
-    list-style: none;
-    line-height: 25px;
-    cursor: pointer;
-    text-align: left;
-}
-/*表格部分*/
-.main-contents-table {
-    text-align: center;
-    margin-top: 30px;
-}
+/*下方表格*/
 .dataTables_length {
     float: right !important;
-    margin-right:10px;
-    font-weight: 700;
 }
-.dataTables_length label{
-    font-weight: 700;
-}
-#dateTables th, td {
+table td,th{
     text-align: center;
 }
-#dateTables_wrapper{
-    overflow: auto;
-    min-width:500px;
+.tableCheck{
+    width:18px;
+    height:18px;
 }
 
+
+/*累加弹窗*/
+.add-title {
+    font-size: 24px;
+    line-height: 40px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-weight: 700;
+}
+.modal .search-show-list{
+
+    height:340px;
+    width:280px;
+    overflow-y: auto
+}
+.showCompany h4{
+    padding-left:20px;
+    margin-bottom:20px;
+    font-weight:700;
+
+}
+.right-show-measure{
+    padding-top:40px;
+}
+.search-li-add span{
+    float:left;
+    margin-right:15px;
+    width:28px;
+    height:28px;
+    background:url("../img/plus-sign.png") no-repeat center center;
+    display: inline-block;
+}
+.search-li2 span{
+    float:left;
+    margin-right:15px;
+    width:28px;
+    height:28px;
+    background:url("../img/minus.png") no-repeat center center;
+    display: inline-block;
+}
+.search-value-list1 .ifOnline{
+    float:left;
+    margin-right:15px;
+    width:28px;
+    height:28px;
+    background:url("../img/plus-sign.png") no-repeat center center;
+    display: inline-block;
+}
+.search-value-list1 li:hover .ifOnline{
+    background:url("../img/plus-sign1.png") no-repeat center center;
+    color: #e66100;
+}
+.search-value-list1 li:hover{
+    color: #e66100;
+}
+
+/*公摊比例子账户维护弹窗*/
+.search-li-input input{
+
+    height: 28px !important;
+    outline: none;
+    margin: 0 15px;
+    border-radius: 5px;
+}
+/*注销计量设备弹窗*/
+#dateTables1_info{
+    display: none;
+}
+.theReson{
+    text-align:right
+}
+#dateTables1 th{
+    text-align: center;
+}
+
+/*跟换计量设备弹窗*/
+.ament-data {
+    padding-left: 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
 /*弹窗样式*/
 .add-title {
     font-size: 26px;
@@ -209,7 +279,6 @@ add-input-arrow {
 }
 .add-input-block {
     width: 202px;
-    margin-left: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     display: inline-block;
@@ -300,7 +369,6 @@ label {
 }
 .add-input-block {
     width: 202px;
-    margin-left: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     display: inline-block;
@@ -335,46 +403,10 @@ label {
     cursor: pointer;
     text-align: left;
 }
-.deploy-form .row{
-    padding-left:20px;
+.deploy-form .row {
+    padding-left: 20px;
 }
-
-/*搜索框样式*/
-#ul1{
-    width:92%;
-    padding-left:10px;
-    border: 1px solid #999;
-    margin-left:10px;
-    border-radius:5px;
-    margin-bottom:20px;
-    max-height:280px;
-    overflow-y: auto;
-}
-#ul1 li{
-    cursor:pointer;
-    font-size:14px;
-    line-height:30px;
-    color: #4c4c4c;
-}
-#ul1 li:hover{
-    color:black;
-}
-.search-value-list{
-    width:92%;
-    padding-left:10px;
-    margin-left:10px;
-    border-radius:5px;
-    margin-bottom:20px;
-    max-height:280px;
-    overflow-y: auto;
-}
-.search-value-list li{
-    cursor:pointer;
-    font-size:14px;
-    line-height:30px;
-    color: #4c4c4c;
-}
-.chooseDate{
-    background:url("../img/times.png") no-repeat 160px center;
+.chooseDate {
+    background: url(../img/times.png) no-repeat 160px center;
     background-size: auto 80%;
 }

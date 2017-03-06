@@ -81,9 +81,7 @@ label {
     border: 1px solid #a9a9a9;
     height: 30px;
 }
-.input-blocked select option{
 
-}
 .condition-query li{
     line-height: 26px !important;
     margin-top: 4px;
@@ -125,6 +123,9 @@ label {
     border-color: #307f7a;
     outline: none;
 }
+.window-btn {
+    width: 116px;
+}
 
 /*表格部分*/
 .main-contents-table {
@@ -140,9 +141,9 @@ label {
 
 /*新增二级单位弹窗*/
 .add-window{
-    width:80%;
+    width:60%;
     min-height:500px;
-    margin:50px auto;
+    margin:10px auto;
 }
 
 .add-title {
@@ -150,6 +151,7 @@ label {
     line-height: 50px;
     padding: 20px;
     padding-top: 5px;
+    padding-bottom:10px;
     border-bottom: 1px solid #ddd;
     font-weight:700;
 }
@@ -173,7 +175,6 @@ label {
     text-align:left;
 }
 .inner-input{
-    text-align:center;
     margin-top:15px;
 
 }
@@ -191,11 +192,9 @@ label {
 .add-deploy{
     border:1px solid #c1c6ce;
     width:100%;
-    height:540px;
-    margin-top:40px;
     margin-bottom:10px;
-    position:relative;
-
+    position:absolute;
+    height:523px;
 }
 .deploy-header{
     font-weight: 600;
@@ -278,7 +277,13 @@ label {
 .main-content-table{
     margin-bottom:20px
 }
+.bottom-div .main-content-table{
+    height:330px;
+    overflow-y: auto;
+}
+.bottom-div .row{
 
+}
 #dateTables1{
     width:80%;
 }
@@ -289,8 +294,11 @@ label {
     text-align:center
 }
 .bottom-div{
-    height:595px;
-    overflow: auto;
+    height:611px;
+}
+.add-deploy h2{
+    margin:200px auto;
+    text-align:center;
 }
 /*右侧表格样式*/
 #dateTables2_info{
@@ -298,6 +306,12 @@ label {
 }
 #dateTables2{
     width:80%;
+}
+#dateTables9 ,#dateTables11{
+    width:80%;
+}
+#dateTables9_info, #dateTables11_info{
+    display:none;
 }
 #dateTables2 th, td{
     text-align:center
@@ -314,11 +328,16 @@ label {
 .add-sign img{
     margin-left:10px;
 }
+#add-unit .dataTables_scroll{
+    width:80%;
+   margin:0 auto;
+
+}
 /*定额弹窗样式*/
 .quota-window{
     width:50%;
     min-height: 300px;
-    margin:200px auto;
+    margin:50px auto;
 }
 .quota-main-content {
     margin-bottom: 10px;
@@ -328,7 +347,7 @@ label {
     font-size:18px;
 }
 .quota-data table{
-    width:80%;
+    width:100%;
 }
 .quota-data-table td{
     border:1px solid #999999;
@@ -379,4 +398,58 @@ label {
 }
 .modal-dialog{
     min-width:250px;
+}
+.dataTables_wrapper .dataTable .onFocus{
+    background:#fbec88
+}
+.theHidden{
+    display:none !important;
+}
+
+/*查看定额弹窗*/
+
+.row-left  p{
+    font-size:20px;
+    margin-left:30px;
+    margin-bottom:10px;
+}
+.row-right  p {
+    font-size: 20px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+}
+.tabs1{
+    width:97%;
+    margin:0 auto;
+}
+.tabs1 a{
+    width:10%;
+}
+#quota .swiper-container{
+    width:97%;
+    border:1px solid #c1c6ce;
+
+}
+.quota-data-bottom p{
+    font-size:20px;
+    margin-top:15px;
+    margin-bottom:10px;
+}
+.quota-data table{
+    font-size:15px;
+}
+#dateTables11-1_info{
+    display: none;
+}
+#dateTables1-1_info{
+    display: none;
+}
+
+.inner-input1{
+    margin-top: 15px;
+}
+.inner-input1 label {
+    width: 115px;
+    text-align: left;
+    padding-left: 20px;
 }

@@ -157,3 +157,13 @@ label {
 #dateTables_info{
     display:none;
 }
+table th,td{
+    text-align:center
+}
+.marks {
+    background: url(../img/mark.png) no-repeat center center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: none;
+}
