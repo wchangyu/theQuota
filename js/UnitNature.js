@@ -135,12 +135,18 @@ $(document).ready(function(){
             success: function (data)
             {
                 console.log(data);
-                $('#add-people').modal('hide');
-                ajaxSuccess();
+
 
                 if(data == 2){
-                    alert('单位性质已存在')
+                    myAlter('单位性质已存在')
+                    return false;
+                };
+                if(data == 3){
+                    myAlter('添加失败')
+                    return false;
                 }
+                $('#add-people').modal('hide');
+                ajaxSuccess();
 
             },
 
@@ -149,11 +155,11 @@ $(document).ready(function(){
                 console.log(data.responseText);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }
 
                     $('#add-people').modal('hide');
-                    alert(num);
+                    myAlter(num);
             }
 
 
@@ -201,6 +207,14 @@ $(document).ready(function(){
 
                {
                    console.log(data);
+                   if(data == 2){
+                       myAlter('单位性质已存在')
+                       return false;
+                   };
+                   if(data == 3){
+                       myAlter('修改失败')
+                       return false;
+                   }
                    $('#alter-people').modal('hide');
                    ajaxSuccess();
 
@@ -209,9 +223,9 @@ $(document).ready(function(){
                     console.log(textStatus);
                    if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                        ajaxTimeoutTest.abort();
-                       alert("超时");
+                       myAlter("超时");
                    }else{
-                       alert(data.responseText.split('"')[3]);
+                       myAlter(data.responseText.split('"')[3]);
                    }
 
                    $('#alter-people').modal('hide');
@@ -261,10 +275,10 @@ $(document).ready(function(){
                     $('#theLoading').modal('hide');
                     ajaxSuccess();
                     if(data == 4){
-                        alert('已被二级单位使用，无法删除')
+                        myAlter('已被二级单位使用，无法删除')
                     }
                     if(data == 3){
-                        alert('删除失败')
+                        myAlter('删除失败')
                     };
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -272,9 +286,9 @@ $(document).ready(function(){
                     $('#theLoading').modal('hide');
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }
-                    alert("请求失败！");
+                    myAlter("请求失败！");
                 }
             });
         })
@@ -308,9 +322,9 @@ function alarmHistory(){
             console.log(XMLHttpRequest);
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
         },
 
     });

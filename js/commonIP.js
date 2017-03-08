@@ -139,7 +139,7 @@ function getEnergyUnit(num){
 //获取人员类别单位
 function getPersonUnit(num){
     if(num == 0){
-        return '人年'
+        return '人数'
     }else if(num == 1){
         return '人时'
     }
@@ -156,7 +156,11 @@ function getQuotaState(num){
     }
 }
 
-
+//自定义弹窗
+function myAlter(string){
+    $('#my-alert').modal('show');
+    $('#my-alert p b').html(string);
+}
 //点击确定时触发
 //$(document).on('keydown',function(e){
 //    var theEvent = window.event || e;

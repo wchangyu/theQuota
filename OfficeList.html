@@ -40,12 +40,13 @@
                                 </li>
                                 <li>
 
-                                    <input id="orgNameInput" style="width:19px;height:20px;margin-top:0" value="-1" class="rct-form-control" type="checkbox">
-                                    <label for="" style="margin-left:5px;">显示已注销</label>
+                                    <input id="orgNameInput" style="width:19px;height:20px;margin-top:0" value="-1" class="rct-form-control" type="checkbox" >
+                                    <label for="orgNameInput" style="margin-left:5px;">显示已注销</label>
                                 </li>
 
                                 <li><button class="top-btn unit-refer" style="margin-right:20px">查询</button></li>
 
+                                <li><button class="top-btn unit-reset" style="margin-right:20px">重置</button></li>
 
                                 <div class="clearfix"></div>
                             </ul>
@@ -57,11 +58,11 @@
                         <ul class="condition-query">
                             <li> <button class="top-btn window-btn top-btn1" data-toggle='modal' data-target='#add-unit'>单位添加</button></li>
                             <li> <button class="top-btn window-btn top-btn2" data-toggle='modal' data-target='#alter-unit'>单位修改</button></li>
-                            <li> <button class="top-btn window-btn top-btn3" data-toggle='modal' data-target='#myModal1'>单位注销</button></li>
-                            <li> <button class="top-btn window-btn top-btn4" data-toggle='modal' data-target='#adjust-deploy'>修改手工调整值</button></li>
                             <li> <button class="top-btn window-btn top-btn5" data-toggle='modal' data-target='#index-class'>修改人员类别</button></li>
-                            <li> <button class="top-btn window-btn top-btn6" data-toggle='modal' data-target='#count-type'>修改计费方案</button></li>
+                            <li> <button class="top-btn window-btn top-btn4" data-toggle='modal' data-target='#adjust-deploy'>修改手工调整值</button></li>
 
+                            <li> <button class="top-btn window-btn top-btn6" data-toggle='modal' data-target='#count-type'>修改计费方案</button></li>
+                            <li> <button class="top-btn window-btn top-btn3" data-toggle='modal' data-target='#myModal1'>单位注销</button></li>
                             <div class="clearfix"></div>
                         </ul>
                         <!--表格部分-->
@@ -87,28 +88,28 @@
     </div>
     <!--新增二级单位弹窗-->
     <div class="modal fade " id="add-unit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog add-window" style="min-width:690px;">
+        <div class="modal-dialog add-window" style="min-width:930px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <div class="add-title">新增二级单位</div>
                     <div class="add-main-content">
                         <div class="row first-row">
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input type-number">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input type-number">
                                 <label for="" class="input-label ">代码：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input">
                                 <label for="" class="input-label">单位名称：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input">
                                 <label for="" class="input-label">单位性质：</label>
 
                                 <div class="add-input-father" style="margin-left:10px">
@@ -127,7 +128,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input">
                                 <label for="" class="input-label">负责人姓名：</label>
 
                                 <div class="add-input-block">
@@ -135,14 +136,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input type-phone">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input type-phone">
                                 <label for="">负责人电话：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input">
                                 <label for="" class="input-label">单位专业：</label>
                                 <div class="add-input-father" style="margin-left:10px">
                                     <div class="add-input-block" style="margin-left:0">
@@ -160,55 +161,55 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input">
                                 <label for="" >单位房间：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input1  type-number">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input1  type-number">
                                 <label for="" >单位面积：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input type-number">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input type-number">
                                 <label for="">百分比减免：</label>
                                 <div class="add-input-block">
                                     <input type="text" class="add-input">
                                 </div>
                             </div>
 
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input">
                                 <label for="">备注字段1：</label>
                                 <div class="add-input-block">
                                     <input type="text" class="add-input type-long">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input" >
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input" >
                                 <label for="">备注字段2：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input type-long">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input" >
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input" >
                                 <label for="">备注字段3：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input type-long">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input" >
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input" >
                                 <label for="">备注字段4：</label>
 
                                 <div class="add-input-block">
                                     <input type="text" class="add-input type-long">
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input" >
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  inner-input" >
                                 <label for="">备注字段5：</label>
                                 <div class="add-input-block">
                                     <input type="text" class="add-input type-long">
@@ -218,7 +219,7 @@
                         </div>
 
                         <div class="row" style="margin-right:0px">
-                            <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div">
+                            <div  class="col-lg-12 col-md-12  bottom-div">
                                 <div class="wrap">
                                     <div class="tabs tabs0">
                                         <a href="#" hidefocus="true" class="active">选择人员类别</a>
@@ -232,7 +233,7 @@
 
 
                                                 <div class="row" style="margin-top:15px">
-                                                    <div class="col-lg-6 col-sm-12 col-xs-12 inner-input person-type" >
+                                                    <div class="col-lg-6  inner-input person-type" >
                                                         <label for=""  class="input-label">人员类别：</label>
 
                                                         <div class="add-input-father" style="margin-left:10px">
@@ -251,7 +252,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6  col-sm-12 col-xs-12 inner-input add-sign type-number" style="margin-bottom:6px">
+                                                    <div class="col-lg-6   inner-input add-sign type-number" style="margin-bottom:6px">
                                                         <label for="" class="input-label">人数或人时：</label>
 
                                                         <div class="add-input-block">
@@ -284,7 +285,7 @@
                                             <!--填写内容-->
                                             <form action="" method="get" class="deploy-form choose-radio">
                                                 <label style="margin-left:20px">
-                                                    <input class="chooseIt" name="Fruit" type="radio" value="0" checked="'checked"/>停用
+                                                    <input class="chooseIt" name="Fruit" type="radio" value="0" checked="'checked"/>未启用
                                                 </label>
                                                 <label>
                                                     <input class="chooseIt" name="Fruit" type="radio" value="1" />启用加减微调
@@ -298,7 +299,7 @@
                                                 </div>
 
                                                 <div class="row" style="display: none">
-                                                    <div class="col-lg-6 col-sm-12 col-xs-12 inner-input energy-type" style="text-ali">
+                                                    <div class="col-lg-6 col-xs-6 inner-input energy-type" style="text-ali">
                                                         <label for=""  class="input-label">能耗类型：</label>
 
                                                         <div class="add-input-father" style="margin-left:10px">
@@ -317,7 +318,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6  col-sm-12 col-xs-12 inner-input type-number">
+                                                    <div class="col-lg-6 col-xs-6  inner-input type-number">
                                                         <label for="" class="input-label" style="width:140px;margin-right:20px">月加减微调值：</label>
 
                                                         <div class="add-input-block">
@@ -326,7 +327,7 @@
 
 
                                                     </div>
-                                                    <div class="col-lg-10 col-sm-12 col-xs-12 inner-input add-sign">
+                                                    <div class="col-lg-10 col-xs-10 inner-input add-sign">
                                                         <label for="" >调整备注：</label>
 
                                                         <div class="add-input-block">
@@ -337,7 +338,7 @@
                                                 </div>
 
                                                 <div class="row" style="display: none">
-                                                    <div class="col-lg-6 col-sm-12 col-xs-12 inner-input energy-type" style="text-ali">
+                                                    <div class="col-lg-6 col-xs-6 inner-input energy-type" style="text-ali">
                                                         <label for=""  class="input-label">能耗类型：</label>
 
                                                         <div class="add-input-father" style="margin-left:10px">
@@ -356,7 +357,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6  col-sm-12 col-xs-12 inner-input type-number">
+                                                    <div class="col-lg-6  col-xs-6 inner-input type-number">
                                                         <label for="" class="input-label" style="width:140px;margin-right:20px">用能月定额量：</label>
 
                                                         <div class="add-input-block">
@@ -365,7 +366,7 @@
 
 
                                                     </div>
-                                                    <div class="col-lg-10 col-sm-12 col-xs-12 inner-input add-sign">
+                                                    <div class="col-lg-10 col-xs-10 inner-input add-sign">
                                                         <label for="" >调整备注：</label>
 
                                                         <div class="add-input-block">
@@ -412,7 +413,7 @@
 
 
                                                 <div class="row">
-                                                    <div class="col-lg-6 col-sm-12 col-xs-12 inner-input energy-type" style="margin-top:25px">
+                                                    <div class="col-lg-6  inner-input energy-type" style="margin-top:25px">
                                                         <label for=""  class="input-label">能耗类型：</label>
 
                                                         <div class="add-input-father" style="margin-left:10px">
@@ -431,7 +432,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-6 col-sm-12 col-xs-12 inner-input count-type" style="margin-bottom:10px; margin-top:30px">
+                                                    <div class="col-lg-6  inner-input count-type" style="margin-bottom:10px; margin-top:30px">
                                                         <label for=""  class="input-label">计费方案：</label>
 
                                                         <div class="add-input-father" style="margin-left:10px">
@@ -484,7 +485,7 @@
     </div>
     <!--查看定额弹窗-->
     <div class='modal fade' id='quota' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog quota-window' style="min-width:690px;">
+        <div class='modal-dialog quota-window' style="min-width:707px;">
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -492,7 +493,7 @@
                     <div class="quota-main-content" style="margin-bottom:15px;">
                         <div class="row" style="margin-bottom:20px">
                             <!--定额数据展示-->
-                            <div class="col-sm-12 col-xs-12 quota-data">
+                            <div class="col-sm-12  quota-data">
                                 <p style="margin-bottom:5px;display: inline-block"><b>手工调整状态：</b><span>已禁用</span></p>
                                 <p style="margin-left:25px;display: inline-block"><b>用能调整系数：</b><span>1.2</span></p>
                                     <h3 style="text-align:center;margin-bottom:10px;">定额数据汇总</h3>
@@ -569,7 +570,6 @@
 
                     </div>
                     <div class='modal-footer'>
-                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
                         <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
                     </div>
                 </div>
@@ -726,13 +726,13 @@
 
     <!--修改二级单位弹窗-->
     <div class='modal fade' id='alter-unit' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:60%;margin:15% auto'>
+        <div class='modal-dialog'style='width:60%;margin:50px auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                     <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">修改二级单位</div>
                     <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input type-number">
                             <label for="" class="input-label">代码：</label>
 
                             <div class="add-input-block">
@@ -773,7 +773,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input type-phone">
                             <label for="">负责人电话：</label>
 
                             <div class="add-input-block">
@@ -806,14 +806,14 @@
                                 <input type="text" class="add-input">
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input1">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input1  type-number">
                             <label for="" >单位面积：</label>
 
                             <div class="add-input-block">
                                 <input type="text" class="add-input">
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input">
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 inner-input  type-number">
                             <label for="">百分比减免：</label>
                             <div class="add-input-block">
                                 <input type="text" class="add-input">
@@ -899,31 +899,31 @@
 
     <!--单位注销弹窗2-->
     <div class='modal fade' id='myModal1' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:30%;margin:15% auto'>
+        <div class='modal-dialog'style='width:30%;margin:50px auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">二级单位公摊用能调整</div>
-                    <div class="ament-data"><b>仪表名称：</b>
-                        <span>*********表</span>
-                    </div>
-                    <div class="main-content-table" style="padding-left:10px;width:80%">
-                        <table class="table table-striped" id="dateTables6">
-                            <thead>
-                                <td>二级单位</td><td>公摊比例</td>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>水</td><td>20t</td>
-                                </tr>
-                                <tr>
-                                    <td>电</td><td>30kw</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class='modal-footer'>
-                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">此功能暂未开放</div>
+                    <!--<div class="ament-data"><b>仪表名称：</b>-->
+                        <!--<span>*********表</span>-->
+                    <!--</div>-->
+                    <!--<div class="main-content-table" style="padding-left:10px;width:80%">-->
+                        <!--<table class="table table-striped" id="dateTables6">-->
+                            <!--<thead>-->
+                                <!--<td>二级单位</td><td>公摊比例</td>-->
+                            <!--</thead>-->
+                            <!--<tbody>-->
+                                <!--<tr>-->
+                                    <!--<td>水</td><td>20t</td>-->
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                    <!--<td>电</td><td>30kw</td>-->
+                                <!--</tr>-->
+                            <!--</tbody>-->
+                        <!--</table>-->
+                    <!--</div>-->
+                    <div class='modal-footer' style="border:none">
+                        <!--<button type='button' class='btn btn-primary top-btn'>提交更改</button>-->
                         <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
                     </div>
                 </div>
@@ -932,7 +932,7 @@
     </div>
     <!--手工调整操作弹窗-->
     <div class='modal fade' id='adjust-deploy' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:40%;margin:5% auto;min-width:615px;'>
+        <div class='modal-dialog'style='width:40%;margin:5% auto;min-width:650px;'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -947,7 +947,7 @@
                                 <!--填写内容-->
                                 <form action="" method="get" class="deploy-form choose-radio1">
                                     <label style="margin-left:20px">
-                                        <input name="Fruit" type="radio" value="" checked="'checked"/>停用
+                                        <input name="Fruit" type="radio" value="" checked="'checked"/>未启用
                                     </label>
                                     <label>
                                         <input name="Fruit" type="radio" value="" />启用加减微调
@@ -1082,7 +1082,7 @@
 
     <!--人员类别操作弹窗-->
     <div class='modal fade' id='index-class' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:40%;margin:10% auto'>
+        <div class='modal-dialog'style='width:40%;margin:50px auto;min-width:660px;'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -1539,6 +1539,22 @@
         </div>
     </div>
 
+    <!--自定义弹窗-->
+    <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:18px">提示</h3>
+                    <p style="font-size:20px"> <b style="color:red"></b> </p>
+
+                    <div class='modal-footer' style="border:none">
+
+                        <button type='button' class='btn btn-primary top-btn' data-dismiss='modal'>确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--loading页面-->
     <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
         <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>

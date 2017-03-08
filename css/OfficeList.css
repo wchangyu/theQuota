@@ -340,7 +340,6 @@ label {
 .quota-window{
     width:50%;
     min-height: 300px;
-    margin:50px auto;
 }
 .quota-main-content {
     margin-bottom: 10px;
@@ -426,7 +425,8 @@ label {
     margin:0 auto;
 }
 .tabs1 a{
-    width:10%;
+    width:100px;
+    overflow: hidden;
 }
 #quota .swiper-container{
     width:97%;
@@ -457,3 +457,17 @@ label {
     padding-left: 20px;
 }
 
+/*备注信息*/
+.adjust-comment span{
+    max-width: 100px;
+
+    display: inline-block;
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+}

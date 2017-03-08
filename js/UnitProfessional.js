@@ -4,7 +4,6 @@
 
 
 
-
 $(document).ready(function(){
     $('input').attr('maxlength','50');
     //调用获取后台数据方法，进行数据获取
@@ -174,12 +173,18 @@ $(document).ready(function(){
             success: function (data)
             {
                 console.log(data);
-                $('#add-people').modal('hide');
-                ajaxSuccess();
+
                 $('#theLoading').modal('hide');
                 if(data == 2){
-                    alert('单位专业已存在')
+                    myAlter('单位专业已存在');
+                    return false;
                 }
+                if(data == 3){
+                    myAlter('添加失败');
+                    return false;
+                }
+                $('#add-people').modal('hide');
+                ajaxSuccess();
 
             },
             error:function (data, textStatus, errorThrown) {
@@ -187,12 +192,12 @@ $(document).ready(function(){
                 console.log(data.responseText);
                 if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                     ajaxTimeoutTest.abort();
-                    alert("超时");
+                    myAlter("超时");
                 }
                 $('#theLoading').modal('hide');
 
                 $('#add-people').modal('hide');
-                alert(num);
+                myAlter(num);
             }
         });
         //完成后清空input框
@@ -209,10 +214,10 @@ $(document).ready(function(){
         var txt2 = $(tar).parent().parent().children().eq(2).html();
         $('#alter-people .add-input').eq(0).val(txt1);
         $('#alter-people .add-input').eq(1).val(txt2);
-        console.log(id);
+
         //点击提交按钮
         $('#alter-people .btn-primary').one('click',function(){
-            console.log(id);
+
             var txt1 = $('#alter-people .add-input').eq(0).val();
             var txt2 =  $('#alter-people .add-input').eq(1).val();
             console.log(txt1);
@@ -242,17 +247,27 @@ $(document).ready(function(){
 
                 {
                     console.log(data);
+
+                    if(data == 2){
+                        myAlter('单位专业已存在');
+                        return false;
+                    }
+                    if(data == 3){
+                        myAlter('修改失败');
+                        return false;
+                    }
                     $('#alter-people').modal('hide');
                     ajaxSuccess();
+
 
                 },
                 error:function (data, textStatus, errorThrown) {
                     console.log(textStatus);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }else{
-                        alert(data.responseText.split('"')[3]);
+                        myAlter(data.responseText.split('"')[3]);
                     }
 
                     $('#alter-people').modal('hide');
@@ -302,19 +317,19 @@ $(document).ready(function(){
                     $('#remove-people').modal('hide');
                     ajaxSuccess();
                     if(data == 4){
-                        alert('已被二级单位使用，无法删除')
+                        myAlter('已被二级单位使用，无法删除')
                     }
                     if(data == 3){
-                        alert('删除失败')
+                        myAlter('删除失败')
                     };
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }
                     $('#remove-people').modal('hide');
-                    alert("请求失败！");
+                    myAlter("请求失败！");
                 }
             });
         })
@@ -350,9 +365,9 @@ function alarmHistory(){
 
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
         },
 
     });

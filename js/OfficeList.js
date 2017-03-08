@@ -4,6 +4,7 @@
 
 $(document).ready(function(){
     //限定input框长度
+
     $('input').attr('maxlength','50');
 
         $(".tabs0 a").on('touchstart mousedown',function(e){
@@ -21,7 +22,6 @@ $(document).ready(function(){
         $(".tabs0 a").click(function(e){
             e.preventDefault();
         });
-
     //新增二级单位弹窗中的单选按钮操作
     $(".choose-radio label").on('mousedown',function(e){
         e.preventDefault()
@@ -54,7 +54,7 @@ $(document).ready(function(){
                 "paging":false,
                 "ordering": false,
                 'searching':false,
-                "sScrollY": '240px',
+                "sScrollY": '230px',
                 "bPaginate": false,
                 "scrollCollapse": true,
                 'language': {
@@ -100,7 +100,12 @@ $(document).ready(function(){
                     } ,
                     {
                         title:'调整备注',
-                        data:'remark'
+                        data:'remark',
+                        class:'adjust-comment',
+                        render:function(data, type, full, meta){
+                            return '<span title="'+data+'">'+data+'</span>'
+                        }
+
                     } ,
                     {
                         title:'编辑操作',
@@ -129,7 +134,7 @@ $(document).ready(function(){
                 "paging":false,
                 "ordering": false,
                 'searching':false,
-                "sScrollY": '240px',
+                "sScrollY": '230px',
                 "bPaginate": false,
                 "scrollCollapse": true,
                 'language': {
@@ -175,7 +180,12 @@ $(document).ready(function(){
                     } ,
                     {
                         title:'调整备注',
-                        data:'remark'
+                        data:'remark',
+                        class:'adjust-comment',
+                        render:function(data, type, full, meta){
+                            return '<span title="'+data+'">'+data+'</span>'
+                        }
+
                     } ,
                     {
                         title:'编辑操作',
@@ -289,17 +299,35 @@ $(document).ready(function(){
 
     //select 优化动画
     var rotateNum = 1;
-    $('.add-input-select').click(function(){
+    $(document).on('click',function(){
+        if($('.add-select-block').is(':hidden')){
+            $('.add-select-block').css({
+                display:'none'
+            }) ;
+            rotateNum = 1;
+            var num = rotateNum * 180;
+            var string = num + 'deg';
+            $('.add-input-select').children('div').css({
+                'transform':'rotate('+string+')'
+            })
+        }
+
+    });
+    $('.add-input-select').click(function(e){
+        $('.add-select-block').not($(this).parents('.add-input-father').children('.add-select-block')).css({
+            display:'none'
+        });
         rotateNum++;
         var num = rotateNum * 180;
         var string = num + 'deg';
         console.log('bb');
-        $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
+        $(this).parents('.add-input-father').children('.add-select-block').slideToggle('fast');
         $(this).children('div').css({
 
             'transform':'rotate('+string+')'
         })
 
+        e.stopPropagation();
 
     });
     $('.add-select-block li').on('click',function(){
@@ -321,6 +349,10 @@ $(document).ready(function(){
         })
     });
 
+    $('.choose-radio').children('label').css({
+       marginRight:'50px'
+    });
+
     //调用获取后台数据方法，进行数据获取
     alarmHistory();
     //初始化页面table表单
@@ -333,6 +365,9 @@ $(document).ready(function(){
             "pagingType":"full_numbers",
             "ordering": false,
             'searching':false,
+            //'stateSave':true,
+            //'stateSaveCallback':true,
+            //'stateLoadCallback':true,
             'language': {
                 'emptyTable': '没有数据',
                 'loadingRecords': '加载中...',
@@ -355,6 +390,7 @@ $(document).ready(function(){
 
             ],
             //数据源
+            //'data':dataArr,
             'columns':[
                 {
                     title:'代码',
@@ -424,14 +460,11 @@ $(document).ready(function(){
             ]
         }
     );
+
     _table = $('#dateTables').dataTable();
     //给表格添加后台获取到的数据
     setData();
     hiddrenId();
-
-
-    $('#dateTables tbody').children().eq(0).addClass('onFocus');
-
 
 
     //按条件查询功能
@@ -468,11 +501,10 @@ $(document).ready(function(){
                     dataArr[i].f_QuotaEditStateWord = getQuotaState(nums);
                 }
 
-
+                _table = $('#dateTables').dataTable();
                 $('#dateTables').dataTable().fnClearTable();
                 setData();
                 hiddrenId();
-                $('#dateTables tr').eq(1).addClass('onFocus');
                 $('#theLoading').modal('hide');
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -480,9 +512,9 @@ $(document).ready(function(){
 
                 if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                     ajaxTimeoutTest.abort();
-                    alert("超时");
+                    myAlter("超时");
                 }
-                alert("请求失败！");
+                myAlter("请求失败！");
                 $('#theLoading').modal('hide');
             }
 
@@ -502,17 +534,20 @@ $(document).ready(function(){
 
         checkedText1();
         if(!checkedText1()){
-            console.log(11);
             return false;
         };
         checkedText2('#add-unit .first-row');
         if(!checkedText2('#add-unit .first-row')){
             return false;
         };
-        checkedPhone('#add-unit');
-        if(!checkedPhone('#add-unit')){
-            return false;
-        };
+        if($('#add-unit .first-row .inner-input').eq(4).find('.add-input').val() != ''){
+            checkedPhone('#add-unit');
+            if(!checkedPhone('#add-unit')){
+                return false;
+            };
+        }
+
+
         //生成对应参数
        var code = $('#add-unit .first-row .inner-input').eq(0).find('.add-input').val();
         var unitName = $('#add-unit .first-row .inner-input').eq(1).find('.add-input').val();
@@ -580,71 +615,71 @@ $(document).ready(function(){
         console.log(data4);
 
 
-//        $.ajax({
-//            type: "post",
-//            url: IP + "/SecondUnit/AddSecondUnit",
-////      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
-//            timeout:theTimes,
-//            data:{
-//                "pK_Unit": 0,
-//                "fK_Specialty_Unit": SpecialtyID,
-//                "f_CoefficientK": factor,
-//                "f_Code": code,
-//                "f_UnitName": unitName,
-//                "fK_Nature_Unit": natureID,
-//                "f_DirectorName": DirectorName,
-//                "f_DirectorPhone": telNum,
-//                "f_UnitRoom": unitRoom,
-//                "f_UnitArea":unitArea,
-//                "f_Comment1": remark1,
-//                "f_Comment2": remark2,
-//                "f_Comment3": remark3,
-//                "f_Comment4": remark4,
-//                "f_Comment5": remark5,
-//                "f_PercentageReduction":  reduction,
-//                "f_QuotaEditState": editState,
-//                "unitQuotaEdits":data2,
-//                "unitQuotaRevises":data3,
-//                "unitPeopleRelations":data1,
-//                "unitPrices":data4,
-//                "userID": userName
-//            },
-//            cache: false,
-//            async : false,
-//            dataType: "json",
-//            beforeSend:function(){
-//                $('#add-unit').modal('hide');
-//            },
-//            complete:function(){
-//                $('#theLoading').modal('hide');
-//            },
-//
-//            success: function (data)
-//            {
-//
-//                console.log(data);
-//
-//                _table = $('#dateTables').dataTable();
-//                ajaxSuccess();
-//                $('#add-unit').modal('hide');
-//                $('#theLoading').modal('hide');
-//                if(data == 2){
-//                    alert('二级单位已存在')
-//                }
-//
-//            },
-//            error:function (data, textStatus, errorThrown) {
-//                //var num = data.responseText.split('"')[3];
-//                $('#theLoading').modal('hide');
-//                if(textStatus=='timeout'){//超时,status还有success,error等值的情况
-//                    ajaxTimeoutTest.abort();
-//                    alert("超时");
-//                }
-//
-//                $('#add-unit').modal('hide');
-//                alert('执行失败');
-//            }
-//        });
+        $.ajax({
+            type: "post",
+            url: IP + "/SecondUnit/AddSecondUnit",
+//      data: "para="+para,  此处data可以为 a=1&b=2类型的字符串 或 json数据。
+            timeout:theTimes,
+            data:{
+                "pK_Unit": 0,
+                "fK_Specialty_Unit": SpecialtyID,
+                "f_CoefficientK": factor,
+                "f_Code": code,
+                "f_UnitName": unitName,
+                "fK_Nature_Unit": natureID,
+                "f_DirectorName": DirectorName,
+                "f_DirectorPhone": telNum,
+                "f_UnitRoom": unitRoom,
+                "f_UnitArea":unitArea,
+                "f_Comment1": remark1,
+                "f_Comment2": remark2,
+                "f_Comment3": remark3,
+                "f_Comment4": remark4,
+                "f_Comment5": remark5,
+                "f_PercentageReduction":  reduction,
+                "f_QuotaEditState": editState,
+                "unitQuotaEdits":data2,
+                "unitQuotaRevises":data3,
+                "unitPeopleRelations":data1,
+                "unitPrices":data4,
+                "userID": userName
+            },
+            cache: false,
+            async : false,
+            dataType: "json",
+            beforeSend:function(){
+                $('#add-unit').modal('hide');
+            },
+            complete:function(){
+                $('#theLoading').modal('hide');
+            },
+
+            success: function (data)
+            {
+
+                console.log(data);
+
+                _table = $('#dateTables').dataTable();
+                ajaxSuccess();
+                $('#add-unit').modal('hide');
+                $('#theLoading').modal('hide');
+                if(data == 2){
+                    myAlter('二级单位已存在')
+                }
+
+            },
+            error:function (data, textStatus, errorThrown) {
+                //var num = data.responseText.split('"')[3];
+                $('#theLoading').modal('hide');
+                if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                    ajaxTimeoutTest.abort();
+                    myAlter("超时");
+                }
+
+                $('#add-unit').modal('hide');
+                myAlter('执行失败');
+            }
+        });
         //完成后清空input框
         $(this).parent().parent().parent().find('input').val('');
         removeTable();
@@ -693,9 +728,9 @@ $(document).ready(function(){
                     console.log(textStatus);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }else{
-                        alert(data.responseText.split('"')[3]);
+                        myAlter(data.responseText.split('"')[3]);
                     }
 
 
@@ -748,6 +783,11 @@ $(document).ready(function(){
 
                     },
                     {
+                        title:'单位',
+                        data:'f_EnergyTypeUnit'
+
+                    },
+                    {
                         title:'月指标',
                         data:'f_EnergyMonthIndex'
                     } ,
@@ -790,7 +830,7 @@ $(document).ready(function(){
                 async : false,
                 dataType: "json",
                 beforeSend:function(){
-                    $('#theLoading').modal('show');
+
                 },
                 complete:function(){
                     $('#theLoading').modal('hide');
@@ -848,7 +888,9 @@ $(document).ready(function(){
                         for(var j=0 ; j < arrs.length; j++){
                             var num = arrs[j].f_EnergyType;
                             var txt = getEnergyType(num);
+                            var unit = getEnergyUnit(num);
                             arrs[j].f_EnergyTypeName = txt;
+                            arrs[j].f_EnergyTypeUnit = unit;
                         }
 
                     }
@@ -871,7 +913,7 @@ $(document).ready(function(){
                     $('.show-person-total').html(html4);
 
                     $(".tabs1 a").on('touchstart mousedown',function(e){
-                        e.preventDefault()
+                        e.preventDefault();
                         $(".tabs1 .active").removeClass('active');
                         $(this).addClass('active');
                         var num = $(this).index();
@@ -879,6 +921,7 @@ $(document).ready(function(){
                         $('.show-person-total').html(html4);
 
                         table4Arr = bottomData[num];
+                        console.log(table4Arr);
                         _table = $('#dateTables4').dataTable();
                         _table.dataTable().fnClearTable();
                         setDatas(table4Arr);
@@ -895,9 +938,9 @@ $(document).ready(function(){
                     console.log(textStatus);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }else{
-                        alert(data.responseText.split('"')[3]);
+                        myAlter(data.responseText.split('"')[3]);
                     }
 
 
@@ -912,8 +955,14 @@ $(document).ready(function(){
 
     $('.top-btn2').on('click',function(){
         var dom = $('.onFocus');
+        if(dom.length == 0){
+            myAlter('请选中一行数据进行操作');
+            return false;
+        }
+        var index = $(dom).index() + 1;
         var id = dom.children().eq(1).html();
         var txt = $(dom).children().eq(2).html();
+
         $('#alter-unit .add-title').html(txt +" 信息修改");
         var postData ;
 
@@ -930,16 +979,16 @@ $(document).ready(function(){
             async : false,
             dataType: "json",
             beforeSend:function(){
-                $('#theLoading').modal('show');
+
             },
             complete:function(){
-                $('#theLoading').modal('hide');
+
             },
             success: function (data)
 
             {
                 console.log(data);
-                $('#theLoading').modal('hide');
+
                 postData = data;
                 $('#alter-unit .add-input').eq(0).val(data.f_Code);
                 $('#alter-unit .add-input').eq(1).val(data.f_UnitName );
@@ -982,18 +1031,35 @@ $(document).ready(function(){
                 console.log(textStatus);
                 if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                     ajaxTimeoutTest.abort();
-                    alert("超时");
+                    myAlter("超时");
                 }else{
-                    alert(data.responseText.split('"')[3]);
+                    myAlter(data.responseText.split('"')[3]);
                 }
                 $('#theLoading').modal('hide');
 
             }
 
         });
-
-        $('#alter-unit .btn-primary').one('click',function(){
+        $('#alter-unit .btn-primary').off('click');
+        $('#alter-unit .btn-primary').on('click',function(){
             console.log(postData);
+
+            checkedText11();
+            if(!checkedText11()){
+                return false;
+            };
+            checkedText2('#alter-unit .row');
+            if(!checkedText2('#alter-unit .row')){
+                return false;
+            };
+            if($('#alter-unit  .inner-input').eq(4).find('.add-input').val() != ''){
+                checkedPhone('#alter-unit');
+                if(!checkedPhone('#alter-unit')){
+                    console.log('ok');
+                    return false;
+                };
+            }
+
             var code = $('#alter-unit  .inner-input').eq(0).find('.add-input').val();
             var unitName = $('#alter-unit  .inner-input').eq(1).find('.add-input').val();
             var natureID = $('#alter-unit  .inner-input').eq(2).find('.add-input').children('span').attr('ids');
@@ -1047,26 +1113,32 @@ $(document).ready(function(){
                 {
                     $('#theLoading').modal('hide');
                     if(data == 2){
-                        alert('名称重复')
+                        myAlter('单位名称重复');
+                        return false;
                     }
                     if(data == 3){
-                        alert('修改失败')
+                        myAlter('修改失败');
+                        return false;
                     }
                     $('#alter-unit').modal('hide');
+                    //window.location.reload();
                     _table = $('#dateTables').dataTable();
-                    ajaxSuccess();
-                    $('#dateTables tr').eq(id).addClass('onFocus');
+                    //_table.fnDraw();
+                    jumpNow();
+
+
+                    $('#dateTables tr').eq(index).addClass('onFocus');
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
                     console.log(XMLHttpRequest);
                     var txt = XMLHttpRequest.responseText;
                     var hint = txt.split('"')[3];
-                    alert(hint);
+                    myAlter(hint);
                     $('#theLoading').modal('hide');
 
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }
                     $('#alter-unit').modal('hide');
                 }
@@ -1093,7 +1165,7 @@ $(document).ready(function(){
                 "paging":false,
                 "ordering": false,
                 'searching':false,
-                "sScrollY": '240px',
+                "sScrollY": '230px',
                 "bPaginate": false,
                 "scrollCollapse": true,
                 'language': {
@@ -1139,7 +1211,12 @@ $(document).ready(function(){
                     } ,
                     {
                         title:'调整备注',
-                        data:'f_Comment'
+                        data:'f_Comment',
+                        class:'adjust-comment',
+                        render:function(data, type, full, meta){
+                          return '<span title="'+data+'">'+data+'</span>'
+                        }
+
                     } ,
                     {
                         title: '编辑操作',
@@ -1162,7 +1239,7 @@ $(document).ready(function(){
                 "paging":false,
                 "ordering": false,
                 'searching':false,
-                "sScrollY": '240px',
+                "sScrollY": '230px',
                 "bPaginate": false,
                 "scrollCollapse": true,
                 'language': {
@@ -1208,7 +1285,12 @@ $(document).ready(function(){
                     } ,
                     {
                         title:'调整备注',
-                        data:'f_Comment'
+                        data:'f_Comment',
+                        class:'adjust-comment',
+                        render:function(data, type, full, meta){
+                            return '<span title="'+data+'">'+data+'</span>'
+                        }
+
                     } ,
                     {
                         title: '编辑操作',
@@ -1229,17 +1311,24 @@ $(document).ready(function(){
 
     var tableNumber = 0;
 
-    $('.top-btn4').on('click',function(){
 
+
+    $('.top-btn4').on('click',function(){
+        var dom = $('.onFocus');
+        if(dom.length == 0){
+            myAlter('请选中一行数据进行操作');
+            return false;
+        }
+        var index = $(dom).index() + 1;
         //获取当前ID
         setTimeout(function(){
 
-            var dom = $('.onFocus');
             var id = dom.children().eq(1).html();
             var datas;
             var postData = [];
             var postData1 = [];
             var postData2 = [];
+
             //获取后台数据
             $.ajax({
                 type: "get",
@@ -1253,7 +1342,7 @@ $(document).ready(function(){
                 async : false,
                 dataType: "json",
                 beforeSend:function(){
-                    $('#theLoading').modal('show');
+
                 },
                 complete:function(){
                     $('#theLoading').modal('hide');
@@ -1288,9 +1377,11 @@ $(document).ready(function(){
                     }
                     if( num != 0){
                         if(num == 1){
-                            tableArr = data.unitQuotaEdits;
+                            postData1 = data.unitQuotaEdits;
+                            tableArr =  postData1;
                         }else if(num == 2){
-                            tableArr = data.unitQuotaRevises;
+                            postData2 = data.unitQuotaRevises;
+                            tableArr =  postData2;
                         }
                         for( var i = 0 ; i < tableArr.length; i++){
                             num1 = tableArr[i].f_EnergyType;
@@ -1298,7 +1389,6 @@ $(document).ready(function(){
                             tableArr[i].f_EnergyName = txt;
 
                         }
-                        console.log(tableArr);
 
                         if(num == 2){
                             _table = $('#dateTables11-1').dataTable();
@@ -1313,12 +1403,27 @@ $(document).ready(function(){
                     };
                     $('.add-row-big').off('click');
                     $('.add-row-big').on('click',function(){
-                        _table = $('#dateTables11-1').dataTable();
-                        _table.dataTable().fnClearTable();
+
+
                         var txt1 = $(this).prev().children('.add-input').val();
                         var txt2 = $(this).parent().prev().prev().find('.add-input-select').children('span').html();
                         var id = $(this).parent().prev().prev().find('.add-input-select').children('span').attr('ids');
                         var txt3 = $(this).parent().prev().find('.add-input').val();
+
+                        var dom = $(this).parent().prev().find('.add-input');
+                        if(isNaN(txt3 / 1) ||　txt3 == ''){
+                            myAlter('月定额量 必须为数字');
+                            getFocus1(dom);
+                            return false;
+                        };
+                        for(var i=0 ; i<postData2.length; i++){
+                            if(postData2[i].f_EnergyType == id){
+                                myAlter('能耗类型已存在');
+                                return false;
+                            }
+                        };
+                        _table = $('#dateTables11-1').dataTable();
+                        _table.dataTable().fnClearTable();
 
                         var obj2 = {
                             "f_EnergyType": id,
@@ -1328,10 +1433,7 @@ $(document).ready(function(){
                             "f_Comment":txt1
                         };
 
-                        if(num == 2){
-                           postData2 = tableArr;
 
-                        }
 
                         postData2.push(obj2);
                         console.log(postData2);
@@ -1341,13 +1443,28 @@ $(document).ready(function(){
 
                     $('.add-row-small').off('click');
                     $('.add-row-small').on('click',function(){
-                        _table = $('#dateTables1-1').dataTable();
-                        _table.dataTable().fnClearTable();
+
+
                         var txt1 = $(this).prev().children('.add-input').val();
                         var txt2 = $(this).parent().prev().prev().find('.add-input-select').children('span').html();
                         var id = $(this).parent().prev().prev().find('.add-input-select').children('span').attr('ids');
                         var txt3 = $(this).parent().prev().find('.add-input').val();
 
+                        var dom = $(this).parent().prev().find('.add-input');
+                        if(isNaN(txt3 / 1) ||　txt3 == ''){
+                            myAlter('月加减微调值 必须为数字');
+                            getFocus1(dom);
+                            return false;
+                        };
+                        for(var i=0 ; i<postData1.length; i++){
+                            if(postData1[i].f_EnergyType == id){
+                                myAlter('能耗类型已存在');
+                                return false;
+                            }
+                        };
+
+                        _table = $('#dateTables1-1').dataTable();
+                        _table.dataTable().fnClearTable();
                         var obj1 = {
                             "f_EnergyType": id,
                             "f_EnergyName" : txt2,
@@ -1356,20 +1473,16 @@ $(document).ready(function(){
                             "f_Comment":txt1
                         };
 
-                        if(num == 1){
-                            postData1 = tableArr;
-                        }
 
                         postData1.push(obj1);
                         console.log(postData1);
                         setDatas(postData1);
                     });
 
-
+                    //删除按钮
                     $('#dateTables11-1').on('click','.remove',function(){
-                        if(num == 2){
-                            postData2 = tableArr;
-                        }
+
+                        console.log(postData2);
                         var num1 = $(this).parent().parent().index();
                         var txt = $(this).parent().parent().children().eq(0).html();
                         $('#remove-people p b').html(txt);
@@ -1390,9 +1503,7 @@ $(document).ready(function(){
 
 
                     $('#dateTables1-1').on('click','.remove',function(){
-                        if(num == 1){
-                            postData1 = tableArr;
-                        }
+
                         var num1 = $(this).parent().parent().index();
                         console.log(num);
 
@@ -1412,27 +1523,44 @@ $(document).ready(function(){
 
                     });
 
+                    //修改按钮
                     $('#dateTables1-1').on('click','.alter',function(){
-                        var num = $(this).parent().parent().index();
+                        var num0 = $(this).parent().parent().index();
 
                         var txt1 = $(this).parent().parent().children().eq(0).html();
                         var id = $(this).parent().parent().children().eq(1).html();
                         var txt2 = $(this).parent().parent().children().eq(2).html();
-                        var txt3 = $(this).parent().parent().children().eq(4).html();
+                        var txt3 = $(this).parent().parent().children().eq(4).children('span').html();
 
                         $('#small-adjust').find('.add-input-select').children('span').html(txt1);
                         $('#small-adjust').find('.add-input-select').children('span').attr('ids',id);
                         $('#small-adjust .add-input').eq(1).val(txt2);
                         $('#small-adjust .add-input').eq(2).val(txt3);
 
-                        $('#small-adjust .btn-primary').one('click',function(){
+                        $('#small-adjust .btn-primary').off('click');
+                        $('#small-adjust .btn-primary').on('click',function(){
                             var txt1 =  $('#small-adjust').find('.add-input-select').children('span').html();
                             var id = $('#small-adjust').find('.add-input-select').children('span').attr('ids');
                             console.log(txt1);
                             console.log(id);
                             var txt2 = $('#small-adjust .add-input').eq(1).val();
                             var txt3 = $('#small-adjust .add-input').eq(2).val();
+                            if(num == 1){
+                                postData1 = tableArr;
+                            }
 
+                            var dom = $('#small-adjust .add-input').eq(1);
+                            if(isNaN(txt2 / 1) ||　txt2 == ''){
+                                myAlter('月加减微调值 必须为数字');
+                                getFocus1(dom);
+                                return false;
+                            };
+                            for(var i=0 ; i<postData1.length; i++){
+                                if( i !=num0 && postData1[i].f_EnergyType == id){
+                                    myAlter('能耗类型已存在');
+                                    return false;
+                                }
+                            };
                             var obj1 = {
                                 "f_EnergyType": id,
                                 "f_EnergyName" : txt1,
@@ -1441,12 +1569,10 @@ $(document).ready(function(){
                                 "f_Comment":txt3
                             };
 
+                            console.log(num);
 
-                            if(num == 1){
-                                postData1 = tableArr;
-                            }
 
-                            postData1[num] = obj1;
+                            postData1[num0] = obj1;
 
                             _table = $('#dateTables1-1').dataTable();
                             _table.dataTable().fnClearTable();
@@ -1459,25 +1585,41 @@ $(document).ready(function(){
                     });
 
                     $('#dateTables11-1').on('click','.alter',function(){
-                        var num = $(this).parent().parent().index();
+                        var num0 = $(this).parent().parent().index();
 
                         var txt1 = $(this).parent().parent().children().eq(0).html();
                         var id = $(this).parent().parent().children().eq(1).html();
                         var txt2 = $(this).parent().parent().children().eq(2).html();
-                        var txt3 = $(this).parent().parent().children().eq(4).html();
+                        var txt3 = $(this).parent().parent().children().eq(4).children('span').html();
 
                         $('#big-adjust').find('.add-input-select').children('span').html(txt1);
                         $('#big-adjust').find('.add-input-select').children('span').attr('ids',id);
                         $('#big-adjust .add-input').eq(1).val(txt2);
                         $('#big-adjust .add-input').eq(2).val(txt3);
 
-                        $('#big-adjust .btn-primary').one('click',function(){
+                        $('#big-adjust .btn-primary').off('click');
+                        $('#big-adjust .btn-primary').on('click',function(){
                             var txt1 =  $('#big-adjust').find('.add-input-select').children('span').html();
                             var id = $('#big-adjust').find('.add-input-select').children('span').attr('ids');
                             console.log(txt1);
                             console.log(id);
                             var txt2 = $('#big-adjust .add-input').eq(1).val();
                             var txt3 = $('#big-adjust .add-input').eq(2).val();
+                            if(num == 2){
+                                postData2 = tableArr;
+                            }
+                            var dom = $('#big-adjust .add-input').eq(1);
+                            if(isNaN(txt2 / 1) ||　txt2 == ''){
+                                myAlter('月定额量 必须为数字');
+                                getFocus1(dom);
+                                return false;
+                            };
+                            for(var i=0 ; i<postData2.length; i++){
+                                if( i !=num0 && postData2[i].f_EnergyType == id){
+                                    myAlter('能耗类型已存在');
+                                    return false;
+                                }
+                            };
 
                             var obj1 = {
                                 "f_EnergyType": id,
@@ -1488,11 +1630,9 @@ $(document).ready(function(){
                             };
 
 
-                            if(num == 2){
-                                postData2 = tableArr;
-                            }
 
-                            postData2[num] = obj1;
+
+                            postData2[num0] = obj1;
 
                             _table = $('#dateTables11-1').dataTable();
                             _table.dataTable().fnClearTable();
@@ -1510,9 +1650,9 @@ $(document).ready(function(){
                     console.log(textStatus);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }else{
-                        alert(data.responseText.split('"')[3]);
+                        myAlter(data.responseText.split('"')[3]);
                     }
                     $('#theLoading').modal('hide');
 
@@ -1575,18 +1715,22 @@ $(document).ready(function(){
                     success: function (data)
 
                     {
-                        $('#theLoading').modal('hide');
-                        $('#adjust-deploy').modal('hide');
 
                         if(data == 3){
-                            alert('修改失败')
+                            myAlter('修改失败')
                         };
-                         if(data == 99){
-                             alert('修改成功')
-                         }
+                        if(data == 99){
+                            myAlter('修改成功')
+                        }
+
+                        $('#adjust-deploy').modal('hide');
+
                         _table = $('#dateTables').dataTable();
-                        ajaxSuccess();
-                        $('#dateTables tr').eq(id).addClass('onFocus');
+                        //_table.fnDraw();
+                        jumpNow();
+
+
+                        $('#dateTables tr').eq(index).addClass('onFocus');
                         $('#dateTables1-1').dataTable().fnClearTable();
                         $('#dateTables11-1').dataTable().fnClearTable();
 
@@ -1596,12 +1740,12 @@ $(document).ready(function(){
                         $('#adjust-deploy').modal('hide');
                         var txt = XMLHttpRequest.responseText;
                         var hint = txt.split('"')[3];
-                        alert(hint);
+                        myAlter(hint);
                         if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                             ajaxTimeoutTest.abort();
-                            alert("超时");
+                            myAlter("超时");
                         }
-                        alert("请求失败！");
+                        myAlter("请求失败！");
                     }
                 });
            })
@@ -1664,7 +1808,7 @@ $(document).ready(function(){
                     },
 
                     {
-                        title:'人年或人时',
+                        title:'人数或人时',
                         data:'f_PeopleNum'
                     } ,
                     {
@@ -1685,8 +1829,14 @@ $(document).ready(function(){
     });
 
     $('.top-btn5').on('click',function(){
+        var dom = $('.onFocus');
+        if(dom.length == 0){
+            myAlter('请选中一行数据进行操作');
+            return false;
+        }
+        var index = $(dom).index() + 1;
         setTimeout(function(){
-            var dom = $('.onFocus');
+
             var id = dom.children().eq(1).html();
             var datas;
             var postData = [];
@@ -1707,7 +1857,7 @@ $(document).ready(function(){
                 async : false,
                 dataType: "json",
                 beforeSend:function(){
-                    $('#theLoading').modal('show');
+
                 },
                 complete:function(){
                     $('#theLoading').modal('hide');
@@ -1727,12 +1877,26 @@ $(document).ready(function(){
 
                     $('.add-row-people').off('click');
                     $('.add-row-people').on('click',function(){
-                        _table = $('#dateTables8').dataTable();
-                        _table.dataTable().fnClearTable();
+
                         var txt1 = $(this).prev().children('.add-input').val();
                         var txt2 = $(this).parent().prev().find('.add-input-select').children('span').html();
                         var id = $(this).parent().prev().find('.add-input-select').children('span').attr('ids');
                         var unit = $(this).parent().prev().find('.add-input-select').children('span').attr('unit');
+                        var dom = $(this).prev().children('.add-input');
+                        if(txt1 % 1 != 0 || txt1 < 0 || txt1 == '' ){
+                            myAlter('人数或人时 必须为正整数');
+                            getFocus1(dom);
+                            return false;
+                        }
+                        for(var i=0 ; i< datas.length; i++){
+                            if( datas[i].fK_PersonType_Relation == id){
+                                myAlter('人员类别已存在');
+                                return false;
+                            }
+                        }
+
+                        _table = $('#dateTables8').dataTable();
+                        _table.dataTable().fnClearTable();
                         var obj = {
                             "f_PersonType": txt2,
                             "fK_PersonType_Relation": id,
@@ -1750,6 +1914,7 @@ $(document).ready(function(){
                         $('#remove-people p span').html("注：本次操作将在提交更改后生效");
 
                         $('#remove-people .btn-primary').one('click',function(){
+
                             $('#remove-people').modal('hide');
                             datas.splice(num,1);
                             _table = $('#dateTables8').dataTable();
@@ -1772,18 +1937,34 @@ $(document).ready(function(){
                         $('#alter-person-type').find('.add-input-select').children('span').attr('ids',id);
                         $('#alter-person-type .add-input').eq(1).val(txt2);
 
-                        $('#alter-person-type .btn-primary').one('click',function(){
+                        $('#alter-person-type .btn-primary').off('click');
+                        $('#alter-person-type .btn-primary').on('click',function(){
                             var txt1 =  $('#alter-person-type').find('.add-input-select').children('span').html();
                             var id = $('#alter-person-type').find('.add-input-select').children('span').attr('ids');
+
                             console.log(txt1);
                             console.log(id);
                             var txt2 = $('#alter-person-type .add-input').eq(1).val();
                             var unit;
+
                             for(var i=0 ; i < personType.length; i++){
                                 if(id == personType[i].pK_PersonType){
                                     unit = personType[i].f_IndexUnit;
                                 }
                             }
+                            var dom = $('#alter-person-type .add-input').eq(1);
+                            if(txt2 % 1 != 0 || txt2 < 0 || txt2 == '' ){
+                                myAlter('人数或人时 必须为正整数');
+                                getFocus1(dom);
+                                return false;
+                            };
+                            for(var i=0; i<datas.length;i++){
+                                if( i != num && datas[i].fK_PersonType_Relation == id){
+                                    myAlter('人员类别已存在');
+                                    return false;
+                                }
+                            }
+
                             var obj = {
                                 "f_PersonType": txt1,
                                 "fK_PersonType_Relation": id,
@@ -1806,9 +1987,9 @@ $(document).ready(function(){
                     console.log(textStatus);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }else{
-                        alert(data.responseText.split('"')[3]);
+                        myAlter(data.responseText.split('"')[3]);
                     }
                     $('#theLoading').modal('hide');
 
@@ -1846,15 +2027,17 @@ $(document).ready(function(){
                         $('#index-class').modal('hide');
 
                         if(data == 3){
-                            alert('修改失败')
+                            myAlter('修改失败')
                         };
                         if(data == 99){
-                            alert('修改成功')
+                            myAlter('修改成功')
                         }
                         _table = $('#dateTables').dataTable();
-                        ajaxSuccess();
+                        //_table.fnDraw();
+                        jumpNow();
 
-                        $('#dateTables tr').eq(id).addClass('onFocus');
+
+                        $('#dateTables tr').eq(index).addClass('onFocus');
 
 
                     },
@@ -1863,12 +2046,12 @@ $(document).ready(function(){
                         $('#index-class').modal('hide');
                         var txt = XMLHttpRequest.responseText;
                         var hint = txt.split('"')[3];
-                        alert(hint);
+                        myAlter(hint);
                         if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                             ajaxTimeoutTest.abort();
-                            alert("超时");
+                            myAlter("超时");
                         }
-                        alert("请求失败！");
+                        myAlter("请求失败！");
 
                     }
                 });
@@ -1949,8 +2132,14 @@ $(document).ready(function(){
     });
 
     $('.top-btn6').on('click',function(){
+        var dom = $('.onFocus');
+        if(dom.length == 0){
+            myAlter('请选中一行数据进行操作');
+            return false;
+        }
+        var index = $(dom).index() + 1;
         setTimeout(function(){
-            var dom = $('.onFocus');
+
             var id = dom.children().eq(1).html();
             console.log(id);
             var datas;
@@ -1968,7 +2157,7 @@ $(document).ready(function(){
                 async : false,
                 dataType: "json",
                 beforeSend:function(){
-                    $('#theLoading').modal('show');
+
                 },
                 complete:function(){
                     $('#theLoading').modal('hide');
@@ -1997,14 +2186,22 @@ $(document).ready(function(){
                     _table.dataTable().fnClearTable();
                     setDatas(datas);
 
+                    //添加操作
                     $('.add-row-count').off('click');
                     $('.add-row-count').on('click',function(){
-                        _table = $('#dateTables10').dataTable();
-                        _table.dataTable().fnClearTable();
+
                         var txt1 = $(this).prev().find('.add-input-select').children('span').html();
                         var id1 = $(this).prev().find('.add-input-select').children('span').attr('ids');
                         var txt2 = $(this).parent().prev().find('.add-input-select').children('span').html();
                         var id2 = $(this).parent().prev().find('.add-input-select').children('span').attr('ids');
+                        for(var i=0 ; i<datas.length; i++){
+                            if(datas[i].f_EnergyType == id2){
+                                myAlter('能耗类型已存在');
+                                return false;
+                            }
+                        };
+                        _table = $('#dateTables10').dataTable();
+                        _table.dataTable().fnClearTable();
                         var obj = {
                             "f_EnergyName": txt2,
                             "fK_PricePRJ_UnitPrice": id1,
@@ -2064,13 +2261,19 @@ $(document).ready(function(){
                         };
                         $("#adjust-count .add-select-block").eq(1).html(html2);
 
-                        $('#adjust-count .btn-primary').one('click',function(){
+                        $('#adjust-count .btn-primary').off('click');
+                        $('#adjust-count .btn-primary').on('click',function(){
                             var txt1 =  $('#adjust-count').find('.add-input-select').eq(0).children('span').html();
                             var id1 = $('#adjust-count').find('.add-input-select').eq(0).children('span').attr('ids');
 
                             var txt2 =  $('#adjust-count').find('.add-input-select').eq(1).children('span').html();
                             var id2 = $('#adjust-count').find('.add-input-select').eq(1).children('span').attr('ids');
-
+                            for(var i=0 ; i<datas.length; i++){
+                                if(i != num && datas[i].f_EnergyType == id1){
+                                    myAlter('能耗类型已存在');
+                                    return false;
+                                }
+                            };
                             var obj = {
                                 "f_EnergyName": txt1,
                                 "fK_PricePRJ_UnitPrice": id2,
@@ -2094,9 +2297,9 @@ $(document).ready(function(){
                     console.log(textStatus);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }else{
-                        alert(data.responseText.split('"')[3]);
+                        myAlter(data.responseText.split('"')[3]);
                     }
                     $('#theLoading').modal('hide');
 
@@ -2140,15 +2343,17 @@ $(document).ready(function(){
                         $('#count-type').modal('hide');
 
                         if(data == 3){
-                            alert('修改失败')
+                            myAlter('修改失败')
                         };
                         if(data == 99){
-                            alert('修改成功')
+                            myAlter('修改成功')
                         }
                         _table = $('#dateTables').dataTable();
-                        ajaxSuccess();
+                        //_table.fnDraw();
+                        jumpNow();
 
-                        $('#dateTables tr').eq(id).addClass('onFocus');
+
+                        $('#dateTables tr').eq(index).addClass('onFocus');
 
 
                     },
@@ -2157,12 +2362,12 @@ $(document).ready(function(){
                         $('#count-type').modal('hide');
                         var txt = XMLHttpRequest.responseText;
                         var hint = txt.split('"')[3];
-                        alert(hint);
+                        myAlter(hint);
                         if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                             ajaxTimeoutTest.abort();
-                            alert("超时");
+                            myAlter("超时");
                         }
-                        alert("请求失败！");
+                        myAlter("请求失败！");
                     }
                 });
 
@@ -2219,7 +2424,7 @@ $(document).ready(function(){
 
                        },
                        {
-                           title:'人年或人时',
+                           title:'人数或人时',
                            data:'f_PeopleNum'
 
                        },
@@ -2343,7 +2548,7 @@ $(document).ready(function(){
     } );
     var counter = 7;
     $('.adds').on( 'click', function () {
-        alert('ok');
+        myAlter('ok');
         table.row.add( [
             /*counter +'.1',
             counter +'.2',
@@ -2369,8 +2574,6 @@ $(document).ready(function(){
         // Event listener to the two range filtering inputs to redraw on input
 })
 
-
-
 //弹窗关闭时清空已输入过的信息
 $('.modal-header .close').on('click',function(){
     $(this).parent().parent().parent().find('input').val('');
@@ -2393,10 +2596,16 @@ $(document).on('keydown',function(e){
     var code = theEvent.keyCode || theEvent.which;
 
     if(code == 13){
-        $('.in .btn-primary').click();
+        $('.unit-refer').click();
         return false;
     }
-})
+});
+//重置按钮
+$('.unit-reset').on('click',function(){
+    $('.unit-names').val('');
+    $('.unit-refer').click();
+
+});
 
 //点击table中某一行时
 $('#dateTables tbody').on('click','tr',function(){
@@ -2445,9 +2654,9 @@ function alarmHistory(){
 
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
         }
 
     });
@@ -2488,9 +2697,9 @@ function getUnitNature(){
             console.log(textStatus);
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
 
         }
 
@@ -2520,9 +2729,9 @@ function getUnitSpecialty(){
             console.log(textStatus);
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
 
         }
 
@@ -2553,9 +2762,9 @@ function  getPerson(){
             console.log(textStatus);
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
 
         }
 
@@ -2586,9 +2795,9 @@ function  getCountType(){
             console.log(textStatus);
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
 
         }
 
@@ -2793,19 +3002,33 @@ $('.change-count1').on('click',function(){
 thePerson = [];
 $('.add-person-table').on('click',function(){
 
-
-    _table = $('#dateTables2').dataTable();
-    _table.dataTable().fnClearTable();
     var txt1 = $(this).prev().children('.add-input').val();
+    console.log(txt1);
+
     var txt2 = $(this).parent().prev().find('.add-input-select').children('span').html();
     var id = $(this).parent().prev().find('.add-input-select').children('span').attr('ids');
     var unit = $(this).parent().prev().find('.add-input-select').children('span').attr('unit');
+    var dom = $(this).prev().children('.add-input');
+    if(txt1 % 1 != 0 || txt1 < 0 || txt1 == '' ){
+        myAlter('人数或人时 必须为正整数');
+        getFocus1(dom);
+        return false;
+    }
+    for(var i=0 ; i<thePerson.length; i++){
+        if(thePerson[i].f_PersonType == txt2){
+            myAlter('人员类别已存在');
+            return false;
+        }
+    }
     var obj = {
       "f_PersonType": txt2,
         "fK_PersonType_Relation": id,
         "f_PeopleNum":txt1,
         "f_IndexUnit":unit
     };
+
+    _table = $('#dateTables2').dataTable();
+    _table.dataTable().fnClearTable();
     thePerson.push(obj);
 
     //给表格添加后台获取到的数据
@@ -2844,7 +3067,8 @@ $('#dateTables2').on('click','.alter',function(){
     $('#alter-person-type').find('.add-input-select').children('span').attr('ids',id);
     $('#alter-person-type .add-input').eq(1).val(txt2);
 
-    $('#alter-person-type .btn-primary').one('click',function(){
+    $('#alter-person-type .btn-primary').off('click');
+    $('#alter-person-type .btn-primary').on('click',function(){
         var txt1 =  $('#alter-person-type').find('.add-input-select').children('span').html();
         var id = $('#alter-person-type').find('.add-input-select').children('span').attr('ids');
         console.log(txt1);
@@ -2854,6 +3078,18 @@ $('#dateTables2').on('click','.alter',function(){
         for(var i=0 ; i < personType.length; i++){
             if(id == personType[i].pK_PersonType){
                 unit = personType[i].f_IndexUnit;
+            }
+        }
+        var dom = $('#alter-person-type .add-input').eq(1);
+        if(txt2 % 1 != 0 || txt2 < 0 || txt2 == '' ){
+            myAlter('人数或人时 必须为正整数');
+            getFocus1(dom);
+            return false;
+        };
+        for(var i=0; i<thePerson.length;i++){
+            if( i != num && thePerson[i].fK_PersonType_Relation == id){
+                myAlter('人员类别已存在');
+                return false;
             }
         }
         var obj = {
@@ -2915,12 +3151,24 @@ var postSmall = [];
 $('.small-adjust').on('click',function(){
 
 
-    _table = $('#dateTables1').dataTable();
-    _table.dataTable().fnClearTable();
+
     var txt1 = $(this).prev().children('.add-input').val();
     var txt2 = $(this).parent().prev().prev().find('.add-input-select').children('span').html();
     var id = $(this).parent().prev().prev().find('.add-input-select').children('span').attr('ids');
     var txt3 = $(this).parent().prev().find('.add-input').val();
+    var dom = $(this).parent().prev().find('.add-input');
+    if(isNaN(txt3 / 1) ||　txt3 == ''){
+        myAlter('月加减微调值 必须为数字');
+        getFocus1(dom);
+        return false;
+    };
+    for(var i=0 ; i<theSmallAd.length; i++){
+        if(theSmallAd[i].energyID == id){
+            myAlter('能耗类型已存在');
+            return false;
+        }
+    };
+
     var obj = {
         "energyType": txt2,
         "energyID": id,
@@ -2929,6 +3177,9 @@ $('.small-adjust').on('click',function(){
         "remark":txt1
     };
     theSmallAd.push(obj);
+
+    _table = $('#dateTables1').dataTable();
+    _table.dataTable().fnClearTable();
 
     var obj1 = {
         "f_EnergyType": id,
@@ -2971,14 +3222,15 @@ $('#dateTables1').on('click','.alter',function(){
     var txt1 = $(this).parent().parent().children().eq(0).html();
     var id = $(this).parent().parent().children().eq(1).html();
     var txt2 = $(this).parent().parent().children().eq(2).html();
-    var txt3 = $(this).parent().parent().children().eq(4).html();
+    var txt3 = $(this).parent().parent().children().eq(4).children('span').html();
 
     $('#small-adjust').find('.add-input-select').children('span').html(txt1);
     $('#small-adjust').find('.add-input-select').children('span').attr('ids',id);
     $('#small-adjust .add-input').eq(1).val(txt2);
     $('#small-adjust .add-input').eq(2).val(txt3);
 
-    $('#small-adjust .btn-primary').one('click',function(){
+    $('#small-adjust .btn-primary').off('click');
+    $('#small-adjust .btn-primary').on('click',function(){
         var txt1 =  $('#small-adjust').find('.add-input-select').children('span').html();
         var id = $('#small-adjust').find('.add-input-select').children('span').attr('ids');
         console.log(txt1);
@@ -2986,6 +3238,18 @@ $('#dateTables1').on('click','.alter',function(){
         var txt2 = $('#small-adjust .add-input').eq(1).val();
         var txt3 = $('#small-adjust .add-input').eq(2).val();
         var unit;
+        var dom = $('#small-adjust .add-input').eq(1);
+        if(isNaN(txt2 / 1) ||　txt2 == ''){
+            myAlter('月加减微调值 必须为数字');
+            getFocus1(dom);
+            return false;
+        };
+        for(var i=0 ; i<postSmall.length; i++){
+            if( i !=num && postSmall[i].f_EnergyType == id){
+                myAlter('能耗类型已存在');
+                return false;
+            }
+        };
         var obj = {
             "energyType": txt1,
             "energyID": id,
@@ -3019,12 +3283,27 @@ var postBig = [];
 $('.quota-adjust').on('click',function(){
 
 
-    _table = $('#dateTables11').dataTable();
-    _table.dataTable().fnClearTable();
+
     var txt1 = $(this).prev().children('.add-input').val();
     var txt2 = $(this).parent().prev().prev().find('.add-input-select').children('span').html();
     var id = $(this).parent().prev().prev().find('.add-input-select').children('span').attr('ids');
     var txt3 = $(this).parent().prev().find('.add-input').val();
+
+    var dom = $(this).parent().prev().find('.add-input');
+    if(isNaN(txt3 / 1) || txt3 == ''){
+        myAlter('月定额量 必须为数字');
+        getFocus1(dom);
+        return false;
+    };
+    for(var i=0 ; i<theQuotaAd.length; i++){
+        if(theQuotaAd[i].energyID == id){
+            myAlter('能耗类型已存在');
+            return false;
+        }
+    };
+
+    _table = $('#dateTables11').dataTable();
+    _table.dataTable().fnClearTable();
     var obj = {
         "energyType": txt2,
         "energyID": id,
@@ -3076,14 +3355,15 @@ $('#dateTables11').on('click','.alter',function(){
     var txt1 = $(this).parent().parent().children().eq(0).html();
     var id = $(this).parent().parent().children().eq(1).html();
     var txt2 = $(this).parent().parent().children().eq(2).html();
-    var txt3 = $(this).parent().parent().children().eq(4).html();
+    var txt3 = $(this).parent().parent().children().eq(4).children('span').html();
 
     $('#big-adjust').find('.add-input-select').children('span').html(txt1);
     $('#big-adjust').find('.add-input-select').children('span').attr('ids',id);
     $('#big-adjust .add-input').eq(1).val(txt2);
     $('#big-adjust .add-input').eq(2).val(txt3);
 
-    $('#big-adjust .btn-primary').one('click',function(){
+    $('#big-adjust .btn-primary').off('click');
+    $('#big-adjust .btn-primary').on('click',function(){
         var txt1 =  $('#big-adjust').find('.add-input-select').children('span').html();
         var id = $('#big-adjust').find('.add-input-select').children('span').attr('ids');
         console.log(txt1);
@@ -3091,6 +3371,20 @@ $('#dateTables11').on('click','.alter',function(){
         var txt2 = $('#big-adjust .add-input').eq(1).val();
         var txt3 = $('#big-adjust .add-input').eq(2).val();
         var unit;
+
+        var dom = $('#big-adjust .add-input').eq(1);
+        if(isNaN(txt2 / 1) ||　txt2 == ''){
+            myAlter('月定额量 必须为数字');
+            getFocus1(dom);
+            return false;
+        };
+        for(var i=0 ; i<postBig.length; i++){
+            if( i !=num && postBig[i].f_EnergyType == id){
+                myAlter('能耗类型已存在');
+                return false;
+            }
+        };
+
         var obj = {
             "energyType": txt1,
             "energyID": id,
@@ -3122,13 +3416,21 @@ thePriceAd = [];
 var postPrice = [];
 $('.price-group').on('click',function(){
 
-
-    _table = $('#dateTables9').dataTable();
-    _table.dataTable().fnClearTable();
     var txt1 = $(this).prev().find('.add-input-select').children('span').html();
     var id1 = $(this).prev().find('.add-input-select').children('span').attr('ids');
     var txt2 = $(this).parent().prev().find('.add-input-select').children('span').html();
     var id2 = $(this).parent().prev().find('.add-input-select').children('span').attr('ids');
+
+
+    for(var i=0 ; i<thePriceAd.length; i++){
+        if(thePriceAd[i].energyID == id2){
+            myAlter('能耗类型已存在');
+            return false;
+        }
+    };
+
+    _table = $('#dateTables9').dataTable();
+    _table.dataTable().fnClearTable();
     var obj = {
         "energyType": txt2,
         "energyID": id2,
@@ -3180,13 +3482,20 @@ $('#dateTables9').on('click','.alter',function(){
     };
     $("#adjust-count .add-select-block").eq(1).html(html2);
 
-    $('#adjust-count .btn-primary').one('click',function(){
+    $('#adjust-count .btn-primary').off('click');
+    $('#adjust-count .btn-primary').on('click',function(){
         var txt1 =  $('#adjust-count').find('.add-input-select').eq(0).children('span').html();
         var id1 = $('#adjust-count').find('.add-input-select').eq(0).children('span').attr('ids');
 
         var txt2 =  $('#adjust-count').find('.add-input-select').eq(1).children('span').html();
         var id2 = $('#adjust-count').find('.add-input-select').eq(1).children('span').attr('ids');
 
+        for(var i=0 ; i<postPrice.length; i++){
+            if(i != num && postPrice[i].f_EnergyType == id1){
+                myAlter('能耗类型已存在');
+                return false;
+            }
+        };
         var obj = {
             "energyType": txt1,
             "energyID": id1,
@@ -3329,6 +3638,7 @@ function checkedText1(){
             console.log(txt);
             $('#check-text').modal('show');
             $('#check-text p b').html(txt);
+            $('#check-text p span').html('不能为空');
            getFocus($('#add-unit .first-row .input-label').eq(i).next().children('input'));
             return false;
         };
@@ -3336,12 +3646,37 @@ function checkedText1(){
             var txt = $('#add-unit .first-row .input-label').eq(i).html().split('：')[0];
             $('#check-text').modal('show');
             $('#check-text p b').html(txt);
+            $('#check-text p span').html('不能为空');
             return false;
         }
     }
     return true;
 }
 
+function checkedText11(){
+    var num = $('#alter-unit .input-label').length;
+    console.log(num);
+    for(var i=0; i< num; i++){
+        if( $('#alter-unit .input-label').eq(i).next().children('input').val() == ''){
+            var txt = $('#alter-unit .input-label').eq(i).next().children('input').parent().prev().html().split('：')[0];
+
+            console.log(txt);
+            $('#check-text').modal('show');
+            $('#check-text p b').html(txt);
+            $('#check-text p span').html('不能为空');
+            getFocus($('#alter-unit .input-label').eq(i).next().children('input'));
+            return false;
+        };
+        if($('#alter-unit .input-label').eq(i).next().find('.add-input-select').children('span').html() == ''){
+            var txt = $('#alter-unit .input-label').eq(i).html().split('：')[0];
+            $('#check-text').modal('show');
+            $('#check-text p b').html(txt);
+            $('#check-text p span').html('不能为空');
+            return false;
+        }
+    }
+    return true;
+}
 //判断输入内容是否为数字
 function checkedText2(dom){
     var num = $(dom).find('.type-number').length;
@@ -3365,7 +3700,7 @@ function checkedText2(dom){
 
 function checkedPhone(dom){
     var txt = $(dom).find('.type-phone').find('input').val();
-    if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(txt))){
+    if(!(/^1[3|4|5|8][0-9]\d{8}$/.test(txt))){
         $('#check-text').modal('show');
         $('#check-text p b').html('手机号');
         $('#check-text p span').html('输入错误');
@@ -3375,17 +3710,18 @@ function checkedPhone(dom){
     return true;
 }
 
-
-$('#add-unit .add-title').on('click',function(){
-    checkedText2('#add-unit .first-row');
-    checkedPhone('#add-unit');
-});
-
+//获取焦点
 function getFocus(dom){
     $('#check-text').on('click','.btn-primary',function(){
         dom.focus();
     });
 
+};
+
+function getFocus1(dom){
+    $('#my-alert').on('click','.btn-primary',function(){
+        dom.focus();
+    });
 }
 //当人员类别改变时 对应的单位进行改变
 $('.person-type .add-select-block li').on('click',function(){
@@ -3397,5 +3733,16 @@ $('.person-type .add-select-block li').on('click',function(){
 
 });
 
+//提交更改后跳转到当前页
+function jumpNow(){
+    var txt = $('#dateTables_paginate').children('span').children('.current').html();
 
+        ajaxSuccess();
+        var num = txt - 1;
+        var dom = $('#dateTables_paginate').children('span').children().eq(num);
+        console.log(txt);
+        console.log(dom);
+        dom.click();
+
+}
 

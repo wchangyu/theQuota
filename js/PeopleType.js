@@ -74,17 +74,35 @@ $(document).ready(function(){
 
     //select 优化动画
     var rotateNum = 1;
-    $('.add-input-select').click(function(){
+    $(document).on('click',function(){
+        if($('.add-select-block').is(':hidden')){
+            $('.add-select-block').css({
+                display:'none'
+            }) ;
+            rotateNum = 1;
+            var num = rotateNum * 180;
+            var string = num + 'deg';
+            $('.add-input-select').children('div').css({
+                'transform':'rotate('+string+')'
+            })
+        }
+
+    });
+    $('.add-input-select').click(function(e){
+        $('.add-select-block').not($(this).parents('.add-input-father').children('.add-select-block')).css({
+            display:'none'
+        });
         rotateNum++;
         var num = rotateNum * 180;
         var string = num + 'deg';
         console.log('bb');
-        $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
+        $(this).parents('.add-input-father').children('.add-select-block').slideToggle('fast');
         $(this).children('div').css({
 
             'transform':'rotate('+string+')'
         })
 
+        e.stopPropagation();
 
     });
     $('.add-select-block li').on('click',function(){
@@ -167,25 +185,32 @@ $(document).ready(function(){
 
             success: function (data)
             {
+                $('#theLoading').modal('hide');
+
+                if(data == 2){
+                    myAlter('人员类别已存在');
+                    return false;
+                }
+                if(data == 3){
+                    myAlter('添加失败');
+                    return false;
+                }
                 console.log(data);
                 $('#add-people').modal('hide');
                 ajaxSuccess();
 
-                if(data == 2){
-                    alert('单位专业已存在')
-                }
-
             },
             error:function (data, textStatus, errorThrown) {
+                $('#theLoading').modal('hide');
                 var num = data.responseText.split('"')[3];
                 console.log(data.responseText);
                 if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                     ajaxTimeoutTest.abort();
-                    alert("超时");
+                    myAlter("超时");
                 }
 
                 $('#add-people').modal('hide');
-                alert(num);
+                myAlter(num);
             }
         });
         //完成后清空input框
@@ -205,7 +230,8 @@ $(document).ready(function(){
         $('#alter-people .add-input').eq(1).children('span').html(txt2);
         console.log(id);
         //点击提交按钮
-        $('#alter-people .btn-primary').one('click',function(){
+        $('#alter-people .btn-primary').off('click');
+        $('#alter-people .btn-primary').on('click',function(){
             console.log(id);
             var txt1 = $('#alter-people .add-input').eq(0).val();
             var txt2 =  $('#alter-people .add-input').eq(1).children('span').html();
@@ -237,6 +263,15 @@ $(document).ready(function(){
 
                 {
                     console.log(data);
+                    if(data == 2){
+                        myAlter('人员类别已存在');
+                        return false;
+
+                    };
+                    if(data == 3){
+                        myAlter('修改失败');
+                        return false;
+                    }
                     $('#alter-people').modal('hide');
                     ajaxSuccess();
 
@@ -245,9 +280,9 @@ $(document).ready(function(){
                     console.log(textStatus);
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }else{
-                        alert(data.responseText.split('"')[3]);
+                        myAlter(data.responseText.split('"')[3]);
                     }
 
                     $('#alter-people').modal('hide');
@@ -295,10 +330,10 @@ $(document).ready(function(){
 
                 {
                     if(data == 4){
-                        alert('已被二级单位使用，无法删除')
+                        myAlter('已被二级单位使用，无法删除')
                     }
                     if(data == 3){
-                        alert('删除失败')
+                        myAlter('删除失败')
                     };
                     $('#remove-people').modal('hide');
                     ajaxSuccess();
@@ -307,9 +342,9 @@ $(document).ready(function(){
                     $('#theLoading').modal('hide');
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
-                        alert("超时");
+                        myAlter("超时");
                     }
-                    alert("请求失败！");
+                    myAlter("请求失败！");
                 }
             });
         })
@@ -352,9 +387,9 @@ function alarmHistory(){
 
             if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                 ajaxTimeoutTest.abort();
-                alert("超时");
+                myAlter("超时");
             }
-            alert("请求失败！");
+            myAlter("请求失败！");
         },
 
     });
