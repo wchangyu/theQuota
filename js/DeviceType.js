@@ -452,14 +452,7 @@ function alarmHistory(){
     });
 }
 
-//判断仪表状态
-function getMtonline(num){
-    if(num == 0){
-        return '手抄表'
-    }else if(num == 1){
-        return '在线表'
-    }
-};
+
 
 //获取全部能耗类型
 getAllEnergys('.energy-type');

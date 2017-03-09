@@ -34,6 +34,10 @@ $(document).ready(function(){
         })
     });
 
+    $('#theLoading').modal('show');
+    $('input').attr('maxLength', '50');
+    //调用获取后台数据方法，进行数据获取
+    alarmHistory();
     //初始化表格
     var table = $('#dateTables').DataTable({
         "autoWidth": false,  //用来启用或禁用自动列的宽度计算
@@ -62,71 +66,108 @@ $(document).ready(function(){
         ],
         "dom":'B<"clear">lfrtip',
         //数据源
-        'ajax': './data/araming.json',
         'columns':[
             {
-                title:'仪表类型',
-                data:'name'
+                title:'计量设备名称',
+                data:'f_MeterTypeName'
 
             },
             {
+                title:'本行ID',
+                data:'pK_Meter',
+                class:'theHidden'
+
+            },
+            {
+                title:'计量设备ID',
+                data:'fK_MeterType_Meter',
+                class:'theHidden'
+            },
+            {
                 title:'能耗类型',
-                data:'alarmType'
+                data:'f_EnergyName'
+
+            },
+            {
+                title:'计量设备状态',
+                data:'f_onlineName'
 
             },
             {
                 title:'表号或代号',
-                data:'warningCondition'
+                data:'f_mtNumber'
 
             },
             {
+                title:'表号或代号类型',
+                data:'f_mtNumberFlag',
+                class:'theHidden'
+            },
+            {
+                title:'二级单位',
+                data:'f_UnitName'
+
+            },
+            {
+                title:'绑定楼宇',
+                data:'pointerName'
+            },
+            {
+                title:'计量区域',
+                data:'f_MeasureArea'
+            },
+            {
+                title:'绑定数采仪',
+                data:'cNameT'
+            },
+            {
                 title:'出场编号',
-                data:'serialNumber'
+                data:'f_FactoryNumber'
 
             },
             {
                 title:'倍率',
-                data:'atThisPointThedata'
+                data:'f_Rate'
 
             },
             {
                 title:'建档日期',
-                data:'seeing'
+                data:'f_FilingDT'
 
             },
             {
                 title:'建档起数',
-                data:'seeing'
+                data:'f_FilingNumber'
 
             },
             {
                 title:'最后止数',
-                data:'seeing'
+                data:'f_ReadEndNum'
 
             },
             {
                 title:'抄表日期',
-                data:'seeing'
+                data:'f_ReadET'
 
             },
             {
                 title:'报警上限',
-                data:'seeing'
+                data:'f_WarnUp'
 
             },
             {
                 title:'报警下限',
-                data:'seeing'
+                data:'f_WarnDown'
 
             },
             {
                 title:'安装位置',
-                data:'seeing'
+                data:'f_InstalPosition'
 
             },
             {
                 title:'计量区域',
-                data:'seeing'
+                data:'f_MeasureArea'
 
             },
             {
@@ -143,7 +184,10 @@ $(document).ready(function(){
             },
         ]
     })
-
+    _table = $('#dateTables').dataTable();
+    //给表格添加后台获取到的数据
+    setData();
+    hiddrenId();
 
 });
 
@@ -157,6 +201,56 @@ $(function(){
 
 
 });
+
+//获取后台数据
+function alarmHistory(){
+    dataArr=[];
+    $.ajax({
+        type:'get',
+        url:IP + "/UnitMeter/GetMeterByCondition",
+        async:false,
+        timeout:theTimes,
+        data:{
+            'F_MTEnergyType' : -1,
+            'F_MTOnline' : -1,
+            'F_MTNumber' :''
+        },
+        beforeSend:function(){
+            $('#theLoading').modal('show');
+        },
+        complete:function(){
+            $('#theLoading').modal('hide');
+        },
+        success:function(result){
+            $('#theLoading').modal('hide');
+            console.log(result);
+            for(var i=0;i<result.length;i++){
+                dataArr.push(result[i]);
+            }
+            var num = dataArr.length;
+            for(var i=0; i<num; i++){
+                var num1 =  dataArr[i].f_mtEnergyType;
+                var num2 = dataArr[i].f_mtOnline;
+                var txt = getEnergyType(num1);
+                dataArr[i].f_EnergyName = txt;
+                var txt2 = getMtonline(num2);
+                dataArr[i].f_onlineName = txt2;
+            }
+
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown) {
+            $('#theLoading').modal('hide');
+            console.log(textStatus);
+
+            if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                ajaxTimeoutTest.abort();
+                myAlter("超时");
+            }
+            myAlter("请求失败！");
+        },
+
+    });
+}
 
 
 function SEARCH_ENGINE(dom,searchInput,searchResultInner,searchList){

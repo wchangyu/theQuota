@@ -198,6 +198,15 @@ function getFocus1(dom){
         dom.focus();
     });
 }
+
+//判断仪表状态
+function getMtonline(num){
+    if(num == 0){
+        return '手抄表'
+    }else if(num == 1){
+        return '在线表'
+    }
+};
 //点击确定时触发
 //$(document).on('keydown',function(e){
 //    var theEvent = window.event || e;
