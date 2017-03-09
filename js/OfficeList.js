@@ -862,6 +862,9 @@ $(document).ready(function(){
 
                     $('#dateTables3 .data-top').html(html1);
                     $('#dateTables3 .data-body').html(html2);
+                    if(arr.length != 0){
+
+                    }
                     for(var i=0; i< arr.length; i++){
                         var person = arr[i].f_PersonType;
                         var personUnit = getPersonUnit(arr[i].f_IndexUnit);
@@ -881,6 +884,7 @@ $(document).ready(function(){
                         }
 
                     };
+                    console.log(bottomData);
                     //
                     for(var i = 0 ; i< bottomData.length;i++){
                         var arrs = bottomData[i];
@@ -898,9 +902,9 @@ $(document).ready(function(){
                     console.log(bottomData);
 
                     _table = $('#dateTables4').dataTable();
-                    if(table4Arr.length != 0){
-                        _table.dataTable().fnClearTable();
-                    }
+
+                    _table.dataTable().fnClearTable();
+
                     table4Arr = bottomData[0];
 
 
@@ -909,7 +913,12 @@ $(document).ready(function(){
                     setDatas(table4Arr);
 
                     $('#quota .tabs1').html(html3);
-                    html4 = '<b>'+personArr[0].name+''+personArr[0].unit +':</b>'+ personArr[0].count+'';
+                    if(personArr.length != 0){
+                        html4 = '<b>'+personArr[0].name+' '+personArr[0].unit +':</b>'+ personArr[0].count+'';
+                    }else{
+                        html4 = '<b></b>'
+                    }
+
                     $('.show-person-total').html(html4);
 
                     $(".tabs1 a").on('touchstart mousedown',function(e){
@@ -917,7 +926,7 @@ $(document).ready(function(){
                         $(".tabs1 .active").removeClass('active');
                         $(this).addClass('active');
                         var num = $(this).index();
-                        html4 = '<b>'+personArr[num].name+''+personArr[num].unit +':</b>'+ personArr[num].count+'';
+                        html4 = '<b>'+personArr[num].name+' '+personArr[num].unit +':</b>'+ personArr[num].count+'';
                         $('.show-person-total').html(html4);
 
                         table4Arr = bottomData[num];
@@ -1932,6 +1941,18 @@ $(document).ready(function(){
                         var txt1 = $(this).parent().parent().children().eq(0).html();
                         var id = $(this).parent().parent().children().eq(1).html();
                         var txt2 = $(this).parent().parent().children().eq(2).html();
+                        var unit0;
+                        for(var i = 0 ; i < personType.length; i++){
+                            if( id == personType[i].pK_PersonType){
+                                unit0 = personType[i].f_IndexUnit;
+                            }
+                        }
+                        console.log(unit0);
+                        if(unit0 == 0 ){
+                            $('#alter-person-type label').eq(1).html('人数:');
+                        }else{
+                            $('#alter-person-type label').eq(1).html('人时:');
+                        }
 
                         $('#alter-person-type').find('.add-input-select').children('span').html(txt1);
                         $('#alter-person-type').find('.add-input-select').children('span').attr('ids',id);
@@ -2603,8 +2624,8 @@ $(document).on('keydown',function(e){
 //重置按钮
 $('.unit-reset').on('click',function(){
     $('.unit-names').val('');
-    $('.unit-refer').click();
-
+    $('#orgNameInput').prop('checked',false);
+    console.log('ok');
 });
 
 //点击table中某一行时
@@ -3057,11 +3078,24 @@ $('#dateTables2').on('click','.remove',function(){
 
 //编辑操作
 $('#dateTables2').on('click','.alter',function(){
+    console.log('ok');
     var num = $(this).parent().parent().index();
 
     var txt1 = $(this).parent().parent().children().eq(0).html();
     var id = $(this).parent().parent().children().eq(1).html();
     var txt2 = $(this).parent().parent().children().eq(2).html();
+    var unit0;
+    for(var i = 0 ; i < personType.length; i++){
+        if( id == personType[i].pK_PersonType){
+            unit0 = personType[i].f_IndexUnit;
+        }
+    }
+    console.log(unit0);
+    if(unit0 == 0 ){
+        $('#alter-person-type label').eq(1).html('人数:');
+    }else{
+        $('#alter-person-type label').eq(1).html('人时:');
+    }
 
     $('#alter-person-type').find('.add-input-select').children('span').html(txt1);
     $('#alter-person-type').find('.add-input-select').children('span').attr('ids',id);

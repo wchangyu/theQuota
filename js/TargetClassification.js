@@ -299,7 +299,7 @@ $(document).ready(function(){
             {
                 console.log(data);
 
-
+                $('#theLoading').modal('hide');
                 if(data == 2){
                     myAlter('指标信息已存在')
                     return false;
@@ -339,6 +339,7 @@ $(document).ready(function(){
                 break;
             }
         };
+        console.log(thisData);
         //获取本行数据
         $.ajax({
             type: "get",
@@ -361,6 +362,7 @@ $(document).ready(function(){
 
             {
                 postData = data;
+                console.log(data);
             },
             error:function (data, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -396,8 +398,8 @@ $(document).ready(function(){
             var txt2 = $("#alter-type .add-input-select").eq(1).find('span').attr('ids');
             //生成指标
             var txt = $("#alter-type .add-input").eq(2).val();
-            var mouthTar = $("#alter-type .add-input").eq(2).val() + "*{K}";
-            var yearTar = $("#alter-type .add-input").eq(3).val() + "*{K}";
+            var mouthTar = $("#alter-type .add-input").eq(2).val() + "*{k}";
+            var yearTar = $("#alter-type .add-input").eq(3).val() + "*{k}";
 
             if($('#alter-type .add-input').eq(4).find('span').html() == '无'){
                 mouthTar = $("#alter-type .add-input").eq(2).val();
@@ -420,7 +422,7 @@ $(document).ready(function(){
                 async : false,
                 dataType: "json",
                 beforeSend:function(){
-                    $('#theLoading').modal('show');
+
                 },
                 complete:function(){
                     $('#theLoading').modal('hide');
@@ -428,6 +430,7 @@ $(document).ready(function(){
                 success: function (data)
 
                 {
+                    $('#theLoading').modal('hide');
                     $('#alter-type').modal('hide');
                     console.log(data);
                     if(data == 2){
@@ -438,7 +441,7 @@ $(document).ready(function(){
                     }
 
                     ajaxSuccess();
-                    $('#theLoading').modal('hide');
+
 
                 },
                 error:function (data, textStatus, errorThrown) {

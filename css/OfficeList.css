@@ -278,7 +278,8 @@ label {
 }
 /*左侧表格样式*/
 .main-content-table{
-    margin-bottom:20px
+    margin-bottom:20px;
+    width:98%;
 }
 .bottom-div .main-content-table{
     height:330px;
@@ -425,8 +426,13 @@ label {
     margin:0 auto;
 }
 .tabs1 a{
-    width:100px;
+    width:120px;
     overflow: hidden;
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+    cursor: pointer;
 }
 #quota .swiper-container{
     width:97%;
