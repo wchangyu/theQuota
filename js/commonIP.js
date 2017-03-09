@@ -161,6 +161,43 @@ function myAlter(string){
     $('#my-alert').modal('show');
     $('#my-alert p b').html(string);
 }
+
+//获取全部能耗类型
+function  getAllEnergys(dom){
+    var arr1 = [];
+    var arr2 = [];
+    var txt = energyType.alltypes;
+    var html2 = '';
+    for(var i=0 ; i < txt.length; i++){
+        var id = parseInt(txt[i].ettype);
+        var type = txt[i].etname;
+        arr1.push(id);
+        arr2.push(type);
+    }
+    for(var i = 0 ; i < arr2.length; i++){
+
+        html2 += '<li ids="'+arr1[i]+'">'+ arr2[i]+'</li>'
+    }
+    for(var i=0; i<$(dom).length; i++){
+        $(dom).eq(i).find('.add-input-select').eq(0).find('span').html(arr2[0]);
+        $(dom).eq(i).find('.add-select-block').eq(0).html(html2);
+        $(dom).eq(i).find('.add-input-select').eq(0).find('span').attr('ids',arr1[0]);
+    }
+}
+
+//获取焦点
+function getFocus(dom){
+    $('#check-text').on('click','.btn-primary',function(){
+        dom.focus();
+    });
+
+};
+
+function getFocus1(dom){
+    $('#my-alert').on('click','.btn-primary',function(){
+        dom.focus();
+    });
+}
 //点击确定时触发
 //$(document).on('keydown',function(e){
 //    var theEvent = window.event || e;

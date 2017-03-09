@@ -477,3 +477,6 @@ label {
     cursor: pointer;
 
 }
+.modal{
+    overflow: auto !important;
+}

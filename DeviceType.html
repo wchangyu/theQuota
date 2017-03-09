@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>能源管理系统—计量设备类型管理</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta content="" name="description"/>
+    <meta content="" name="author"/>
+    <link rel="stylesheet" href="./button/bootstrap.css">
+    <link rel="stylesheet" href="./button/buttons.dataTables.min.css">
+    <link href="./admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="./css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/DeviceType.css">
+</head>
+<body>
+    <div class="row">
+    <div class="col-md-12">
+        <!--外部包裹-->
+        <div class="out-content">
+            <!--内部包裹-->
+            <div class="inner-content">
+                <!--页面主体-->
+                <div class="main-content">
+                    <!--头部横条-->
+                    <ul class="main-content-header">
+                        <li class="main-content-header-lists0">计量设备列表</li>
+                    </ul>
+
+                    <!--具体内容-->
+                    <!--搜索部分-->
+                    <div class="main-content-body row">
+
+                        <div class="col-md-3" style="margin-bottom:20px;">
+                            <button class="top-btn window-btn top-add" data-toggle='modal' data-target='#add-measure'
+                                    style="margin-left:30px;">添加</button>
+
+                        </div>
+                    </div>
+                    <!--表格部分-->
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 main-content-table" style="overflow: auto;">
+                            <table class="table table-striped" id="dateTables">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!--新增计量设备弹窗-->
+    <div class='modal fade' id='add-measure' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:40%;margin:50px auto; min-width:430px;'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">新增计量设备</div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="min-height:430px">
+                            <div class="add-deploy" style="border:none;margin-top:0;min-height:410px">
+                                <form action="" method="get" class="deploy-form" style="margin-bottom:20px">
+
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="input-label">计量设备名称：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input add-sign energy-type" style="">
+                                            <label for="" class="input-label" style="width:125px">能耗类型：</label>
+                                            <div class="add-input-father" style="display:inline-block">
+                                                <div class="add-input-block" style="margin-left:0;">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span>电</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(540deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="z-index: 1000; display: none;">
+                                                    <li>电</li>
+                                                    <li>水</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:125px">仪表状态：</label>
+
+                                            <div class="add-input-father" style="display:inline-block">
+                                                <div class="add-input-block" style="margin-left:0;">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span ids="1">在线表</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(540deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="z-index: 1000; display: none;">
+                                                    <li  ids="1">在线表</li>
+                                                    <li  ids="0">手抄表</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input type-number">
+                                            <label for=""  class="input-label">默认上限值：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="">仪表规格：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input  type-number">
+                                            <label for=""  class="input-label">量程：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--修改计量设备弹窗-->
+    <div class='modal fade' id='alter-measure' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:40%;margin:50px auto; min-width:430px;'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">修改计量设备</div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="min-height:430px">
+                            <div class="add-deploy" style="border:none;margin-top:0;min-height:410px">
+                                <form action="" method="get" class="deploy-form" style="margin-bottom:20px">
+
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="input-label">计量设备名称：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input add-sign energy-type" style="">
+                                            <label for="" class="input-label" style="width:125px">能耗类型：</label>
+                                            <div class="add-input-father" style="display:inline-block">
+                                                <div class="add-input-block" style="margin-left:0;">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span>电</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(540deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="z-index: 1000; display: none;">
+                                                    <li>电</li>
+                                                    <li>水</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:125px">仪表状态：</label>
+
+                                            <div class="add-input-father" style="display:inline-block">
+                                                <div class="add-input-block" style="margin-left:0;">
+                                                    <div type="text" class="add-input add-input-select" style="">
+                                                        <span ids="1">在线表</span>
+                                                        <div class="add-input-arrow" style="transform: rotate(540deg);"></div>
+                                                    </div>
+                                                </div>
+                                                <ul class="add-select-block" style="z-index: 1000; display: none;">
+                                                    <li  ids="1">在线表</li>
+                                                    <li  ids="0">手抄表</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input type-number">
+                                            <label for=""  class="input-label">默认上限值：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input">
+                                            <label for=""  class="">仪表规格：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input  type-number">
+                                            <label for=""  class="input-label">量程：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--删除计量设备弹窗-->
+    <div class='modal fade' id='remove-measure' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">提示</h3>
+                    <p style="font-size:16px">真的要删除数据 <b></b> 吗？</p>
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--自定义弹窗-->
+    <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:18px">提示</h3>
+                    <p style="font-size:20px"> <b style="color:red"></b> </p>
+
+                    <div class='modal-footer' style="border:none">
+
+                        <button type='button' class='btn btn-primary top-btn' data-dismiss='modal'>确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--loading图-->
+    <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>
+
+        </div>
+    </div>
+
+    <script src="js/lib/jquery-3.0.0.min.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script>
+    <script src="js/lib/jquery.dataTables.min.js"></script>
+    <script src="./button/dataTables.buttons.min.js"></script>
+    <script src="./button/dataTables.tableTools.min.js"></script>
+    <script src="./button/jszip.min.js"></script>
+    <script src="js/lib/vfs_fonts.js"></script>
+    <script src="./button/buttons.html5.min.js"></script>
+    <script src="./js/commonIP.js"></script>
+    <script src="js/DeviceType.js"></script>
+</body>
+</html>

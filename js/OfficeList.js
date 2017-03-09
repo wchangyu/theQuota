@@ -3744,19 +3744,7 @@ function checkedPhone(dom){
     return true;
 }
 
-//获取焦点
-function getFocus(dom){
-    $('#check-text').on('click','.btn-primary',function(){
-        dom.focus();
-    });
 
-};
-
-function getFocus1(dom){
-    $('#my-alert').on('click','.btn-primary',function(){
-        dom.focus();
-    });
-}
 //当人员类别改变时 对应的单位进行改变
 $('.person-type .add-select-block li').on('click',function(){
     var num = $(this).attr('unit');
