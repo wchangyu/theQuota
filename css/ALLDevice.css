@@ -300,7 +300,6 @@ label {
 }
 .add-input-block {
     width: 202px;
-    margin-left: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     display: inline-block;
@@ -340,7 +339,7 @@ label {
 }
 
 /*搜索框样式*/
-#ul1{
+#ul1,#ul2{
     width:92%;
     padding-left:10px;
     border: 1px solid #999;
@@ -350,13 +349,13 @@ label {
     max-height:280px;
     overflow-y: auto;
 }
-#ul1 li{
+#ul1,#ul2 li{
     cursor:pointer;
     font-size:14px;
     line-height:30px;
     color: #4c4c4c;
 }
-#ul1 li:hover{
+#ul1,#ul2 li:hover{
     color:black;
 }
 .search-value-list{
@@ -377,4 +376,16 @@ label {
 .chooseDate{
     background:url("../img/times.png") no-repeat 160px center;
     background-size: auto 80%;
+}
+
+.window-btn {
+    width: 116px;
+}
+/*选中行的样式*/
+.dataTables_wrapper .dataTable .onFocus {
+    background: #fbec88;
+}
+
+#dateTables td,th{
+    height:32px;
 }
