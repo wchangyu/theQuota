@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>能源管理系统</title>
+    <title>能源管理系统—关联二级单位计量仪表</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <meta content="" name="description"/>
@@ -22,51 +22,28 @@
                 <div class="inner-content">
                     <div class="main-content">
                         <!--左侧搜索部分-->
-                        <div class="main-content-left col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                        <div class="main-content-left col-lg-3 col-md-4 col-sm-12 col-xs-12" style="overflow: auto">
                             <ul class="main-content-header">
                                 <li class="main-content-header-lists0">二级单位</li>
                             </ul>
 
                             <div class="showCompany search-test-inner search-test-inner0 row">
                                 <!-- 搜索框结构 -->
-                                <div class="col-sm-12 col-xs-12" style="min-height:480px">
-                                    <div class="add-input-block">
-                                        <input type="text" class="add-input search-value search-value0" value="" placeholder="请输入单位名称">
+                                <div class="col-sm-12 col-xs-12" style="min-height:670px;">
+                                    <div class="add-input-block" style="margin-left:10px;">
+                                        <input type="text" class="add-input search-value search-value0" value="" placeholder="请输入单位名称进行搜索" >
                                     </div>
-                                    <button class="top-btn search-build-btn">搜索</button>
-                                    <button class="top-btn show-all">显示全部</button>
+                                    <button class="top-btn show-all" style="margin-left:10px;;margin-top:10px;margin-bottom:10px;">显示全部</button>
                                     <div style="height:6px"></div>
                                     <ul class="search-value-list search-value-list0" style="background:white"></ul>
 
                                     <ul id='ul1' class="search-show-list search-show-list0" style="margin-top:20px">
-                                        <li class="titles search-li search-li0" data-name='综合楼'>综合楼</li>
-                                        <li class="titles search-li search-li0" data-name='科技楼' >科技楼</li>
-                                        <li class="titles search-li search-li0" data-name='美术楼'>美术楼</li>
-                                        <li class="titles search-li search-li0" data-name='书法楼'>书法楼</li>
-                                        <li class="titles search-li search-li0" data-name='办公楼'>办公楼</li>
-                                        <li class="titles search-li search-li0" data-name='美术楼'>美术楼</li>
-                                        <li class="titles search-li search-li0" data-name='书法楼'>书法楼</li>
-                                        <li class="titles search-li search-li0" data-name='办公楼'>办公楼</li>
-                                        <li class="titles search-li search-li0" data-name='美术楼'>美术楼</li>
-                                        <li class="titles search-li search-li0" data-name='书法楼'>书法楼</li>
-                                        <li class="titles search-li search-li0" data-name='办公楼'>办公楼</li>
-                                        <li class="titles search-li search-li0" data-name='综合楼'>综合楼</li>
-                                        <li class="titles search-li search-li0" data-name='科技楼' >科技楼</li>
-                                        <li class="titles search-li search-li0" data-name='美术楼'>美术楼</li>
-                                        <li class="titles search-li search-li0" data-name='书法楼'>书法楼</li>
+
                                     </ul>
                                 </div>
                             </div>
 
-                            <ul class="main-content-header">
-                                <li class="main-content-header-lists0">当前用能量</li>
-                            </ul>
 
-                            <ul class="use-level">
-                                <li><b>用电量：</b><span>10000 kwh</span></li>
-                                <li><b>用水量：</b><span>10000 m³</span></li>
-                                <li><b>用气量：</b><span>10000 m³</span></li>
-                            </ul>
                         </div>
 
                         <!--右侧查询部分-->
@@ -79,17 +56,34 @@
 
                             <ul class="condition-query">
                                 <li>
-                                    <label for="">仪表类型：</label>
-                                    <select name="" id="">
-                                        <option value=""></option>
-                                        <option value=""></option>
-                                        <option value=""></option>
+                                    <label for="">能耗类型：</label>
+                                    <select name="" id="" class="datatimeblock">
+                                        <option value="-1">全部</option>
+                                        <option value="100">电</option>
+                                        <option value="200">水</option>
+                                        <option value="300">气</option>
+                                        <option value="400">暖</option>
+                                        <option value="500">冷</option>
                                     </select>
+                                </li>
+                                <li>
+                                    <label for="">仪表在线：</label>
+                                    <select name="" id="" class="datatimeblock">
+                                        <option value="-1">全部</option>
+                                        <option value="1">在线表</option>
+                                        <option value="0">手抄表</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label for="">表号或代号：</label>
+                                    <div class="input-blocked">
+                                        <input type="text" class="datatimeblock">
+                                    </div>
                                 </li>
                                 <li>
 
                                     <input id="orgNameInput" style="width:19px;height:20px;" value="" class="rct-form-control" type="checkbox">
-                                    <label for="" style="margin-left:5px;">显示已注销</label>
+                                    <label for="orgNameInput" style="margin-left:5px;">显示已注销</label>
                                 </li>
 
                                 <li><button class="top-btn" style="margin-right:20px">查询</button></li>
@@ -104,10 +98,10 @@
 
                             <ul class="condition-query">
 
-                                <li> <button class="top-btn window-btn" data-toggle='modal' data-target='#accum-preseve'>累加子账户维护</button></li>
-                                <li> <button class="top-btn window-btn" data-toggle='modal' data-target='#accum-preseve'>累减子账户维护</button></li>
-                                <li> <button class="top-btn window-btn" data-toggle='modal' data-target='#accum-shared'>公摊比例账户维护</button></li>
-                                <li> <button class="top-btn window-btn" data-toggle='modal' data-target='#cancel-meter'>注销计量设备</button></li>
+                                <li> <button class="top-btn window-btn top-btn1" data-toggle='modal' data-target='#accum-preseve'>累加子账户维护</button></li>
+                                <li> <button class="top-btn window-btn top-btn2" data-toggle='modal' data-target='#accum-preseve'>累减子账户维护</button></li>
+                                <li> <button class="top-btn window-btn top-btn3" data-toggle='modal' data-target='#accum-shared'>公摊比例账户维护</button></li>
+                                <li> <button class="top-btn window-btn top-btn4" data-toggle='modal' data-target='#cancel-meter'>注销计量设备</button></li>
 
                                 <div class="clearfix"></div>
                             </ul>
@@ -135,7 +129,7 @@
 
     <!--累加子账户维护弹窗-->
     <div class='modal fade' id='accum-preseve' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:829px;margin:10% auto'>
+        <div class='modal-dialog'style='width:819px;margin:50px auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -143,11 +137,11 @@
 
                     <div class="showCompany search-test-inner1 row" style="padding-top:15px">
                         <!-- 搜索框结构 -->
-                        <div class="col-sm-7 col-xs-7">
+                        <div class="col-sm-6 col-xs-6">
                             <div class="add-input-block">
-                                <input type="text" class="add-input search-value1" value="" placeholder="请输入表号代号">
+                                <input type="text" class="add-input search-value1" value="" placeholder="请输入表号或代号">
                             </div>
-                            <button class="top-btn search-build-btn">搜索</button>
+                            <button class="top-btn " data-toggle='modal' data-target='#choose-building'>按楼查看</button>
                             <button class="top-btn show-all">显示全部</button>
                             <div style="height:6px"></div>
                             <ul class="search-value-list1 search-value-list" style="background:white"></ul>
@@ -155,27 +149,24 @@
                                 <h4 style="margin-top:20px">待选计量设备列表
                                     <button class="top-btn" style="margin-left:10px">添加全部</button>
                                 </h4>
+
+                            <div style="margin-bottom:10px;">
+                                <b style="margin-left:60px;">表号或代号</b> <b style="margin-left:20px;">计量区域</b>
+                            </div>
                             <ul id='ul2' class="search-show-list search-show-list1">
-                                <li class="titles search-li1 search-li search-li-add" data-name='综合楼'>综合楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='科技楼' >科技楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='美术楼'>美术楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='书法楼'>书法楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='办公楼'>办公楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='美术楼'>美术楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='书法楼'>书法楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='办公楼'>办公楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='美术楼'>美术楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='书法楼'>书法楼<span></span></li>
-                                <li class="titles search-li1 search-li search-li-add" data-name='办公楼'>办公楼<span></span></li>
+
                             </ul>
                         </div>
 
-                        <div class="col-sm-5 col-xs-5 right-show-measure">
+                        <div class="col-sm-6 col-xs-6 right-show-measure">
 
                             <h4 style="margin-top:20px">已选计量设备列表
                                 <button class="top-btn" style="margin-left:10px">删除全部</button>
                             </h4>
 
+                            <div style="margin-bottom:10px;">
+                                <b style="margin-left:60px;">表号或代号</b> <b style="margin-left:50px;">建档日期</b><b style="margin-left:50px;">建档读数</b>
+                            </div>
                             <ul id='ul3' class="search-show-list window-show">
 
                             </ul>
@@ -251,7 +242,7 @@
 
     <!--注销计量设备弹窗-->
     <div class='modal fade' id='cancel-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:40%;margin:15% auto'>
+        <div class='modal-dialog'style='width:1280px;margin:50px auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -279,14 +270,18 @@
 
     <!--更换计量设备弹窗-->
     <div class='modal fade' id='change-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:50%;margin:15% auto;min-width:300px'>
+        <div class='modal-dialog'style='width:50%;margin:50px auto;min-width:300px'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                     <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">更换仪表计量设备</div>
                     <!--展示表格-->
-                    <div class="ament-data"><b>仪表名称：</b>
+                    <div class="ament-data"><b>表号或代号：</b>
                         <span>*********表</span>
+                    </div>
+
+                    <div class="ament-data"><b>能耗类型：</b>
+                        <span>电</span>
                     </div>
 
                     <div class="row">
@@ -295,15 +290,56 @@
                                 <form action="" method="get" class="deploy-form" style="margin-bottom:20px">
 
                                     <div class="row">
+
                                         <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
-                                            <label for="" class="input-label" style="width:135px;margin-right:40px;">仪表终止读数：</label>
+                                            <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表起始日期：</label>
 
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表起数：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表结束日期：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;margin-right:40px;">计量设备终止读数：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;margin-right:40px;">圈数：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表人：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:10px;margin-left: 0">
                                             <label for="" class="input-label" style="width:170px">新仪表表名或代号：</label>
 
                                             <div class="add-input-father">
@@ -336,7 +372,7 @@
                                         </div>
 
                                         <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
-                                            <label for="" class="input-label"  style="margin-right:61px">建档起数：</label>
+                                            <label for="" class="input-label"  style="margin-right:61px">建档读数：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
@@ -369,6 +405,67 @@
             </div>
         </div>
     </div>
+
+    <!--选择楼宇弹窗-->
+    <div class='modal fade' id='choose-building' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:430px;margin:10% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">选择楼宇</div>
+
+                    <div class="showCompany search-test-inner  search-test-inner0 row">
+                        <!-- 搜索框结构 -->
+                        <div class="col-sm-12 col-xs-12">
+                            <div class="add-input-block">
+                                <input type="text" class="add-input search-value search-value0" value="" placeholder="请输入楼宇名称">
+                            </div>
+                            <button class="top-btn" onclick='showAll()'>显示全部</button>
+                            <div style="height:6px"></div>
+                            <ul class="search-value-list search-value-list0" style="background:white"></ul>
+
+                            <ul id='seek0' class="seek-ul">
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--自定义弹窗-->
+    <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:18px">提示</h3>
+                    <p style="font-size:20px"> <b style="color:red"></b> </p>
+
+                    <div class='modal-footer' style="border:none">
+
+                        <button type='button' class='btn btn-primary top-btn' data-dismiss='modal'>确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--loading图-->
+    <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>
+
+        </div>
+    </div>
     <script src="js/lib/jquery-3.0.0.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/jquery.dataTables.min.js"></script>
@@ -379,6 +476,7 @@
     <script src="./button/buttons.html5.min.js"></script>
     <script src="js/lib/jQuery.Hz2Py-min.js"  type="text/javascript"></script>
     <script src="js/lib/bootstrap-datepicker.js"></script>
+    <script src="js/commonIP.js"></script>
     <script src="js/OfficeDevice.js"></script>
 </body>
 </html>

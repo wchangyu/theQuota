@@ -565,7 +565,7 @@ $(document).ready(function(){
                         return false;
                     }
                     if(data == 3){
-                        myAlter('添加失败');
+                        myAlter('修改失败');
                         return false;
                     }
                     if(data == 6){
@@ -740,6 +740,8 @@ $(function(){
     new SEARCH_ENGINE("search-test-inner0","search-value0","search-value-list0","search-li0");
 
 
+
+
 });
 
 //获取后台数据
@@ -868,7 +870,7 @@ SEARCH_ENGINE.prototype = {
         }
         //数字
         else if(type === "digital"){
-            s = 2;
+            s = 1;
         }
 
         for(var i=0;i<this.searchMemberArray.length;i++){

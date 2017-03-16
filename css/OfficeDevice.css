@@ -50,7 +50,7 @@ li{
     margin-left:10px;
     border-radius:5px;
     margin-bottom:20px;
-    height:380px;
+    height:580px;
     overflow-y: auto;
 }
 .search-show-list li{
@@ -63,7 +63,7 @@ li{
     color: #e66100;
     text-decoration: underline;
 }
-.search-li-add:hover span{
+.search-li-add:hover .add-it{
     background:url("../img/plus-sign1.png") no-repeat center center;
 }
 .window-show li:hover span{
@@ -208,7 +208,7 @@ table td,th{
 .right-show-measure{
     padding-top:40px;
 }
-.search-li-add span{
+.search-li-add .add-it{
     float:left;
     margin-right:15px;
     width:28px;
@@ -264,6 +264,7 @@ table td,th{
     padding-left: 20px;
     font-size: 16px;
     margin-bottom: 10px;
+    display:inline-block;
 }
 /*弹窗样式*/
 .add-title {
@@ -300,7 +301,7 @@ table td,th{
 .inner-input{
     text-align:left;
     margin-top:15px;
-    margin-bottom:20px;
+    margin-bottom:10px;
 }
 .input-label{
     background:url("../img/asterisk.png") no-repeat 0 center;
@@ -409,4 +410,33 @@ label {
 .chooseDate {
     background: url(../img/times.png) no-repeat 160px center;
     background-size: auto 80%;
+}
+
+/*鼠标移到按钮上时*/
+.top-btn:hover {
+    color: #fff;
+    background-color: #3b9c96;
+    border-color: #307f7a;
+    outline: none;
+}
+
+/*二级单位搜索框*/
+.search-value-list0{
+    max-height:560px !important;
+    overflow-y: auto;
+}
+
+.search-li-add .area{
+    width:100px;
+    text-align: left;
+    display:inline-block;
+}
+.search-li-add .mtNumber {
+    width: 100px;
+    text-align: left;
+    display: inline-block;
+}
+
+#ul3{
+    width:360px;
 }

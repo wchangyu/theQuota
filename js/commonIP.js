@@ -5,7 +5,7 @@
 var userName = 'xiaohong';
 var IP1 = "http://192.168.1.120/BEEWebAPI/api";
 var IP2 = 'http://211.100.28.180/DingEAPI/api';
-var IP = IP2;
+var IP = IP1;
 
 var theTimes = 10000;
 var energyType = {

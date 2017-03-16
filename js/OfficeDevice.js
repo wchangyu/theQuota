@@ -3,7 +3,64 @@
  */
 
 $(document).ready(function(){
+
+    //select 优化动画
+    var rotateNum = 1;
+    $(document).on('click', function () {
+        if ($('.add-select-block').is(':hidden')) {
+            $('.add-select-block').css({
+                display: 'none'
+            });
+            rotateNum = 1;
+            var num = rotateNum * 180;
+            var string = num + 'deg';
+            $('.add-input-select').children('div').css({
+                'transform': 'rotate(' + string + ')'
+            })
+        }
+
+    });
+    $('.add-input-select').click(function (e) {
+        $('.add-select-block').not($(this).parents('.add-input-father').children('.add-select-block')).css({
+            display: 'none'
+        });
+        rotateNum++;
+        var num = rotateNum * 180;
+        var string = num + 'deg';
+        console.log('bb');
+        $(this).parents('.add-input-father').children('.add-select-block').slideToggle('fast');
+        $(this).children('div').css({
+
+            'transform': 'rotate(' + string + ')'
+        })
+
+        e.stopPropagation();
+
+    });
+    $('.add-select-block li').on('click',function(){
+        var text = $(this).html();
+        var num0 = $(this).attr('ids');
+        var num1 = $(this).attr('factor');
+        var num2 = $(this).attr('unit');
+        $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').html(text);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('ids',num0);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('factor',num1);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('unit',num2);
+        rotateNum++;
+        var num = rotateNum * 180;
+        var string = num + 'deg';
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('div').css({
+
+            'transform':'rotate('+string+')'
+        })
+    });
+
     //初始化表格
+    console.log(unitId[0])
+    importantId = unitId[0];
+    alarmHistory(unitId[0]);
+
     var table = $('#dateTables').DataTable({
         "autoWidth": false,  //用来启用或禁用自动列的宽度计算
         //是否分页
@@ -31,7 +88,6 @@ $(document).ready(function(){
         ],
         "dom":'B<"clear">lfrtip',
         //数据源
-        'ajax': './data/history.json',
         'columns':[
             {
                 title:'选择',
@@ -41,7 +97,7 @@ $(document).ready(function(){
 
             },
             {
-                title:'仪表类型',
+                title:'计量设备类型',
                 data:'time'
 
             },
@@ -51,8 +107,28 @@ $(document).ready(function(){
 
             },
             {
+                title:'仪表状态',
+                data:'alarmType'
+
+            },
+
+            {
                 title:'表号或代号',
                 data:'serialNumber'
+
+            },
+            {
+                title:'绑定楼宇',
+                data:'seeing'
+            },
+            {
+                title:'计量区域',
+                data:'seeing'
+
+            },
+            {
+                title:'绑定数采仪',
+                data:'seeing'
 
             },
             {
@@ -101,11 +177,6 @@ $(document).ready(function(){
 
             },
             {
-                title:'计量区域',
-                data:'seeing'
-
-            },
-            {
                 title:'操作',
                 "targets": -1,
                 "data": null,
@@ -134,7 +205,42 @@ $(document).ready(function(){
 
             },
             {
+                title:'能耗类型',
+                data:'seeing'
+
+            },
+            {
+                title:'抄表起始日期',
+                data:'seeing'
+
+            },
+            {
+                title:'抄表起数',
+                data:'seeing'
+
+            },
+            {
+                title:'抄表结束日期',
+                data:'seeing'
+
+            },
+            {
                 title:'设备终止读数',
+                data:'seeing'
+
+            },
+            {
+                title:'圈数',
+                data:'seeing'
+
+            },
+            {
+                title:'抄表人',
+                data:'seeing'
+
+            },
+            {
+                title:'操作',
                 data:'seeing'
 
             },
@@ -143,40 +249,66 @@ $(document).ready(function(){
                 "targets": -1,
                 "data": null,
                 "class":'theReson',
-                "defaultContent": '<textarea name="yj" cols="40" rows="2" style="resize:none;">'
+                "defaultContent": '<textarea name="yj" cols="30" rows="2" style="resize:none;">'
             },
         ]
     });
-    //select 优化动画
-    var rotateNum = 1;
-    $('.add-input-select').click(function(){
-        rotateNum++;
-        var num = rotateNum * 180;
-        var string = num + 'deg';
-        console.log('bb');
-        $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
-        $(this).children('div').css({
+    _table = $('#dateTables').dataTable();
+    //给表格添加后台获取到的数据
+    setData();
+    hiddrenId();
 
-            'transform':'rotate('+string+')'
+    //累加子账户维护
+    $('.top-btn1').on('click',function(){
+        var id = importantId;
+        //获取待选计量设备列表
+        $.ajax({
+            type: 'get',
+            url: IP + "/UnitMeter/GetAddMeterByUnitID",
+            async: false,
+            timeout: theTimes,
+            data:{
+                unitID:id
+            },
+            beforeSend: function () {
+
+            },
+
+            complete: function () {
+
+            },
+            success: function (data) {
+                $('#theLoading').modal('hide');
+                console.log(data);
+                var waitArr = data.waitMeters;
+                var pointArr = data.meterPointers;
+                var html = '';
+                for(var i=0; i<waitArr.length; i++){
+                    html += ' <li class="titles search-li1 search-li search-li-add" data-name="'+waitArr[i].f_mtNumber+'" data-date="'+waitArr[i].f_FilingDT+'"  data-number="'+waitArr[i].f_FilingNumber+'" data-remove="'+waitArr[i].isBindingUnitMeter+'" data-online="'+waitArr[i].isBindingUnitMeter+'"><span class="mtNumber">'+waitArr[i].f_mtNumber+'</span><span class="add-it"></span> <span class="area">'+waitArr[i].f_MeasureArea+'</span></li>'
+                };
+
+                //for(var i=0; i<)
+
+                $('#ul2').html(html);
+                new SEARCH_ENGINE("search-test-inner1","search-value1","search-value-list1","search-li1");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#theLoading').modal('hide');
+                console.log(textStatus);
+
+                if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                    ajaxTimeoutTest.abort();
+                    myAlter("超时");
+                }
+                myAlter("请求失败！");
+            }
         })
-
-
-    });
-    $('.add-select-block li').on('click',function(){
-        var text = $(this).html();
-
-        $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
-        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').html(text);
-        rotateNum++;
-        var num = rotateNum * 180;
-        var string = num + 'deg';
-        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('div').css({
-
-            'transform':'rotate('+string+')'
-        })
     });
 
-})
+
+
+
+});
 
 
 //二级单位搜索功能
@@ -186,7 +318,7 @@ $(function(){
     // search-value-list --->  搜索结果显示div
     // search-li --->  搜索条目
     new SEARCH_ENGINE("search-test-inner0","search-value0","search-value-list0","search-li0");
-    new SEARCH_ENGINE("search-test-inner1","search-value1","search-value-list1","search-li1");
+
 
 });
 
@@ -236,10 +368,10 @@ SEARCH_ENGINE.prototype = {
             var cnCharacter = this.searchList.eq(i).attr("data-name");
 
             //数字
-            var online = this.searchList.eq(i).attr("data-online");
+            var id = this.searchList.eq(i).attr("data-id");
 
             //存入数组
-            this.searchMemberArray.push(pinyin + "&" + cnCharacter + "&" + online);
+            this.searchMemberArray.push(pinyin + "&" + cnCharacter + "&" + id);
         }
 
         //删除临时存放数据对象
@@ -261,7 +393,7 @@ SEARCH_ENGINE.prototype = {
         }
         //数字
         else if(type === "digital"){
-            s = 2;
+            s = 1;
         }
 
         for(var i=0;i<this.searchMemberArray.length;i++){
@@ -289,20 +421,13 @@ SEARCH_ENGINE.prototype = {
 
                 html += '<li class="theResult">';
 
-                //判断是否在线
-                var color;
-                if(sArray[2] == '不在线'){
 
-                    color = '#2097f3';
-                }else{
-                    color = 'red'
-                }
 
-                html += '<span class="ifOnline"></span>';
-                html += '<span class="name">' + sArray[1] + '</span>';
+                html += '<span class="name" ids="'+sArray[2]+'">' + sArray[1] + '</span>';
                 html += '</li>';
 
             }
+
         }
         //无搜索结果
         else{
@@ -315,6 +440,7 @@ SEARCH_ENGINE.prototype = {
         }
         this.searchResultInner.html(html);
         showResult();
+        buildClick();
     },
 
     //-----------------------------【绑定搜索事件】
@@ -332,7 +458,7 @@ SEARCH_ENGINE.prototype = {
                 display:'block'
             });
             $(this).parent().parent().children('h4').css({
-                display:'none',
+                display:'none'
             });
             //临时存放找到的数组
             var tempArray = [];
@@ -367,49 +493,10 @@ SEARCH_ENGINE.prototype = {
             }
 
             searchEngine.postMemberList(tempArray);
-            buildClick()
+
         });
 
-        $('.search-build-btn').on('click',function(){
-            console.log('ok');
-            //使默认的展示项关闭
-            $('#ul1').css({
-                'display':'none'
-            })
-            //临时存放找到的数组
-            var tempArray = [];
 
-            var val = $('.search-value').val();
-            //判断拼音的正则
-            var pinYinRule = /^[A-Za-z]+$/;
-
-            //判断汉字的正则
-            var cnCharacterRule = new RegExp("^[\\u4E00-\\u9FFF]+$","g");
-
-            //判断整数的正则
-            var digitalRule = /^[-\+]?\d+(\.\d+)?$/;
-
-            //只搜索3种情况
-            //拼音
-            if(pinYinRule.test(val)){
-                tempArray = searchEngine.fuzzySearch("pinyin",val);
-            }
-            //汉字
-            else if(cnCharacterRule.test(val)){
-                tempArray = searchEngine.fuzzySearch("cnCharacter",val);
-            }
-            //数字
-            else if(digitalRule.test(val)){
-
-                tempArray = searchEngine.fuzzySearch("digital",val);
-            }
-            else{
-                searchEngine.searchResultInner.html('<li class="tips">无搜索结果……</li>');
-            }
-
-            searchEngine.postMemberList(tempArray);
-            buildClick()
-        })
     }
 };
 //显示全部按钮
@@ -426,6 +513,112 @@ $('.show-all').on('click',function(){
 
 });
 
+var unitId = [];
+var unitName = [];
+
+//当前页面显示的二级单位ID
+var importantId;
+//获取全部单位信息
+function getUnitMessage(){
+
+    $.ajax({
+        type:'get',
+        url:IP + "/SecondUnit/GetSecondUnitByCondition",
+        async:false,
+        timeout:theTimes,
+        data:{
+            unitName: '',
+            cancelFlag: 0
+        },
+        beforeSend:function(){
+            $('#theLoading').modal('show');
+        },
+        complete:function(){
+            $('#theLoading').modal('hide');
+        },
+        success:function(result){
+            $('#theLoading').modal('hide');
+            for(var i=0;i<result.length;i++){
+                unitId.push(result[i].pK_Unit);
+                unitName.push(result[i].f_UnitName);
+            }
+            var html = '';
+            for(var i=0; i<unitId.length;i++){
+                html += '<li class="titles search-li search-li0" data-name="'+unitName[i]+'" data-id="'+ unitId[i]+'">'+unitName[i]+'</li>'
+            }
+
+            $('#ul1').html(html);
+
+
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown) {
+            $('#theLoading').modal('hide');
+            console.log(textStatus);
+
+            if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                ajaxTimeoutTest.abort();
+                myAlter("超时");
+            }
+            myAlter("请求失败！");
+        }
+
+    });
+}
+getUnitMessage();
+
+//获取后台数据
+function alarmHistory(id){
+    dataArr=[];
+    console.log(id);
+    $.ajax({
+        type:'get',
+        url:IP + "/UnitMeter/GetUnitMeterByCondition",
+        async:false,
+        timeout:theTimes,
+        data:{
+            'PK_Unit':id,
+            'F_MTEnergyType' : -1,
+            'F_MTOnline' : -1,
+            'F_MTNumber' :'',
+            'F_CancelFlag':0
+        },
+        beforeSend:function(){
+            $('#theLoading').modal('show');
+        },
+        complete:function(){
+            $('#theLoading').modal('hide');
+        },
+        success:function(result){
+
+            $('#theLoading').modal('hide');
+            console.log(result);
+            for(var i=0;i<result.length;i++){
+                dataArr.push(result[i]);
+            }
+            var num = dataArr.length;
+            for(var i=0; i<num; i++){
+                var num1 =  dataArr[i].f_mtEnergyType;
+                var num2 = dataArr[i].f_mtOnline;
+                var txt = getEnergyType(num1);
+                dataArr[i].f_EnergyName = txt;
+                var txt2 = getMtonline(num2);
+                dataArr[i].f_onlineName = txt2;
+            }
+
+        },
+        error:function (XMLHttpRequest, textStatus, errorThrown) {
+            $('#theLoading').modal('hide');
+            console.log(textStatus);
+
+            if(textStatus=='timeout'){//超时,status还有success,error等值的情况
+                ajaxTimeoutTest.abort();
+                myAlter("超时");
+            }
+            myAlter("请求失败！");
+        },
+
+    });
+}
 
 $('.search-value').on('focus',function(){
     if($(this).val() != ""){
@@ -441,16 +634,29 @@ $('.search-value').on('focus',function(){
 //当点击二级单位时触发
 $('#ul1 li').on('click',function(){
     var txt = $(this).html();
-    $('.search-value').val(txt);
+    var id = $(this).attr('data-id');
+    $('.search-value0').val(txt);
+    $('.search-value0').attr('ids',id);
+
+    importantId = id;
+    ajaxSuccess1(importantId);
+
 });
 
+//点击搜索到的信息时
 function buildClick(){
     $('.search-value-list0 li').on('click',function(){
         console.log('ok');
-        var txt = $(this).children().eq(1).html();
-        $('.search-value').val(txt);
+        var txt = $(this).children().html();
+        var id = $(this).children().attr('ids');
+        $('.search-value0').val(txt);
+        $('.search-value0').attr('ids',id);
+
+        importantId = id;
+        ajaxSuccess1(importantId);
     });
-}
+};
+
 //选择日期插件
 $('.chooseDate').datepicker(
     {
@@ -465,7 +671,8 @@ setInterval(function(){
     removeMeasure();
     addMeasure1();
     removeMeasure1();
-},300)
+},300);
+
 function addMeasure(){
     $('#ul2 li').off('click');
     $('#ul2 li').on('click',function(){
@@ -527,4 +734,12 @@ function removeMeasure1(){
         var txt2 = $('<li class="search-li search-li1 search-li-add">'+txt1+'<span></span></li>');
         txt2.appendTo('#ul4');
     });
+};
+
+function ajaxSuccess1(id){
+    _table = $('#dateTables').dataTable();
+    _table.fnClearTable();
+    alarmHistory(id);
+    setData();
+    hiddrenId();
 }
