@@ -2,11 +2,11 @@
  * Created by admin on 2017/2/13.
  */
 
-
+var rotateNum = 1;
 $(document).ready(function(){
 
     //select 优化动画
-    var rotateNum = 1;
+
     $(document).on('click', function () {
         if ($('.add-select-block').is(':hidden')) {
             $('.add-select-block').css({
@@ -1155,7 +1155,113 @@ function putMeterType(dom){
     $(dom).eq(0).parent().parent().find('.add-input').eq(12).val(arr3[0]);
 }
 
-putMeterType('.meter-type');
+
+
+$('.top-btn1').on('click',function(){
+    console.log('11');
+    putMeterType('.meter-type');
+
+    //仪表类型改变时 报警上限 数采仪编号 跟着改变
+    $('.add-select-meter li').on('click',function(){
+        var num = $(this).attr('unit');
+        var num0 = $(this).attr('factor');
+        var num1 = $(this).attr('type');
+        var txt = $(this).parents('.deploy-form').find('.build-number').find('input').val();
+
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(1).find('input').val('');
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('input').val('');
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('span').html('');
+
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('span').html('');
+        console.log(txt);
+        if(num0 == 0){
+
+
+            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','不可输入');
+            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('readOnly',"true");
+            $(this).parents('.deploy-form').find('.number-machine').find('img').removeAttr('data-target');
+            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
+
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('placeHolder','');
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').val(1);
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').removeAttr('readOnly');
+            if(num1 != 100){
+                $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('readOnly',"true");
+            }
+
+
+            $(this).parents('.deploy-form').find('.get-online-message').attr('disabled','true');
+            $(this).parents('.deploy-form').find('.get-online-message').removeClass('top-btn');
+
+            $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').removeAttr('readOnly');
+
+            $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
+                display:'inline-block'
+            });
+            $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('span').css({
+                display:'none'
+            });
+
+        }else {
+            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','从数采仪列表中选择');
+
+            $(this).parents('.deploy-form').find('.number-machine').find('img').attr('data-target','#choose-instrument');
+            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
+
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('placeHolder','自动获取');
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').val('');
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('readOnly',"true");
+
+            $(this).parents('.deploy-form').find('.get-online-message').removeAttr('disabled');
+            $(this).parents('.deploy-form').find('.get-online-message').addClass('top-btn');
+
+            $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').attr('readOnly',"true");
+            $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
+                display:'none'
+            });
+            $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('span').css({
+                display:'block'
+            });
+
+            var doms = $('.in');
+            if(doms.attr('id') == '#add-meter'){
+                if(txt != ''){
+                    console.log('111');
+                    getNumbered('#add-meter');
+                }
+            }else{
+                if(txt != ''){
+                    console.log('222');
+                    getNumbered1('#alter-meter');
+                }
+            }
+
+
+        }
+        $(this).parents('.deploy-form').find('.add-input').eq(12).val(num);
+
+    });
+    $('.add-select-block li').on('click',function(){
+        var text = $(this).html();
+        var num0 = $(this).attr('ids');
+        var num1 = $(this).attr('factor');
+        var num2 = $(this).attr('unit');
+        var num3 = $(this).attr('type');
+        $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').html(text);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('ids',num0);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('factor',num1);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('unit',num2);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('type',num3);
+        rotateNum++;
+        var num = rotateNum * 180;
+        var string = num + 'deg';
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('div').css({
+
+            'transform':'rotate('+string+')'
+        })
+    });
+});
 
 //存放楼宇信息
 var buildMessage = [];
@@ -1230,7 +1336,8 @@ $('#choose-building').on('click','.btn-primary',function(){
         return false;
     }
     var doms = $('.in');
-    if(doms.attr('id') == '#add-meter'){
+    console.log(doms.attr('id'));
+    if(doms.attr('id') == 'add-meter'){
 
             console.log('111');
 
@@ -1241,7 +1348,7 @@ $('#choose-building').on('click','.btn-primary',function(){
     }else{
 
             console.log('222');
-            getNumbered1('#alter-meter');
+            getNumbered1('alter-meter');
         $("#alter-meter").find('.add-input').eq(4).val('');
         $("#alter-meter").find('.add-input').eq(4).attr('ids','');
 
@@ -1301,12 +1408,12 @@ $('.add-select-meter li').on('click',function(){
         $(this).parents('.deploy-form').find('.get-online-message').attr('disabled','true');
         $(this).parents('.deploy-form').find('.get-online-message').removeClass('top-btn');
 
-        $('#add-meter').find('.bookbuilding').find('.add-input').removeAttr('readOnly');
+        $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').removeAttr('readOnly');
 
-        $('#add-meter').find('.bookbuilding').eq(0).find('.add-input').css({
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
             display:'inline-block'
         });
-        $('#add-meter').find('.bookbuilding').eq(0).find('span').css({
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('span').css({
             display:'none'
         });
 
@@ -1323,11 +1430,11 @@ $('.add-select-meter li').on('click',function(){
         $(this).parents('.deploy-form').find('.get-online-message').removeAttr('disabled');
         $(this).parents('.deploy-form').find('.get-online-message').addClass('top-btn');
 
-        $('#add-meter').find('.bookbuilding').find('.add-input').attr('readOnly',"true");
-        $('#add-meter').find('.bookbuilding').eq(0).find('.add-input').css({
+        $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').attr('readOnly',"true");
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
             display:'none'
         });
-        $('#add-meter').find('.bookbuilding').eq(0).find('span').css({
+        $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('span').css({
             display:'block'
         });
 

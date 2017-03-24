@@ -386,6 +386,10 @@ label {
     background: #fbec88;
 }
 
-#dateTables td,th{
-    min-height:32px;
+
+.odd td{
+   height:36px;
+}
+.even td{
+    height:36px;
 }

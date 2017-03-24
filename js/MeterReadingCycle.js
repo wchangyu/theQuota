@@ -64,15 +64,17 @@ $(document).ready(function(){
                 "targets": -1,
                 "data": null,
                 "defaultContent": "<button class='top-btn'>删除</button>"
-            },
+            }
         ]
     })
 });
 $('.chooseDate').datepicker(
     {
+        startView: 1,
+        maxViewMode: 2,
+        minViewMode:1,
         language:  'zh-CN',
-        todayBtn: 1,
         todayHighlight: 1,
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm'
     }
 )

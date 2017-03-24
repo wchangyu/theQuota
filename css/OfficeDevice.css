@@ -45,7 +45,6 @@ li{
 /*搜索框样式*/
 .search-show-list{
     width:92%;
-    padding-left:10px;
     border: 1px solid #999;
     margin-left:10px;
     border-radius:5px;
@@ -58,6 +57,7 @@ li{
     font-size:14px;
     line-height:30px;
     color: #4c4c4c;
+    padding-left:10px;
 }
 .search-show-list li:hover{
     color: #e66100;
@@ -201,12 +201,12 @@ table td,th{
 }
 .showCompany h4{
     padding-left:20px;
-    margin-bottom:20px;
+    margin-bottom:15px;
     font-weight:700;
 
 }
 .right-show-measure{
-    padding-top:40px;
+    padding-top:10px;
 }
 .search-li-add .add-it{
     float:left;
@@ -439,4 +439,108 @@ label {
 
 #ul3{
     width:360px;
+}
+#dateTables2{
+    width:477px !important;
+}
+
+
+#dateTables2_info{
+    display: none;
+}
+#dateTables3{
+    width:477px !important;
+}
+
+#dateTables5{
+    width:450px !important;
+}
+
+#dateTables6{
+    width:650px !important;
+}
+
+#dateTables3_info, #dateTables5_info,#dateTables6_info{
+    display: none;
+}
+
+#accum-preseve .dataTables_scrollBody{
+    border:1px solid #999;
+    border-top:none;
+
+}
+
+#accum-shared .dataTables_scrollBody{
+    border:1px solid #999;
+    border-top:none;
+
+}
+.add-row{
+    cursor: pointer;
+}
+
+.adjust-comment span {
+    max-width: 200px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+/*搜索框样式*/
+.dataTables_filter {
+    float:left !important;
+    margin-left:18px;
+
+}
+.dataTables_filter label{
+    font-size:16px;
+}
+.dataTables_filter input{
+    width:210px;
+    height:30px;
+}
+.theHidden{
+    display: none;
+}
+
+/*楼宇搜索*/
+#dateTables4{
+    width:377px !important;
+    float:left;
+}
+#dateTables4_info{
+    display: none;
+}
+
+.table-striped th{
+    text-align:center ;
+}
+
+.left-th-table td{
+    text-align:left !important;
+}
+.left-th-table th{
+    text-align:left !important;
+}
+table td{
+    vertical-align: middle !important;
+}
+
+/*注销计量设备中的table*/
+#dateTables7{
+    width:397px !important;
+    float:left;
+}
+#dateTables7_info{
+    display: none;
+}
+#dateTables7 tr td{
+    text-align:center !important;
+}
+#dateTables7 tr th{
+    text-align:center !important;
+}
+.dataTables_wrapper .dataTable .onFocus {
+    background: #fbec88;
 }

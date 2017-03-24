@@ -194,7 +194,7 @@ function getFocus(dom){
 };
 
 function getFocus1(dom){
-    $('#my-alert').on('click','.btn-primary',function(){
+    $('#my-alert').one('click','.btn-primary',function(){
         dom.focus();
     });
 }

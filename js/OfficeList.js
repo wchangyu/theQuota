@@ -1258,6 +1258,7 @@ $(document).ready(function(){
                     'lengthMenu': '每页 _MENU_ 条',
                     'zeroRecords': '没有数据',
                     'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+                    "search":   "搜索：",
                     'paginate': {
                         'first':      '第一页',
                         'last':       '最后一页',
