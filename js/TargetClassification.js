@@ -611,6 +611,16 @@ function alarmHistory(){
     });
 }
 
+//点击确定时触发
+$(document).on('keydown',function(e){
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which;
+
+    if(code == 13){
+        $('.refer').click();
+        return false;
+    }
+});
 
 //用于存放人员类型的数组
 

@@ -1265,6 +1265,17 @@ $(document).ready(function(){
                     $('#theLoading').modal('hide');
                     console.log(data);
                     logoutArr = data.cancelMeterModels;
+                    var alterText = data.validateNumber;
+                    if(alterText == 1){
+                        myAlter('注销失败，请联系管理员');
+                        $('#cancel-meter').modal('hide');
+                        return false;
+                    };
+                    if(alterText == 3){
+                        myAlter('注销失败');
+                        $('#cancel-meter').modal('hide');
+                        return false;
+                    };
 
                     _table = $('#dateTables1').dataTable();
                     _table.fnClearTable();
@@ -1328,6 +1339,7 @@ $(document).ready(function(){
                         console.log(data);
                         if(data.validateNumber == 5){
                             var arr = data.f_mtNumberInfos;
+
                             for(var i=0; i<arr.length; i++){
 
                             }
@@ -1461,6 +1473,17 @@ $(document).ready(function(){
             success: function (data) {
                 $('#theLoading').modal('hide');
                 console.log(data);
+                var alterText = data.validateNumber;
+                if(alterText == 1){
+                    myAlter('注销失败，请联系管理员');
+                    $('#change-meter').modal('hide');
+                    return false;
+                };
+                if(alterText == 3){
+                    myAlter('注销失败');
+                    $('#change-meter').modal('hide');
+                    return false;
+                };
 
                 dataObj = data.cancelMeterModels[0];
                 console.log(dataObj);
@@ -2725,6 +2748,17 @@ $('.chooseDate').datepicker(
     }
 );
 
+
+//点击确定时触发
+$(document).on('keydown',function(e){
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which;
+
+    if(code == 13){
+        $('.top-refer').click();
+        return false;
+    }
+});
 
 //点击弹窗中的搜索结果时
 function showResult(){

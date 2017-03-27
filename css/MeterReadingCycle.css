@@ -158,6 +158,12 @@ label {
     display: none;
 }
 .chooseDate {
-    background: url(../img/times.png) no-repeat 160px center;
-    background-size: auto 80%;
+     background: url(../img/times.png) no-repeat 160px center;
+     background-size: auto 80%;
+ }
+.theHidden{
+    display:none !important;
+}
+a:hover{
+    text-decoration:none;
 }

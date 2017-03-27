@@ -744,6 +744,17 @@ $(function(){
 
 });
 
+//点击确定时触发
+$(document).on('keydown',function(e){
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which;
+
+    if(code == 13){
+        $('.top-refer').click();
+        return false;
+    }
+});
+
 //获取后台数据
 function alarmHistory(){
     dataArr=[];
