@@ -67,22 +67,13 @@ li{
     width: 206px;
 }
 .ztree li span {
-  font-size:16px;
+  font-size:14px;
 }
 
 .ztree li span font {
-    font-size:16px;
+    font-size:14px;
 }
-.ico_docu{
-    background:none !important;
-    width:0 !important;
-}
-.ico_open{
-    display: none !important;
-}
-.ico_close {
-    display: none !important;
-}
+
 /*上方添加按钮*/
 label {
     display: inline-block;
@@ -285,3 +276,65 @@ label {
     background: url(../img/times.png) no-repeat 160px center;
     background-size: auto 80%;
 }
+
+.add-inputs {
+    width: 190px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    line-height: 30px;
+    height: 30px;
+    text-align: left;
+}
+.add-input-block{
+    background:white;
+}
+
+#dateTables4 {
+    width: 377px !important;
+    float: left;
+}
+.theHidden{
+    display: none !important;
+}
+
+/*搜索框样式*/
+.dataTables_filter {
+    float:left !important;
+    margin-left:18px;
+
+}
+.dataTables_filter label{
+    font-size:16px;
+}
+.dataTables_filter input{
+    width:210px;
+    height:30px;
+}
+.theHidden{
+    display: none;
+}
+
+/*楼宇搜索*/
+#dateTables4{
+    width:377px !important;
+    float:left;
+}
+#dateTables4_info{
+    display: none;
+}
+#dateTables4 td{
+    padding-left:50px;
+   text-align:left;
+    cursor: pointer;
+}
+
+.dataTables_wrapper .dataTable .onFocus {
+    background: #fbec88;
+}
+
+.input-labels {
+    background: url(../img/asterisk.png) no-repeat 0 center;
+}
+
+

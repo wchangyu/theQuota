@@ -22,8 +22,8 @@
             <div class="out-content">
                 <div class="inner-content">
                     <div class="main-content">
-                        <!--左侧树状图不放呢-->
-                        <div class="main-content-left col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                        <!--左侧树状图-->
+                        <div class="main-content-left col-lg-3 col-md-4 col-sm-4 col-xs-12">
                             <ul class="main-content-header">
                                 <li class="main-content-header-lists0">手工仪表列表</li>
                             </ul>
@@ -32,13 +32,13 @@
                                 <div class="zTreeDemoBackground left">
                                     <input type="text" id="key" placeholder="请输入仪表名称">
                                     <div class="tip" style="width:220px;height:30px;color:red;margin:0 auto;display:none;">*抱歉，没找到您要搜索的内容</div>
-                                    <ul id="treeMultiple" class="ztree" style="height: 700px; width:200px; overflow-y: auto;margin:0 auto"></ul>
+                                    <ul id="treeMultiple" class="ztree" style="height: 700px; width:220px; overflow-y: auto;margin:0 auto"></ul>
                                 </div>
                             </div>
                         </div>
 
                         <!--右侧数据部分-->
-                        <div class="main-content-right col-lg-9 col-md-8 col-sm-12 col-xs-12">
+                        <div class="main-content-right col-lg-9 col-md-8 col-sm-8 col-xs-12">
                             <ul class="main-content-header">
                                 <li class="main-content-header-lists0">手工仪表管理</li>
                             </ul>
@@ -46,7 +46,7 @@
                             <div class="main-content-body row">
 
                                 <div class="col-md-3" style="margin-bottom:20px;">
-                                    <button class="top-btn " data-toggle='modal' data-target='#add-deploy'
+                                    <button class="top-btn add-btn" data-toggle='modal' data-target='#add-deploy'
                                             style="margin-left:30px;">添加</button>
 
                                 </div>
@@ -54,7 +54,7 @@
                             <!--表格部分-->
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-content-table" style="overflow: auto;">
-                                    <table class="table table-striped" id="dateTables">
+                                    <table class="table table-striped" id="dateTables" style="min-width:1500px">
                                         <thead>
 
                                         </thead>
@@ -73,7 +73,7 @@
 
     <!--新增手工抄表数据弹窗-->
     <div class='modal fade' id='add-deploy' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:40%;margin:100px auto'>
+        <div class='modal-dialog'style='width:45%;min-width:800px;margin:100px auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -81,20 +81,89 @@
                     <ul class="condition-query">
 
                         <li >
-                            <button class="top-btn window-btn" data-toggle="modal" data-target="#mult-import" style="margin-left:25px">开启多表输入模式</button>
+                            <button class="top-btn window-btn meters-btn"  style="margin-left:25px">开启多表输入模式</button>
                         </li>
 
 
                         <div class="clearfix"></div>
                     </ul>
-                    <!--仪表名称-->
-                    <div class="ament-data"><b style="margin-left:5px;">仪表名称：</b>
-                        <span>*********表</span>
+
+                    <!--多表输入时显示-->
+                    <div class="row push-meters" style="display: none;background:#eef;margin-bottom:20px;">
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
+                            <label for=""  class="input-labels"  style="width:95px;">选择楼宇：</label>
+
+                            <div class="add-input-block">
+                                <input type="text" class="add-inputs" placeholder="从楼宇列表中搜索">
+                            </div>
+
+                            <img src="img/fdj.png" alt="" data-toggle="modal" data-target="#choose-building">
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
+                            <label for="" class="input-labels" style="width:95px">能耗类型：</label>
+
+                            <div class="add-input-father" style="margin-left:10px">
+                                <div class="add-input-block" style="margin-left:0">
+                                    <div type="text" class="add-inputs add-input-select" style="">
+                                        <span></span>
+                                        <div class="add-input-arrow" style="transform: rotate(540deg);"></div>
+                                    </div>
+                                </div>
+                                <ul class="add-select-block" style="z-index: 1000; display: none;">
+                                    <li ids="100">电</li>
+                                    <li ids="200">水</li>
+                                    <li ids="300">气</li>
+                                    <li ids="400">暖</li>
+                                    <li ids="500">冷</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
+                            <label for=""  style="width:95px;">抄表人：</label>
+
+                            <div class="add-input-block">
+                                <input type="text" class="add-inputs">
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
+                            <label for=""   style="width:95px;">结束日期：</label>
+
+                            <div class="add-input-block">
+                                <input type="text" class="add-inputs chooseDate"   >
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input" style="margin-top:0">
+                            <button type='button' class='btn top-btn refer-meters' style="margin-left:50px;">查询</button>
+
+
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
+                            <div class="show-plan " style="text-align:right;margin-right:30px;">
+                                <span><b>仪表输入进度:</b> &nbsp;<font>1/10</font></span>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="show-plan" style="text-align:right;margin-right:30px;display: none">
-                        <span><b>仪表输入进度:</b> &nbsp;<font>1/10</font></span>
+
+                    <!--仪表名称-->
+                    <div class="ament-data">
+                        <b style="margin-left:5px;">仪表名称：</b>
+                        <span>*********表</span>
+
+                        <b style="margin-left:25px;">计量区域：</b>
+                        <span>*********</span>
                     </div>
+
+
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
                             <label for="" class="input-label" style="width:95px;">抄表人：</label>
@@ -104,14 +173,14 @@
                             </div>
                         </div>
 
+
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
-                            <label for="" class="input-label" style="width:95px;">圈数：</label>
+                            <label for=""  class="input-label" style="width:95px;">倍率：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input"  readonly="true" >
                             </div>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -119,7 +188,7 @@
                             <label for="" class="input-label" style="width:95px;">抄表起数：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input" readonly="true">
                             </div>
                         </div>
 
@@ -127,7 +196,7 @@
                             <label for="" class="input-label" style="width:95px;">抄表止数：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input end-number">
                             </div>
                         </div>
 
@@ -138,7 +207,7 @@
                             <label for="" class="input-label" style="width:95px;">起始日期：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input chooseDate">
+                                <input type="text" class="add-input"  readonly="true">
                             </div>
                         </div>
 
@@ -146,31 +215,35 @@
                             <label for="" class="input-label" style="width:95px;">结束日期：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input  chooseDate">
+                                <input type="text" class="add-input  chooseDate end-date">
                             </div>
+
+
                         </div>
 
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
-                            <label for=""  style="width:95px;">倍率：</label>
+                            <label for="" class="input-label" style="width:95px;">圈数：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input cycleNum" value="0">
                             </div>
                         </div>
 
+
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
-                            <label for=""  style="width:95px;">用能量：</label>
+                            <label for=""  class="input-label" style="width:95px;">用能量：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input" readonly="true">
                             </div>
                         </div>
 
                     </div>
                     <div class='modal-footer'>
+                        <button type='button' class='btn top-btn next-btn' style="display:none" data-toggle="modal" data-target="#jump-meter">下一条</button>
                         <button type='button' class='btn btn-primary top-btn'>提交更改</button>
                         <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
                     </div>
@@ -256,18 +329,61 @@
         </div>
     </div>
 
+
+    <!--选择楼宇弹窗-->
+    <div class='modal fade' id='choose-building' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:430px;margin:10% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">选择楼宇</div>
+
+                    <div class="showCompany search-test-inner  search-test-inner0 row">
+                        <!-- 搜索框结构 -->
+                        <div class="col-sm-12 col-xs-12">
+
+                            <div class="main-content-table" style="overflow: auto;width:100%;">
+                                <table class="table table-striped left-th-table" id="dateTables4" style="text-align:left">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--修改手工抄表数据弹窗-->
     <div class='modal fade' id='remove-deploy' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:40%;margin:100px auto'>
+        <div class='modal-dialog'style='width:45%;min-width:800px;margin:100px auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                     <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">修改手工抄表数据</div>
 
+
                     <!--仪表名称-->
-                    <div class="ament-data"><b style="margin-left:5px;">仪表名称：</b>
+                    <div class="ament-data">
+                        <b style="margin-left:5px;">仪表名称：</b>
                         <span>*********表</span>
+
+                        <b style="margin-left:25px;">计量区域：</b>
+                        <span>*********</span>
                     </div>
+
 
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
@@ -278,14 +394,14 @@
                             </div>
                         </div>
 
+
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
-                            <label for="" class="input-label" style="width:95px;">圈数：</label>
+                            <label for=""  class="input-label" style="width:95px;">倍率：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input"  readonly="true" >
                             </div>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -293,7 +409,7 @@
                             <label for="" class="input-label" style="width:95px;">抄表起数：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input" readonly="true">
                             </div>
                         </div>
 
@@ -301,7 +417,7 @@
                             <label for="" class="input-label" style="width:95px;">抄表止数：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input end-number">
                             </div>
                         </div>
 
@@ -312,7 +428,7 @@
                             <label for="" class="input-label" style="width:95px;">起始日期：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input chooseDate">
+                                <input type="text" class="add-input"  readonly="true">
                             </div>
                         </div>
 
@@ -320,36 +436,98 @@
                             <label for="" class="input-label" style="width:95px;">结束日期：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input  chooseDate">
+                                <input type="text" class="add-input  chooseDate end-date">
                             </div>
+
+
                         </div>
 
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
-                            <label for=""  style="width:95px;">倍率：</label>
+                            <label for="" class="input-label" style="width:95px;">圈数：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input cycleNum" value="0">
                             </div>
                         </div>
 
+
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 inner-input">
-                            <label for=""  style="width:95px;">用能量：</label>
+                            <label for=""  class="input-label" style="width:95px;">用能量：</label>
 
                             <div class="add-input-block">
-                                <input type="text" class="add-input">
+                                <input type="text" class="add-input" readonly="true">
                             </div>
                         </div>
 
                     </div>
                     <div class='modal-footer'>
+                        <button type='button' class='btn top-btn next-btn' style="display:none" data-toggle="modal" data-target="#jump-meter">下一条</button>
                         <button type='button' class='btn btn-primary top-btn'>提交更改</button>
                         <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+    <!--跳转下一跳弹窗-->
+    <div class='modal fade' id='jump-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">提示</h3>
+                    <p style="font-size:16px">确定跳过 <b></b> 进行录入吗？</p>
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--删除弹窗-->
+    <div class='modal fade' id='remove-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">提示</h3>
+                    <p style="font-size:16px">确定删除 <b></b> 中本条数据吗？</p>
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--自定义弹窗-->
+    <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true' style="z-index: 10000">
+        <div class='modal-dialog'style='max-width:700px;margin:150px auto;'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:18px">提示</h3>
+                    <p style="font-size:20px"> <b style="color:red"></b> </p>
+
+                    <div class='modal-footer' style="border:none">
+
+                        <button type='button' class='btn btn-primary top-btn' data-dismiss='modal'>确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--loading图-->
+    <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>
+
         </div>
     </div>
 
@@ -367,6 +545,7 @@
     <script src="./js/lib/jquery.ztree.excheck.min.js"></script>
     <script src="./js/lib/jquery.ztree.exedit.min.js"></script>
     <script src="./js/lib/jquery.ztree.exhide.min.js"></script>
+    <script src="js/commonIP.js"></script>
     <script src="js/MeterReading.js"></script>
 </body>
 </html>
