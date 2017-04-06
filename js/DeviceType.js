@@ -15,6 +15,9 @@ $(document).ready(function() {
         "paging": false,
         "ordering": false,
         'searching': false,
+        "sScrollY": '740px',
+        "bPaginate": false,
+        "scrollCollapse": true,
         'language': {
             'emptyTable': '没有数据',
             'loadingRecords': '加载中...',
