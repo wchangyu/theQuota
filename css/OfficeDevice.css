@@ -440,25 +440,25 @@ label {
 #ul3{
     width:360px;
 }
-#dateTables2{
-    width:477px !important;
-}
+/*#dateTables2{*/
+    /*width:457px !important;*/
+/*}*/
 
 
 #dateTables2_info{
     display: none;
 }
-#dateTables3{
-    width:477px !important;
-}
+/*#dateTables3{*/
+    /*width:477px !important;*/
+/*}*/
 
-#dateTables5{
-    width:450px !important;
-}
+/*#dateTables5{*/
+    /*width:450px !important;*/
+/*}*/
 
-#dateTables6{
-    width:650px !important;
-}
+/*#dateTables6{*/
+    /*width:650px !important;*/
+/*}*/
 
 #dateTables3_info, #dateTables5_info,#dateTables6_info{
     display: none;
@@ -544,3 +544,7 @@ table td{
 .dataTables_wrapper .dataTable .onFocus {
     background: #fbec88;
 }
+.choose-num{
+    cursor: pointer;
+}
+

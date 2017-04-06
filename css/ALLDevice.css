@@ -393,3 +393,9 @@ label {
 .even td{
     height:36px;
 }
+.theHidden{
+    display: none !important;
+}
+.fdjImg{
+    cursor: pointer;
+}

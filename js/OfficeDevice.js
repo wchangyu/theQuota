@@ -292,6 +292,7 @@ $(document).ready(function(){
     });
 
     //累加子账户维护
+
     var table2 = $('#dateTables2').DataTable({
         "autoWidth": false,  //用来启用或禁用自动列的宽度计算
         //是否分页
@@ -501,67 +502,72 @@ $(document).ready(function(){
         $('#accum-preseve .add-title').html('累加子账户维护');
 
         var id = importantId;
+
+        setTimeout(function(){
+            $.ajax({
+                type: 'get',
+                url: IP + "/UnitMeter/GetAddMeterByUnitID",
+                async: false,
+                timeout: theTimes,
+                data:{
+                    unitID:id
+                },
+                beforeSend: function () {
+                    $('#theLoading').modal('show');
+                },
+
+                complete: function () {
+
+                },
+                success: function (data) {
+                    $('#theLoading').modal('hide');
+                    console.log(data);
+                    waitArr = data.waitMeters;
+                    pointArr = data.meterPointers;
+                    selectArr = data.selectMeters;
+                    buildArr = data.meterPointers;
+
+                    leftArr = waitArr;
+
+                    _table = $('#dateTables2').dataTable();
+                    _table.fnClearTable();
+                    setDatas(waitArr);
+
+                    _table = $('#dateTables3').dataTable();
+                    _table.fnClearTable();
+                    setDatas(selectArr);
+
+
+
+                    selectNum = selectArr.length;
+
+                    for(var i=0 ; i<selectNum; i++){
+                        $('#dateTables3 tbody .add-row').eq(i).find('img').attr('src','img/minus-sign1.png');
+                    }
+
+                    console.log(buildArr)
+                    _table = $('#dateTables4').dataTable();
+                    _table.fnClearTable();
+                    setDatas(buildArr);
+
+
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#theLoading').modal('hide');
+                    console.log(textStatus);
+
+                    if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                        ajaxTimeoutTest.abort();
+                        myAlter("超时");
+                    }
+                    myAlter("请求失败！");
+                }
+            });
+        },300)
+
         //获取待选计量设备列表
-        $.ajax({
-            type: 'get',
-            url: IP + "/UnitMeter/GetAddMeterByUnitID",
-            async: false,
-            timeout: theTimes,
-            data:{
-                unitID:id
-            },
-            beforeSend: function () {
 
-            },
-
-            complete: function () {
-
-            },
-            success: function (data) {
-                $('#theLoading').modal('hide');
-                console.log(data);
-                 waitArr = data.waitMeters;
-                 pointArr = data.meterPointers;
-                selectArr = data.selectMeters;
-                buildArr = data.meterPointers;
-
-                 leftArr = waitArr;
-
-                _table = $('#dateTables2').dataTable();
-                _table.fnClearTable();
-                setDatas(waitArr);
-
-                _table = $('#dateTables3').dataTable();
-                _table.fnClearTable();
-                setDatas(selectArr);
-
-
-
-                selectNum = selectArr.length;
-
-                for(var i=0 ; i<selectNum; i++){
-                    $('#dateTables3 tbody .add-row').eq(i).find('img').attr('src','img/minus-sign1.png');
-                }
-
-                console.log(buildArr)
-                _table = $('#dateTables4').dataTable();
-                _table.fnClearTable();
-                setDatas(buildArr);
-
-
-
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#theLoading').modal('hide');
-                console.log(textStatus);
-
-                if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
-                    ajaxTimeoutTest.abort();
-                    myAlter("超时");
-                }
-                myAlter("请求失败！");
-            }
-        });
 
 
 
@@ -630,67 +636,69 @@ $(document).ready(function(){
         $('#accum-preseve  .add-title').html('累减子账户维护');
         var id = importantId;
         //获取待选计量设备列表
-        $.ajax({
-            type: 'get',
-            url: IP + "/UnitMeter/GetSubtractMeterByUnitID",
-            async: false,
-            timeout: theTimes,
-            data:{
-                unitID:id
-            },
-            beforeSend: function () {
 
-            },
+        setTimeout(function(){
+            $.ajax({
+                type: 'get',
+                url: IP + "/UnitMeter/GetSubtractMeterByUnitID",
+                async: false,
+                timeout: theTimes,
+                data:{
+                    unitID:id
+                },
+                beforeSend: function () {
+                    $('#theLoading').modal('show');
+                },
 
-            complete: function () {
+                complete: function () {
 
-            },
-            success: function (data) {
-                $('#theLoading').modal('hide');
-                console.log(data);
-                waitArr = data.waitMeters;
-                pointArr = data.meterPointers;
-                selectArr = data.selectMeters;
-                buildArr = data.meterPointers;
+                },
+                success: function (data) {
+                    $('#theLoading').modal('hide');
+                    console.log(data);
+                    waitArr = data.waitMeters;
+                    pointArr = data.meterPointers;
+                    selectArr = data.selectMeters;
+                    buildArr = data.meterPointers;
 
-                leftArr = waitArr;
+                    leftArr = waitArr;
 
-                _table = $('#dateTables2').dataTable();
-                _table.fnClearTable();
-                setDatas(waitArr);
+                    _table = $('#dateTables2').dataTable();
+                    _table.fnClearTable();
+                    setDatas(waitArr);
 
-                _table = $('#dateTables3').dataTable();
-                _table.fnClearTable();
-                setDatas(selectArr);
+                    _table = $('#dateTables3').dataTable();
+                    _table.fnClearTable();
+                    setDatas(selectArr);
 
 
 
-                selectNum = selectArr.length;
+                    selectNum = selectArr.length;
 
-                for(var i=0 ; i<selectNum; i++){
-                    $('#dateTables3 tbody .add-row').eq(i).find('img').attr('src','img/minus-sign1.png');
+                    for(var i=0 ; i<selectNum; i++){
+                        $('#dateTables3 tbody .add-row').eq(i).find('img').attr('src','img/minus-sign1.png');
+                    }
+
+                    console.log(buildArr)
+                    _table = $('#dateTables4').dataTable();
+                    _table.fnClearTable();
+                    setDatas(buildArr);
+
+
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#theLoading').modal('hide');
+                    console.log(textStatus);
+
+                    if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                        ajaxTimeoutTest.abort();
+                        myAlter("超时");
+                    }
+                    myAlter("请求失败！");
                 }
-
-                console.log(buildArr)
-                _table = $('#dateTables4').dataTable();
-                _table.fnClearTable();
-                setDatas(buildArr);
-
-
-
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#theLoading').modal('hide');
-                console.log(textStatus);
-
-                if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
-                    ajaxTimeoutTest.abort();
-                    myAlter("超时");
-                }
-                myAlter("请求失败！");
-            }
-        });
-
+            });
+        },300);
 
 
 
@@ -901,9 +909,17 @@ $(document).ready(function(){
                 render:function(data, type, row, meta){
 
                     if(row.isBindingUnitMeter == 1){
-                        return '<input style="width:75px" value="'+data+'"  disabled="true"> '
+
+                            return '<input style="width:75px" value="'+data+'"  disabled="true"> '
+
                     }else {
-                        return '<input class="wait-change2" style="width:75px" value="'+data+'"> '
+
+                        if(data == 0){
+                            return '<input class="wait-change2" style="width:75px" value=""> '
+                        }else{
+                            return '<input class="wait-change2" style="width:75px" value="'+data+'"> '
+                        }
+
                     }
                 }
             }
@@ -913,69 +929,77 @@ $(document).ready(function(){
 
     $('.top-btn3').on('click',function(){
         var id = importantId;
-        $.ajax({
-            type: 'get',
-            url: IP + "/UnitMeter/GetApportionMeterByUnitID",
-            async: false,
-            timeout: theTimes,
-            data:{
-                unitID:id
-            },
-            beforeSend: function () {
+        setTimeout(function(){
+            $.ajax({
+                type: 'get',
+                url: IP + "/UnitMeter/GetApportionMeterByUnitID",
+                async: false,
+                timeout: theTimes,
+                data:{
+                    unitID:id
+                },
+                beforeSend: function () {
+                    $('#theLoading').modal('show');
+                },
 
-            },
+                complete: function () {
 
-            complete: function () {
+                },
+                success: function (data) {
+                    $('#theLoading').modal('hide');
+                    console.log(data);
+                    waitArr = data.waitMeters;
+                    pointArr = data.meterPointers;
+                    selectArr = data.selectMeters;
+                    buildArr = data.meterPointers;
 
-            },
-            success: function (data) {
-                $('#theLoading').modal('hide');
-                console.log(data);
-                waitArr = data.waitMeters;
-                pointArr = data.meterPointers;
-                selectArr = data.selectMeters;
-                buildArr = data.meterPointers;
+                    leftArr = waitArr;
 
-                leftArr = waitArr;
+                    _table = $('#dateTables5').dataTable();
+                    _table.fnClearTable();
+                    setDatas(waitArr);
 
-                _table = $('#dateTables5').dataTable();
-                _table.fnClearTable();
-                setDatas(waitArr);
-
-                _table = $('#dateTables6').dataTable();
-                _table.fnClearTable();
-                setDatas(selectArr);
+                    _table = $('#dateTables6').dataTable();
+                    _table.fnClearTable();
+                    setDatas(selectArr);
 
 
 
-                selectNum = selectArr.length;
+                    selectNum = selectArr.length;
 
-                for(var i=0 ; i<selectNum; i++){
-                    $('#dateTables6 tbody .add-row').eq(i).find('img').attr('src','img/minus-sign1.png');
+                    for(var i=0 ; i<selectNum; i++){
+                        $('#dateTables6 tbody .add-row').eq(i).find('img').attr('src','img/minus-sign1.png');
+                    }
+
+                    console.log(buildArr)
+                    _table = $('#dateTables4').dataTable();
+                    _table.fnClearTable();
+                    setDatas(buildArr);
+
+
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#theLoading').modal('hide');
+                    console.log(textStatus);
+
+                    if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                        ajaxTimeoutTest.abort();
+                        myAlter("超时");
+                    }
+                    myAlter("请求失败！");
                 }
+            });
+        },300)
 
-                console.log(buildArr)
-                _table = $('#dateTables4').dataTable();
-                _table.fnClearTable();
-                setDatas(buildArr);
-
-
-
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#theLoading').modal('hide');
-                console.log(textStatus);
-
-                if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
-                    ajaxTimeoutTest.abort();
-                    myAlter("超时");
-                }
-                myAlter("请求失败！");
-            }
-        });
 
         $('#accum-shared .btn-primary').off('click');
         $('#accum-shared .btn-primary').on('click',function(){
+            //检验是否填写正确
+            if(!checkedNull2('#accum-shared')){
+                console.log('ii');
+                return false;
+            };
 
             $.ajax({
                 type: 'post',
@@ -2328,15 +2352,20 @@ function tableChange(){
         }
     });
 
-    $('.wait-change2').on('blur',function(){
+    $('.wait-change2').on('blur',function(e){
+
+
         var id = $(this).parents('tr').find('.theHidden').html();
         var txt = $(this).val();
-
-        if(isNaN(txt) || txt < 0 || txt == 0  || txt > 1){
-            myAlter('公摊比例输入错误');
-            getFocus1($(this));
-            return false;
-        }
+        //if(txt == ''){
+        //    return false;
+        //}else if(){
+        //
+        //        myAlter('公摊比例输入错误');
+        //        getFocus1($(this));
+        //        return false;
+        //
+        //}
 
         for(var i=0; i<selectArr.length; i++){
             if(id == selectArr[i].pK_Meter){
@@ -2367,12 +2396,12 @@ function tableChanges(){
         var id = $(this).parents('tr').find('.theHidden').html();
 
         var txt = $(this).val();
-        var startNum = $(this).parents('tr').children().eq(6).html();
+        var startNum = parseFloat($(this).parents('tr').children().eq(6).html());
         if(isNaN(txt) || txt < 0 || txt == 0){
             myAlter('设备终止读数错误');
             getFocus1($(this));
             return false;
-        }else if(txt < startNum){
+        }else if(parseFloat(txt) < startNum){
             myAlter('止数小于起数，请输入圈数');
             $(this).parents('tr').find('.wait-push2').val('');
             getFocus1($(this).parents('tr').find('.wait-push2'));
@@ -2588,6 +2617,9 @@ function getUnitMessage(){
             }
 
             $('#ul1').html(html);
+            $('#ul1 li').eq(0).css({
+                background:'#fbec88'
+            })
 
 
         },
@@ -2811,6 +2843,8 @@ function checkedNull1(dom){
     var length = $(dom).find('.wait-push').length;
     for(var i=0; i<length; i++){
         if($(dom).find('.wait-push').eq(i).val() == ''){
+
+            console.log('333')
             var txt = $(dom).find('.wait-push').eq(i).attr('txt');
             myAlter('请填写对应的'+ txt);
 
@@ -2820,4 +2854,30 @@ function checkedNull1(dom){
             return false;
         }
     }
+    return true;
+}
+
+function checkedNull2(dom){
+    var length = $(dom).find('.wait-change2').length;
+    for(var i=0; i<length; i++){
+        var txt = $(dom).find('.wait-change2').eq(i).val();
+        if(txt == ''){
+            myAlter('公摊比例不能为空');
+
+            getFocus1($(dom).find('.wait-change2').eq(i));
+
+
+            return false;
+        }else      if(isNaN(txt) || txt < 0 || txt == 0  || txt > 1){
+
+
+            myAlter('公摊比例为大于0小于1的数字');
+
+            getFocus1($(dom).find('.wait-change2').eq(i));
+
+
+            return false;
+        }
+    }
+    return true;
 }

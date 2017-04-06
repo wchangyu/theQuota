@@ -72,7 +72,9 @@ $(document).ready(function(){
                 'processing': '查询中...',
                 'lengthMenu': '每页 _MENU_ 件',
                 'zeroRecords': '没有数据',
-                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
+                "sInfoEmpty" : "记录数为0",
+                "sInfoFiltered" : "(全部记录数 _MAX_ 条)",
                 'paginate': {
                     'first':      '第一页',
                     'last':       '最后一页',
@@ -209,13 +211,20 @@ $(document).ready(function(){
         });
 
     _table = $('#dateTables').dataTable();
+
     //给表格添加后台获取到的数据
     setData();
     hiddrenId();
 
     //点击左侧手抄表，对其数据进行展示
-    $('.treeFont').on('click',function(){
-        var id = $(this).attr('ids');
+
+    $('.ztree li ul li .level1').on('click',function(){
+
+        $('.ztree font').removeClass('onClicks');
+
+        var id = $(this).find('.treeFont').attr('ids');
+
+        $(this).find('.treeFont').addClass('onClicks');
 
         startID = id;
         console.log(startID);
@@ -226,8 +235,6 @@ $(document).ready(function(){
         ajaxSuccess()
 
     });
-
-
 
     //添加功能
 
@@ -282,6 +289,18 @@ $(document).ready(function(){
     pushBuildArr();
 
     $('.add-btn').on('click',function(){
+
+        $('#add-deploy .add-input').val('');
+        $('#add-deploy .add-input').eq(6).val(0);
+        $('#add-deploy .add-inputs').val('');
+        $('#add-deploy .meters-btn').html('开启多表输入模式');
+        $('#add-deploy .push-meters').css({
+            display:'none'
+        });
+        $('#add-deploy .show-plan font').html('0/0');
+        $('#add-deploy .next-btn').css({
+            display:'none'
+        })
 
         //判断是否结算
         if(importantNum == 1){
@@ -376,6 +395,13 @@ $(document).ready(function(){
                     getData = data;
 
                     var lengths = data.length;
+                    console.log(lengths);
+                    if(lengths == 0){
+                        myAlter('未找到符合条件仪表，请重新输入');
+                        $('#add-deploy .add-inputs').eq(0).val('');
+                        $('#add-deploy .add-inputs').eq(0).focus();
+                        return false;
+                    }
 
                     $('.show-plan').find('font').html('1/'+lengths);
 
@@ -522,17 +548,15 @@ $(document).ready(function(){
                     if(getData.length == 0){
                         $('#add-deploy').modal('hide');
                         ajaxSuccess();
+                        $('.onClicks').attr('color','#307f7a');
+                        getTreeMessage();
+
                     }else{
                         var lengths = getData.length;
                         newNum ++;
 
                         if(newNum == lengths){
-                            myAlter("全部录入完成");
-                            $('#add-deploy').modal('hide');
-                            ajaxSuccess();
-                            console.log('ok');
-                            newNum -- ;
-                            return false;
+                            location.reload();
                         }
 
                         var num = newNum + 1;
@@ -1146,6 +1170,10 @@ function getBuildTree(){
 
             startID = data[0].pointerAndMeters[0].meterID;
 
+            zNodes =[
+
+            ];
+
            for(var i=1; i<data.length+1; i++){
                var id0 = data[i-1].pointerID;
                var name0 = data[i-1].pointerName;
@@ -1161,9 +1189,9 @@ function getBuildTree(){
 
                    var names;
                    if(isRead == '1'){
-                       names = "<font color=' #307f7a' class='treeFont' ids='"+id11+"'>"+ name1+"</font>"
+                       names = "<font color='#307f7a' class='treeFont' ids='"+id11+"'>"+ name1+"</font>"
                    }else{
-                       names = "<font color=' #b2041a' class='treeFont' ids='"+id11+"'>"+ name1+"</font>"
+                       names = "<font color='#b2041a' class='treeFont' ids='"+id11+"'>"+ name1+"</font>"
                    }
                    var id1 = i+'' + j + '';
                    var id2 = parseInt(id1);
@@ -1195,6 +1223,27 @@ function getBuildTree(){
 }
 
 getBuildTree();
+
+//树状图下方统计信息
+function getTreeMessage(){
+    var length = $('.treeFont').length;
+    console.log(length);
+    var num = 0;
+    for(var i=0; i<length; i++){
+        var txt = $('.treeFont').eq(i).attr('color');
+        console.log(txt);
+        if(txt == '#b2041a'){
+            console.log('222');
+            num ++;
+        }
+
+    }
+    console.log(num);
+
+    $('.tree-bottom p span').html(length);
+    $('.tree-bottom p b').html(num + " ");
+}
+getTreeMessage();
 
 //给楼宇列表赋值
 function pushBuildArr(){
@@ -1230,6 +1279,7 @@ $('#choose-building .btn-primary').on('click',function(){
 });
 
 var openNum = 0;
+
 $('.meters-btn').on('click',function(){
     if(openNum % 2 == 0){
         $('.in .next-btn').css({

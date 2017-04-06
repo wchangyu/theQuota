@@ -77,7 +77,9 @@ $(document).ready(function(){
             'processing': '查询中...',
             'lengthMenu': '每页 _MENU_ 件',
             'zeroRecords': '没有数据',
-            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
+            "sInfoEmpty" : "记录数为0",
+            "sInfoFiltered" : "(全部记录数 _MAX_ 条)",
             'paginate': {
                 'first':      '第一页',
                 'last':       '最后一页',
@@ -328,7 +330,7 @@ $(document).ready(function(){
             success: function (data)
             {
                 console.log(data);
-                $('#add-meter').modal('hide');
+
                 $('#theLoading').modal('hide');
                 if(data == 2){
                     myAlter('计量设备已存在');
@@ -342,6 +344,11 @@ $(document).ready(function(){
                     myAlter('数采仪编号重复');
                     return false;
                 }
+                if(data == 13){
+                    myAlter('仪表计量区域重复');
+                    return false;
+                }
+                $('#add-meter').modal('hide');
 
                 ajaxSuccess();
 
@@ -558,7 +565,7 @@ $(document).ready(function(){
                 },
                 success: function (data) {
                     console.log(data);
-                    $('#alter-meter').modal('hide');
+
                     $('#theLoading').modal('hide');
                     if(data == 2){
                         myAlter('计量设备已存在');
@@ -572,7 +579,11 @@ $(document).ready(function(){
                         myAlter('数采仪编号重复');
                         return false;
                     }
-
+                    if(data == 13){
+                        myAlter('仪表计量区域重复');
+                        return false;
+                    }
+                    $('#alter-meter').modal('hide');
                     jumpNow();
 
 
@@ -596,7 +607,7 @@ $(document).ready(function(){
     });
 
     //删除功能
-    $('.top-btn5').on('click',function(){
+    $('.top-btn5').on('click',function() {
         var dom = $('.onFocus');
         if(dom.length == 0){
             myAlter('请选中一行数据进行操作');
@@ -654,7 +665,7 @@ $(document).ready(function(){
         });
 
         $('#remove-meter').off('click');
-        $('#remove-meter').one('click','btn-primary',function(){
+        $('#remove-meter').on('click','.btn-primary',function(){
 
             $.ajax({
                 type: 'post',
@@ -1136,6 +1147,9 @@ function putMeterType(dom){
         $('#add-meter').find('.number-machine').find('.number-machine').find('.add-input').attr('placeHolder','不可输入');
         $('#add-meter').find('.number-machine').find('.add-input').attr('readOnly',"true");
         $('#add-meter').find('.number-machine').find('img').removeAttr('data-target');
+        $('#add-meter').find('.number-machine').find('img').css({
+            display:'none'
+        });
 
         $('#add-meter').find('.rate').find('.add-input').attr('placeHolder','');
         $('#add-meter').find('.rate').find('.add-input').val(1);
@@ -1150,6 +1164,9 @@ function putMeterType(dom){
     }else if(arr0[0] == 1){
         $('#add-meter').find('.number-machine').find('.add-input').attr('placeHolder','从数采仪列表中选择');
         $('#add-meter').find('.number-machine').find('img').attr('data-target','#choose-instrument');
+        $('#add-meter').find('.number-machine').find('img').css({
+            display:'inline-block'
+        });
 
         $('#add-meter').find('.rate').find('.add-input').attr('placeHolder','自动获取');
         $('#add-meter').find('.rate').find('.add-input').val('');
@@ -1189,6 +1206,9 @@ $('.top-btn1').on('click',function(){
 
 
             $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','不可输入');
+            $(this).parents('.deploy-form').find('.number-machine').find('img').css({
+                display:'none'
+            });
             $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('readOnly',"true");
             $(this).parents('.deploy-form').find('.number-machine').find('img').removeAttr('data-target');
             $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
@@ -1218,6 +1238,10 @@ $('.top-btn1').on('click',function(){
 
             $(this).parents('.deploy-form').find('.number-machine').find('img').attr('data-target','#choose-instrument');
             $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
+
+            $(this).parents('.deploy-form').find('.number-machine').find('img').css({
+                display:'inline-block'
+            });
 
             $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('placeHolder','自动获取');
             $(this).parents('.deploy-form').find('.rate').find('.add-input').val('');
@@ -1633,7 +1657,7 @@ removeSeek('#choose-building');
 removeSeek('#choose-instrument');
 
 //点击数采仪后的放大镜时
-$('.number-machine').on('click',function(){
+$('.number-machine').on('click','img',function(){
 
   var txt = $(this).parents('.deploy-form').find('.build-number').find('input').val();
     console.log(txt);

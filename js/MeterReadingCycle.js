@@ -14,6 +14,9 @@ $(document).ready(function(){
         "paging":false,
         "ordering": false,
         'searching':false,
+        "sScrollY": '740px',
+        "bPaginate": false,
+        "scrollCollapse": true,
         'language': {
             'emptyTable': '没有数据',
             'loadingRecords': '加载中...',
@@ -83,6 +86,7 @@ $(document).ready(function(){
                         return  "<button class='top-btn' ><a style='color:white;background:none' href='MeterReading.html?id="+data+"'>登记查看</a></button>"
 
                 }
+
 
             },
             {

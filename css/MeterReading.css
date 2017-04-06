@@ -30,7 +30,7 @@ li{
 
 /*头部横条*/
 .main-content-header{
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     height: 30px;
 }
 .main-content-header-lists0 {
@@ -71,7 +71,7 @@ li{
 }
 
 .ztree li span font {
-    font-size:14px;
+    font-size:16px;
 }
 
 /*上方添加按钮*/
@@ -336,5 +336,16 @@ label {
 .input-labels {
     background: url(../img/asterisk.png) no-repeat 0 center;
 }
+/*图例*/
+.legend span{
+    width:30px;
+    height:15px;
+    display: inline-block;
+
+}
+.legend div{
+    text-align:right;
+}
+
 
 
