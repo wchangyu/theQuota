@@ -83,7 +83,7 @@ $(document).ready(function(){
                 title:'抄表登记详情',
                 data:'pK_MTReadCycle',
                 render:function(data, type, full, meta){
-                        return  "<button class='top-btn' ><a style='color:white;background:none' href='MeterReading.html?id="+data+"'>登记查看</a></button>"
+                        return  "<a class='theJump' href='MeterReading.html?id="+data+"'>登记查看</a>"
 
                 }
 
@@ -336,60 +336,67 @@ $(document).ready(function(){
     //生成在线表数据
     $('.create-data').on('click',function(){
         var id = $(this).parents('tr').children().eq(1).html();
-
         console.log(id);
-        $.ajax({
-            type: 'post',
-            url: IP + "/UnitMeter/OnlineDataToReadCycle",
-            contentType:'application/json',
-            async: false,
-            timeout: theTimes,
-            data:JSON.stringify({PK_MTReadCycle:id,UserID:userName}),
-            beforeSend: function () {
 
-            },
+        $('#set-data').modal('show');
+        $('#set-data .btn-primary').on('click',function(){
+            $.ajax({
+                type: 'post',
+                url: IP + "/UnitMeter/OnlineDataToReadCycle",
+                contentType:'application/json',
+                async: false,
+                timeout: theTimes,
+                data:JSON.stringify({PK_MTReadCycle:id,UserID:userName}),
+                beforeSend: function () {
 
-            complete: function () {
+                },
 
-            },
-            success: function (data) {
-                $('#theLoading').modal('hide');
-                console.log(data);
-                var txt = data.validateNumber;
-                if(txt == 99){
-                    myAlter('在线表数据生成成功');
-                }else if(txt == 1){
-                    myAlter('执行失败，请联系管理员')
-                }else if(txt == 3){
-                    myAlter('执行失败')
-                }else if(txt == 7){
-                    myAlter('无在线数据')
-                }else if(txt == 5){
-                    var arr = data.f_mtNumberInfos;
-                    var length = arr.length;
-                    var html = '';
-                    for(var i=0; i<length; i++){
-                        html += arr[i].valueStr + " ";
+                complete: function () {
 
+                },
+                success: function (data) {
+                    $('#theLoading').modal('hide');
+                    $('#set-data').modal('hide');
+                    console.log(data);
+                    var txt = data.validateNumber;
+                    if(txt == 99){
+                        myAlter('在线表数据生成成功');
+                    }else if(txt == 1){
+                        myAlter('执行失败，请联系管理员')
+                    }else if(txt == 3){
+                        myAlter('执行失败')
+                    }else if(txt == 7){
+                        myAlter('无在线数据')
+                    }else if(txt == 5){
+                        var arr = data.f_mtNumberInfos;
+                        var length = arr.length;
+                        var html = '';
+                        for(var i=0; i<length; i++){
+                            html += arr[i].valueStr + " ";
+
+                        }
+
+                        myAlter("下列仪表故障"+ html);
                     }
 
-                    myAlter("下列仪表故障"+ html);
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#theLoading').modal('hide');
+                    $('#set-data').modal('hide');
+                    console.log(textStatus);
+
+                    if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                        ajaxTimeoutTest.abort();
+                        myAlter("超时");
+                    }
+                    console.log('1111')
+                    myAlter("请求失败！");
                 }
+            })
+        });
 
 
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#theLoading').modal('hide');
-                console.log(textStatus);
-
-                if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
-                    ajaxTimeoutTest.abort();
-                    myAlter("超时");
-                }
-                console.log('1111')
-                myAlter("请求失败！");
-            }
-        })
     });
 
     //修改功能
