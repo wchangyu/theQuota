@@ -218,3 +218,17 @@ function getMtonline(num){
 //    }
 //})
 
+$('.chooseDate').on('focus',function(){
+    var that = $(this);
+    setTimeout(function(){
+        $('.day').one('click',function(){
+            console.log('ok');
+            that.blur();
+            $('.datepicker').css({
+                display:'none'
+            })
+
+        });
+    },100)
+
+});

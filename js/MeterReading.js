@@ -91,7 +91,8 @@ $(document).ready(function(){
             'columns':[
                 {
                     title:'计量设备类型',
-                    data:'f_MeterTypeName'
+                    data:'f_MeterTypeName',
+                    class:'theHidden'
 
                 },
                 {
@@ -104,42 +105,50 @@ $(document).ready(function(){
                     data:'f_mtEnergyType',
                     render:function(data, type, full, meta){
                         return getEnergyType(data);
-                    }
+                    },
+                    class:'theHidden'
 
                 },
                 {
                     title:'表号（代号）',
-                    data:'f_mtNumber'
+                    data:'f_mtNumber',
+                    class:'theHidden'
 
                 },
                 {
                     title:'二级单位',
-                    data:'f_UnitName'
+                    data:'f_UnitName',
+                    class:'theHidden'
 
                 },
                 {
                     title:'抄表周期名称',
-                    data:'f_CycleName'
+                    data:'f_CycleName',
+                    class:'theHidden'
 
                 },
                 {
                     title:'抄表月份',
-                    data:'f_ReadCycleST'
+                    data:'f_ReadCycleST',
+                    class:'theHidden'
 
                 },
                 {
                     title:'绑定楼宇',
-                    data:'pointerName'
+                    data:'pointerName',
+                    class:'theHidden'
 
                 },
                 {
                     title:'计量区域',
-                    data:'f_MeasureArea'
+                    data:'f_MeasureArea',
+                    class:'theHidden'
 
                 },
                 {
                     title:'安装位置',
-                    data:'f_InstalPosition'
+                    data:'f_InstalPosition',
+                    class:'theHidden'
 
                 },
                 {
@@ -212,8 +221,104 @@ $(document).ready(function(){
 
     _table = $('#dateTables').dataTable();
 
+
     //给表格添加后台获取到的数据
     setData();
+    hiddrenId();
+
+    var table1 = $('#dateTables1').DataTable({
+        "autoWidth": false,  //用来启用或禁用自动列的宽度计算
+        //是否分页
+        "destroy": false,//还原初始化了的datatable
+        "paging":false,
+        "ordering": false,
+        'searching':false,
+        'language': {
+            'emptyTable': '没有数据',
+            'loadingRecords': '加载中...',
+            'processing': '查询中...',
+            'lengthMenu': '每页 _MENU_ 件',
+            'zeroRecords': '没有数据',
+            'paginate': {
+                'first':      '第一页',
+                'last':       '最后一页',
+                'next':       '下一页',
+                'previous':   '上一页'
+            },
+            'infoEmpty': ''
+        },
+        'buttons': [
+
+        ],
+        "dom":'B<"clear">lfrtip',
+        //数据源
+        'columns':[
+            {
+                title:'计量设备类型',
+                data:'f_MeterTypeName'
+
+            },
+            {
+                title:'抄表数据ID',
+                data:'pK_MTRead',
+                class:'theHidden'
+            },
+            {
+                title:'能耗类型',
+                data:'f_mtEnergyType',
+                render:function(data, type, full, meta){
+                    return getEnergyType(data);
+                }
+
+            },
+            {
+                title:'表号（代号）',
+                data:'f_mtNumber'
+
+            },
+            {
+                title:'二级单位',
+                data:'f_UnitName'
+
+            },
+            {
+                title:'抄表周期名称',
+                data:'f_CycleName'
+
+            },
+            {
+                title:'抄表月份',
+                data:'f_ReadCycleST',
+                render:function(data, type, full, meta){
+                    var txt1 = data.split(' ')[0].split('/')[0];
+                    var txt2 = data.split(' ')[0].split('/')[1]
+                    return txt1 + "-" + txt2;
+                }
+
+            },
+            {
+                title:'绑定楼宇',
+                data:'pointerName'
+
+            },
+            {
+                title:'计量区域',
+                data:'f_MeasureArea'
+
+            },
+            {
+                title:'安装位置',
+                data:'f_InstalPosition'
+
+            }
+        ]
+    });
+
+    _table = $('#dateTables1').dataTable();
+
+
+    //给表格添加后台获取到的数据
+    setDatas(dataArr1);
     hiddrenId();
 
     //点击左侧手抄表，对其数据进行展示
@@ -232,7 +337,15 @@ $(document).ready(function(){
 
         _table = $('#dateTables').dataTable();
         //给表格添加后台获取到的数据
-        ajaxSuccess()
+        ajaxSuccess();
+
+        _table = $('#dateTables1').dataTable();
+        _table.fnClearTable();
+
+        //给表格添加后台获取到的数据
+        setDatas(dataArr1);
+        hiddrenId();
+
 
     });
 
@@ -940,6 +1053,7 @@ getAccount();
 //获取后台数据
 function alarmHistory(){
     dataArr=[];
+    dataArr1 = [];
     $.ajax({
         type:'get',
         url:IP + "/UnitMeter/GetAllReadByMeterID",
@@ -960,6 +1074,7 @@ function alarmHistory(){
             for(var i=0;i<result.length;i++){
                 dataArr.push(result[i]);
             }
+            dataArr1.push(dataArr[0]);
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             $('#theLoading').modal('hide');
@@ -1251,6 +1366,7 @@ function pushBuildArr(){
     //给表格添加后台获取到的数据
     setDatas(buildArr);
     hiddrenId();
+   $('.dataTables_filter input').attr('placeHolder',' 请输入楼宇名称进行搜索');
 }
 
 //点击table中某一行时
@@ -1298,7 +1414,6 @@ $('.meters-btn').on('click',function(){
 
 
 });
-
 
 
 

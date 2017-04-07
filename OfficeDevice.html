@@ -138,6 +138,11 @@
                     <div class="add-title">累加子账户维护</div>
 
                     <div class="showCompany search-test-inner1 row" style="padding-top:15px;margin-bottom:15px">
+
+                        <div class="legend" style="height:30px;">
+                            <div style="float:right;margin-right:50px;"><span><img src="img/add-sign.png"></span> <b> 可添加</b> <span> <img src="img/minus-sign.png"></span> <b> 可删除</b> <span><img src="img/minus-sign1.png"></span> <b> 不可删除</b> </div>
+
+                        </div>
                         <!-- 搜索框结构 -->
                         <div class="col-sm-6 col-xs-6">
 
@@ -146,13 +151,13 @@
                                 <!--表头-->
                                 <h4 style="margin-bottom:15px">待选计量设备列表
 
-                                </h4>
-                            <div class="" style="margin-bottom:15px;">
-                                <button class="top-btn choose-building" data-toggle='modal' data-target='#choose-building' style="margin-left:18px;margin-right:8px;">按楼查看</button>
-                                <button class="top-btn show-all">显示全部</button>
+                                        <button class="top-btn choose-building" data-toggle='modal' data-target='#choose-building' style="margin-left:18px;margin-right:8px;">按楼查看</button>
+                                        <button class="top-btn show-all">显示全部</button>
 
-                                <button class="top-btn push-all" style="margin-left:10px">添加全部</button>
-                            </div>
+                                        <button class="top-btn push-all" style="margin-left:10px">添加全部</button>
+
+                                </h4>
+
 
                             <div class="main-content-table" style="overflow: auto;width:100%;">
                                 <table class="table table-striped ttaddd" id="dateTables2" style="width:476px">
@@ -168,11 +173,11 @@
 
                         <div class="col-sm-6 col-xs-6 right-show-measure">
 
-                            <h4 style="">已选计量设备列表
-
+                            <h4 style="margin-bottom:45px">已选计量设备列表
+                                <button class="top-btn remove-all" style="margin-left:20px;">删除全部</button>
                             </h4>
 
-                            <button class="top-btn remove-all" style="margin-left:20px;margin-bottom:45px">删除全部</button>
+
 
                             <div class="main-content-table" style="overflow: auto;width:100%;">
                                 <table class="table table-striped" id="dateTables3">
@@ -205,6 +210,12 @@
                     <div class="add-title">公摊比例账户维护</div>
 
                     <div class="showCompany search-test-inner1 row" style="padding-top:15px;margin-bottom:15px">
+
+                        <div class="legend" style="height:30px;">
+                            <div style="float:right;margin-right:50px;"><span><img src="img/add-sign.png"></span> <b> 可添加</b> <span> <img src="img/minus-sign.png"></span> <b> 可删除</b> <span><img src="img/minus-sign1.png"></span> <b> 不可删除</b> </div>
+
+                        </div>
+
                         <!-- 搜索框结构 -->
                         <div class="col-sm-5 col-xs-5">
 
@@ -212,14 +223,12 @@
 
                             <!--表头-->
                             <h4 style="margin-bottom:15px">待选计量设备列表
-
-                            </h4>
-                            <div class="" style="margin-bottom:15px;">
                                 <button class="top-btn choose-building" data-toggle='modal' data-target='#choose-building' style="margin-left:18px;margin-right:8px;">按楼查看</button>
                                 <button class="top-btn show-all">显示全部</button>
 
                                 <button class="top-btn push-all" style="margin-left:10px">添加全部</button>
-                            </div>
+                            </h4>
+
 
                             <div class="main-content-table" style="overflow: auto;width:452px;">
                                 <table class="table table-striped" id="dateTables5">
@@ -235,11 +244,10 @@
 
                         <div class="col-sm-7 col-xs-7 right-show-measure">
 
-                            <h4 style="">已选计量设备列表
-
+                            <h4 style="margin-bottom:45px;">已选计量设备列表
+                                <button class="top-btn remove-all" style="margin-left:20px;">删除全部</button>
                             </h4>
 
-                            <button class="top-btn remove-all" style="margin-left:20px;margin-bottom:45px">删除全部</button>
 
                             <div class="main-content-table" style="overflow: auto;width:652px;">
                                 <table class="table table-striped" id="dateTables6">
@@ -309,6 +317,10 @@
 
                     <div class="ament-data"><b>子账户标识：</b>
                         <span>累加</span>
+                    </div>
+
+                    <div class="ament-data"><b>计量设备状态：</b>
+                        <span>手抄表</span>
                     </div>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="min-height:330px">
@@ -510,6 +522,21 @@
         </div>
     </div>
 
+    <!--是否提交信息弹窗-->
+    <div class='modal fade' id='present-message' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:360px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">提示</h3>
+                    <p style="font-size:18px">请在核对所有信息无误后点击确定进行提交。 <br/> <span style="color:red;font-size:14px">注：提交修改后只能通过注销或更换操作取消绑定。</span></p>
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--loading图-->
     <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>

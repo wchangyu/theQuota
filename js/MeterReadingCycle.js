@@ -51,7 +51,12 @@ $(document).ready(function(){
             },
             {
                 title:'抄表月份',
-                data:'f_ReadCycleST'
+                data:'f_ReadCycleST',
+                render:function(data, type, full, meta){
+                    var txt1 = data.split(' ')[0].split('/')[0];
+                    var txt2 = data.split(' ')[0].split('/')[1]
+                    return txt1 + "-" + txt2;
+                }
 
             },
             {
@@ -71,7 +76,7 @@ $(document).ready(function(){
                 title:'在线表操作',
                 "targets": -1,
                 "data": null,
-                "defaultContent": "<button class='top-btn create-data' >生成数据</button>"
+                "defaultContent": "<button class='top-btn create-data' >导入数据</button>"
             },
             {
                 title:'编辑操作',
@@ -337,8 +342,13 @@ $(document).ready(function(){
     $('.create-data').on('click',function(){
         var id = $(this).parents('tr').children().eq(1).html();
         console.log(id);
+        var txt = $(this).parents('tr').children().eq(0).html();
+        console.log(txt);
 
         $('#set-data').modal('show');
+
+        $('#set-data p b').html(txt);
+
         $('#set-data .btn-primary').on('click',function(){
             $.ajax({
                 type: 'post',
@@ -775,6 +785,71 @@ $(document).ready(function(){
 
 });
 
+$('.chooseDate').on('focus',function(){
+    console.log('11');
+    var that = $(this);
+    setTimeout(function(){
+        $('.month').one('click',function(){
+
+            var mydate = new Date();
+            var year = mydate.getFullYear();
+            var month = (mydate.getMonth()+1);
+
+            setTimeout(function(){
+                var num1 = that.val().split('-')[0];
+                var num2 = that.val().split('-')[1];
+                console.log(num2 > month);
+                if(num1 > year){
+                    $('.datepicker').css({
+                        display:'none'
+                    })
+                    myAlter('抄表月份大于当前日期，请重新填写');
+                    getFocus1(that);
+                    return false;
+                }else if(num1 == year && num2 > month){
+                    $('.datepicker').css({
+                        display:'none'
+                    })
+                    myAlter('抄表月份大于当前日期，请重新填写');
+                    getFocus1(that);
+                    return false;
+                }
+                that.blur();
+                $('.datepicker').css({
+                    display:'none'
+                })
+            },100)
+
+
+        });
+    },100)
+
+});
+
+$('.chooseDate').on('blur',function(){
+    var mydate = new Date();
+    var year = mydate.getFullYear();
+    var month = (mydate.getMonth()+1);
+
+    var num1 = $(this).val().split('-')[0];
+    var num2 = $(this).val().split('-')[1];
+    if(num1 > year){
+        $('.datepicker').css({
+            display:'none'
+        })
+        myAlter('抄表月份大于当前日期，请重新填写');
+        getFocus1(this);
+        return false;
+    }else if(num1 == year && num2 > month){
+        $('.datepicker').css({
+            display:'none'
+        })
+        myAlter('抄表月份大于当前日期，请重新填写');
+        getFocus1(this);
+        return false;
+    }
+});
+
 //获取后台数据
 function alarmHistory(){
     dataArr=[];
@@ -843,3 +918,4 @@ function checkedNull(dom){
     }
     return true;
 }
+

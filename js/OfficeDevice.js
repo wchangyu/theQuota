@@ -57,7 +57,7 @@ $(document).ready(function(){
     });
 
     //初始化表格
-    console.log(unitId[0])
+    console.log(unitId[0]);
     importantId = unitId[0];
     alarmHistory(unitId[0]);
 
@@ -139,7 +139,7 @@ $(document).ready(function(){
 
             },
             {
-                title:'绑定数采仪',
+                title:'在线计量设备',
                 data:'cNameT'
 
             },
@@ -532,6 +532,8 @@ $(document).ready(function(){
                     _table = $('#dateTables2').dataTable();
                     _table.fnClearTable();
                     setDatas(waitArr);
+                    $('#dateTables2_filter input').attr('placeHolder',' 请输入表号或代号进行搜索');
+
 
                     _table = $('#dateTables3').dataTable();
                     _table.fnClearTable();
@@ -545,11 +547,11 @@ $(document).ready(function(){
                         $('#dateTables3 tbody .add-row').eq(i).find('img').attr('src','img/minus-sign1.png');
                     }
 
-                    console.log(buildArr)
+                    console.log(buildArr);
                     _table = $('#dateTables4').dataTable();
                     _table.fnClearTable();
                     setDatas(buildArr);
-
+                    $('#dateTables4_filter input').attr('placeHolder',' 请输入楼宇名称进行搜索');
 
 
                 },
@@ -569,11 +571,15 @@ $(document).ready(function(){
         //获取待选计量设备列表
 
 
-
-
-
         $('#accum-preseve .btn-primary').off('click');
         $('#accum-preseve .btn-primary').on('click',function(){
+
+            $('#present-message').modal('show');
+
+        });
+
+        $('#present-message .btn-primary').off('click');
+        $('#present-message .btn-primary').on('click',function(){
 
             $.ajax({
                 type: 'post',
@@ -595,15 +601,22 @@ $(document).ready(function(){
                 },
                 success: function (data) {
                     console.log(data);
+
                     $('#accum-preseve').modal('hide');
-                    if(data == 1){
+                    $('#present-message').modal('hide');
+                    if(data.validateNumber == 1){
                         myAlter('参数错误')
-                    }else if(data == 3){
+                    }else if(data.validateNumber == 3){
                         myAlter('执行失败')
-                    }else if(data == 5){
+                    }else if(data.validateNumber == 5){
                         var html='';
                         for(var i=0; i<data.meterNumbers.length;i++){
-                            html+=data.memeterNumbers[i];
+                            if(i == data.meterNumbers.length - 1){
+                                html+=data.meterNumbers[i];
+                            }else{
+                                html+=data.meterNumbers[i] + ",";
+                            }
+
                         }
                         myAlter(html + '已在其他二级单位存在');
                     }
@@ -617,6 +630,7 @@ $(document).ready(function(){
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $('#theLoading').modal('hide');
                     $('#accum-preseve').modal('hide');
+                    $('#present-message').modal('hide');
                     console.log(textStatus);
 
                     if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
@@ -626,7 +640,7 @@ $(document).ready(function(){
                     myAlter("请求失败！");
                 }
             });
-        });
+        })
     });
 
     //累减子账户维护
@@ -666,6 +680,7 @@ $(document).ready(function(){
                     _table = $('#dateTables2').dataTable();
                     _table.fnClearTable();
                     setDatas(waitArr);
+                    $('#dateTables2_filter input').attr('placeHolder',' 请输入表号或代号进行搜索');
 
                     _table = $('#dateTables3').dataTable();
                     _table.fnClearTable();
@@ -683,6 +698,7 @@ $(document).ready(function(){
                     _table = $('#dateTables4').dataTable();
                     _table.fnClearTable();
                     setDatas(buildArr);
+                    $('#dateTables4_filter input').attr('placeHolder',' 请输入楼宇名称进行搜索');
 
 
 
@@ -705,6 +721,13 @@ $(document).ready(function(){
         $('#accum-preseve .btn-primary').off('click');
         $('#accum-preseve .btn-primary').on('click',function(){
 
+            //
+            $('#present-message').modal('show');
+
+        });
+
+        $('#present-message .btn-primary').off('click');
+        $('#present-message .btn-primary').on('click',function(){
             $.ajax({
                 type: 'post',
                 url: IP + "/UnitMeter/PostAddOrSubtractMeter",
@@ -726,14 +749,20 @@ $(document).ready(function(){
                 success: function (data) {
                     console.log(data);
                     $('#accum-preseve').modal('hide');
-                    if(data == 1){
+                    $('#present-message').modal('hide');
+                    if(data.validateNumber == 1){
                         myAlter('参数错误')
-                    }else if(data == 3){
+                    }else if(data.validateNumber == 3){
                         myAlter('执行失败')
-                    }else if(data == 5){
+                    }else if(data.validateNumber == 5){
                         var html='';
                         for(var i=0; i<data.meterNumbers.length;i++){
-                            html+=data.memeterNumbers[i];
+                            if(i == data.meterNumbers.length - 1){
+                                html+=data.meterNumbers[i];
+                            }else{
+                                html+=data.meterNumbers[i] + ",";
+                            }
+
                         }
                         myAlter(html + '已在其他二级单位存在');
                     }
@@ -746,6 +775,7 @@ $(document).ready(function(){
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $('#theLoading').modal('hide');
                     $('#accum-preseve').modal('hide');
+                    $('#present-message').modal('hide');
                     console.log(textStatus);
 
                     if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
@@ -958,6 +988,7 @@ $(document).ready(function(){
                     _table = $('#dateTables5').dataTable();
                     _table.fnClearTable();
                     setDatas(waitArr);
+                    $('#dateTables5_filter input').attr('placeHolder',' 请输入表号或代号进行搜索');
 
                     _table = $('#dateTables6').dataTable();
                     _table.fnClearTable();
@@ -975,7 +1006,7 @@ $(document).ready(function(){
                     _table = $('#dateTables4').dataTable();
                     _table.fnClearTable();
                     setDatas(buildArr);
-
+                    $('#dateTables4_filter input').attr('placeHolder',' 请输入楼宇名称进行搜索');
 
 
                 },
@@ -1001,6 +1032,13 @@ $(document).ready(function(){
                 return false;
             };
 
+            $('#present-message').modal('show');
+
+
+        });
+
+        $('#present-message .btn-primary').off('click');
+        $('#present-message .btn-primary').on('click',function(){
             $.ajax({
                 type: 'post',
                 url: IP + "/UnitMeter/PostApportionMeter",
@@ -1022,14 +1060,20 @@ $(document).ready(function(){
                 success: function (data) {
                     console.log(data);
                     $('#accum-shared').modal('hide');
-                    if(data == 1){
+                    $('#present-message').modal('hide');
+                    if(data.validateNumber == 1){
                         myAlter('参数错误')
-                    }else if(data == 3){
+                    }else if(data.validateNumber == 3){
                         myAlter('执行失败')
-                    }else if(data == 5){
+                    }else if(data.validateNumber == 5){
                         var html='';
                         for(var i=0; i<data.meterNumbers.length;i++){
-                            html+=data.memeterNumbers[i];
+                            if(i == data.meterNumbers.length-1){
+                                html+=data.memeterNumbers[i]
+                            }else{
+                                html+=data.memeterNumbers[i] + ",";
+                            }
+
                         }
                         myAlter(html + '公摊表分配比例超额');
 
@@ -1043,6 +1087,7 @@ $(document).ready(function(){
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $('#theLoading').modal('hide');
                     $('#accum-shared').modal('hide');
+                    $('#present-message').modal('hide');
                     console.log(textStatus);
 
                     if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
@@ -1528,7 +1573,17 @@ $(document).ready(function(){
                 }else if(childNum == 2){
                     childTxt = '公摊'
                 }
+
+                var ifOnline = dataObj.f_mtOnline;
+                var onlineTxt;
+                if(ifOnline == 0){
+                    onlineTxt = '手抄表'
+                }else{
+                    onlineTxt = '在线表'
+                }
+
                 $('.ament-data').eq(2).find('span').html(childTxt);
+                $('.ament-data').eq(3).find('span').html(onlineTxt);
 
                 $('#change-meter .add-input').eq(0).val(dataObj.f_ReadET);
                 $('#change-meter .add-input').eq(1).val(dataObj.f_ReadEndNum);
@@ -1770,9 +1825,6 @@ $(document).ready(function(){
     });
 
 
-
-
-
 });
 
 
@@ -1786,6 +1838,7 @@ var selectNum = 0;
 var leftArr = [];
 //注销弹窗中的table
 var logoutArr = [];
+
 
 //二级单位搜索功能
 $(function(){

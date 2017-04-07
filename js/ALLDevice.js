@@ -144,7 +144,7 @@ $(document).ready(function(){
                 data:'f_MeasureArea'
             },
             {
-                title:'绑定数采仪',
+                title:'在线计量设备',
                 data:'cNameT'
             },
             {
@@ -1162,7 +1162,7 @@ function putMeterType(dom){
         }
 
     }else if(arr0[0] == 1){
-        $('#add-meter').find('.number-machine').find('.add-input').attr('placeHolder','从数采仪列表中选择');
+        $('#add-meter').find('.number-machine').find('.add-input').attr('placeHolder','从在线计量设备列表中选择');
         $('#add-meter').find('.number-machine').find('img').attr('data-target','#choose-instrument');
         $('#add-meter').find('.number-machine').find('img').css({
             display:'inline-block'
@@ -1234,7 +1234,7 @@ $('.top-btn1').on('click',function(){
             });
 
         }else {
-            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','从数采仪列表中选择');
+            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','从在线计量设备列表中选择');
 
             $(this).parents('.deploy-form').find('.number-machine').find('img').attr('data-target','#choose-instrument');
             $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
@@ -1392,7 +1392,7 @@ $('#choose-building').on('click','.btn-primary',function(){
 
 });
 
-//点击数采仪提交按钮时
+//点击在线计量设备提交按钮时
 $('#choose-instrument').on('click','.btn-primary',function(){
     var txt = $('#choose-instrument .search-value').val();
     var id = $('#choose-instrument .search-value').attr('ids');
@@ -1406,12 +1406,12 @@ $('#choose-instrument').on('click','.btn-primary',function(){
         $('.in .add-input').eq(8).val(rate);
 
     }else{
-        myAlter('请选择数采仪后进行提交');
+        myAlter('请选择在线计量设备后进行提交');
     }
 });
 
 
-//仪表类型改变时 报警上限 数采仪编号 跟着改变
+//仪表类型改变时 报警上限 在线计量设备编号 跟着改变
 $('.add-select-meter li').on('click',function(){
    var num = $(this).attr('unit');
     var num0 = $(this).attr('factor');
@@ -1453,7 +1453,7 @@ $('.add-select-meter li').on('click',function(){
         });
 
     }else {
-        $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','从数采仪列表中选择');
+        $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','从在线计量设备列表中选择');
 
         $(this).parents('.deploy-form').find('.number-machine').find('img').attr('data-target','#choose-instrument');
         $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
@@ -1494,7 +1494,7 @@ $('.add-select-meter li').on('click',function(){
 
 var numbered = [];
 
-//获取新增中的数采仪编号
+//获取新增中的在线计量设备编号
 function getNumbered(dom){
     numbered = [];
     setTimeout(function(){
@@ -1541,7 +1541,7 @@ function getNumbered(dom){
 
 };
 
-//获取修改中的数采仪编号
+//获取修改中的在线计量设备编号
 function getNumbered1(dom){
     numbered = [];
     var txt1 = $(dom).find('.add-input').eq(0).children('span').attr('type');
@@ -1593,7 +1593,7 @@ function getNumbered1(dom){
 
 };
 
-//将数采仪编号放入页面中
+//将在线计量设备编号放入页面中
 
 function putNumbered(dom){
     var arr1 = [];
@@ -1656,7 +1656,7 @@ function removeSeek(dom){
 removeSeek('#choose-building');
 removeSeek('#choose-instrument');
 
-//点击数采仪后的放大镜时
+//点击在线计量设备后的放大镜时
 $('.number-machine').on('click','img',function(){
 
   var txt = $(this).parents('.deploy-form').find('.build-number').find('input').val();
@@ -1677,7 +1677,7 @@ $('.get-online-message').on('click',function(){
         myAlter('请输入楼宇编号');
         return false;
     }else if(!id2){
-        myAlter('请输入数采仪编号');
+        myAlter('请输入在线计量设备编号');
         return false;
     }else{
         $.ajax({

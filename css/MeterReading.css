@@ -317,7 +317,7 @@ label {
 
 /*楼宇搜索*/
 #dateTables4{
-    width:377px !important;
+    width:397px !important;
     float:left;
 }
 #dateTables4_info{
@@ -345,6 +345,12 @@ label {
 }
 .legend div{
     text-align:right;
+}
+#dateTables1 th{
+    text-align:center;
+}
+#dateTables1_info{
+    display: none;
 }
 
 
