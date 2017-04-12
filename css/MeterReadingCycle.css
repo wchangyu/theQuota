@@ -154,9 +154,7 @@ label {
     font-size:14px;
 
 }
-#dateTables_info {
-    display: none;
-}
+
 .chooseDate {
      background: url(../img/times.png) no-repeat 160px center;
      background-size: auto 80%;

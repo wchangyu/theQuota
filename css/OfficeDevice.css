@@ -497,7 +497,7 @@ label {
     font-size:16px;
 }
 .dataTables_filter input{
-    width:210px;
+    width:240px;
     height:30px;
 }
 .theHidden{
@@ -546,5 +546,13 @@ table td{
 }
 .choose-num{
     cursor: pointer;
+}
+
+.chooseDate{
+    cursor: pointer;
+}
+.small-picture{
+    background:url(../img/smallTimes.png) no-repeat 130px center;
+    background-size: auto 80%;
 }
 

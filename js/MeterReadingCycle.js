@@ -7,105 +7,107 @@ $(document).ready(function(){
     //调用获取后台数据方法，进行数据获取
     alarmHistory();
     //初始化table表单
-    var table = $('#dateTables').DataTable({
-        "autoWidth": false,  //用来启用或禁用自动列的宽度计算
-        //是否分页
-        "destroy": false,//还原初始化了的datatable
-        "paging":false,
-        "ordering": false,
-        'searching':false,
-        "sScrollY": '740px',
-        "bPaginate": false,
-        "scrollCollapse": true,
-        'language': {
-            'emptyTable': '没有数据',
-            'loadingRecords': '加载中...',
-            'processing': '查询中...',
-            'lengthMenu': '每页 _MENU_ 件',
-            'zeroRecords': '没有数据',
-            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
-            'paginate': {
-                'first':      '第一页',
-                'last':       '最后一页',
-                'next':       '下一页',
-                'previous':   '上一页'
-            },
-            'infoEmpty': ''
-        },
-        'buttons': [
 
-        ],
-        "dom":'B<"clear">lfrtip',
-        //数据源
-        'columns':[
-            {
-                title:'抄表名称',
-                data:'f_CycleName'
-
+        var table = $('#dateTables').DataTable({
+            "autoWidth": false,  //用来启用或禁用自动列的宽度计算
+            //是否分页
+            "destroy": false,//还原初始化了的datatable
+            "paging": true,
+            "ordering": false,
+            'searching': false,
+            'language': {
+                'emptyTable': '没有数据',
+                'loadingRecords': '加载中...',
+                'processing': '查询中...',
+                'lengthMenu': '每页 _MENU_ 件',
+                'zeroRecords': '没有数据',
+                'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
+                "sInfoEmpty": "记录数为0",
+                "sInfoFiltered": "(全部记录数 _MAX_ 条)",
+                'paginate': {
+                    'first': '第一页',
+                    'last': '最后一页',
+                    'next': '下一页',
+                    'previous': '上一页'
+                },
+                'infoEmpty': ''
             },
-            {
-                title:'抄表ID',
-                data:'pK_MTReadCycle',
-                class:'theHidden'
+            'buttons': [
 
-            },
-            {
-                title:'抄表月份',
-                data:'f_ReadCycleST',
-                render:function(data, type, full, meta){
-                    var txt1 = data.split(' ')[0].split('/')[0];
-                    var txt2 = data.split(' ')[0].split('/')[1]
-                    return txt1 + "-" + txt2;
-                }
+            ],
+            "dom":'B<"clear">lfrtip',
+            //数据源
+            'columns':[
+                {
+                    title:'抄表名称',
+                    data:'f_CycleName'
 
-            },
-            {
-                title:'是否结算',
-                data:'f_ClearingDate',
-                render:function(data, type, full, meta){
-                    if(data == ''){
-                        return '未结算'
-                    }else {
-                        return '已结算'
+                },
+                {
+                    title:'抄表ID',
+                    data:'pK_MTReadCycle',
+                    class:'theHidden'
+
+                },
+                {
+                    title:'抄表月份',
+                    data:'f_ReadCycleST',
+                    render:function(data, type, full, meta){
+                        var txt1 = data.split(' ')[0].split('/')[0];
+                        var txt2 = data.split(' ')[0].split('/')[1]
+                        return txt1 + "-" + txt2;
                     }
 
-                }
+                },
+                {
+                    title:'是否结算',
+                    data:'f_ClearingDate',
+                    render:function(data, type, full, meta){
+                        if(data == ''){
+                            return '未结算'
+                        }else {
+                            return '已结算'
+                        }
 
-            },
-            {
-                title:'在线表操作',
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button class='top-btn create-data' >导入数据</button>"
-            },
-            {
-                title:'编辑操作',
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button class='top-btn change-data' data-toggle='modal' data-target='#remove-deploy'>修改</button>"
-            },
-            {
-                title:'抄表登记详情',
-                data:'pK_MTReadCycle',
-                render:function(data, type, full, meta){
+                    }
+
+                },
+                {
+                    title:'在线表操作',
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='top-btn create-data' >导入数据</button>"
+                },
+                {
+                    title:'编辑操作',
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='top-btn change-data' data-toggle='modal' data-target='#remove-deploy'>修改</button>"
+                },
+                {
+                    title:'抄表登记详情',
+                    data:'pK_MTReadCycle',
+                    render:function(data, type, full, meta){
                         return  "<a class='theJump' href='MeterReading.html?id="+data+"'>登记查看</a>"
 
+                    }
+
+
+                },
+                {
+                    title:'删除操作',
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": "<button class='top-btn remove-data' data-toggle='modal' data-target='#remove-measure'>删除</button>"
                 }
+            ]
+        });
+        _table = $('#dateTables').dataTable();
+        //给表格添加后台获取到的数据
+        setData();
+        hiddrenId();
 
 
-            },
-            {
-                title:'删除操作',
-                "targets": -1,
-                "data": null,
-                "defaultContent": "<button class='top-btn remove-data' data-toggle='modal' data-target='#remove-measure'>删除</button>"
-            }
-        ]
-    });
-    _table = $('#dateTables').dataTable();
-    //给表格添加后台获取到的数据
-    setData();
-    hiddrenId();
 
     //添加操作
     var relateNumber = 0;

@@ -50,7 +50,7 @@ $(document).ready(function() {
             },
             {
                 title: '能耗类型',
-                data: "f_EnergyName",
+                data: "f_EnergyName"
             },
             {
                 title: '计量设备状态',
@@ -491,10 +491,10 @@ function checkedNumber(dom){
         if($(dom).find('.type-number').eq(i).find('input').val() != ""){
             var txt = $(dom).find('.type-number').eq(i).find('input').val() / 1;
 
-            if(isNaN(txt)){
+            if(isNaN(txt) || txt < 0 || txt == 0){
                 var txt1 = $(dom).find('.type-number').eq(i).children('label').html().split('：')[0];
                 console.log(txt1);
-                myAlter(txt1 + " 必须为数字")
+                myAlter(txt1 + " 必须为大于0的数字")
                 getFocus1($(dom).find('.type-number').eq(i).find('input'));
                 return false;
             }

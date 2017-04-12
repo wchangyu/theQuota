@@ -152,9 +152,6 @@ label {
     font-size:14px;
 
 }
-#dateTables_info{
-    display:none;
-}
 
 /*验证表单提示字样式*/
 .hooks{

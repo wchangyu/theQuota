@@ -352,6 +352,10 @@ label {
 #dateTables1_info{
     display: none;
 }
+/*放大镜按钮*/
+.choose-builds{
+    cursor: pointer;
+}
 
 
 

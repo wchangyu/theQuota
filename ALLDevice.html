@@ -64,13 +64,13 @@
                         </ul>
 
                         <ul class="main-content-header">
-                            <li class="main-content-header-lists0">单位操作</li>
+                            <li class="main-content-header-lists0">仪表操作</li>
                         </ul>
 
                         <ul class="condition-query">
-                            <li> <button class="top-btn window-btn top-btn1" data-toggle='modal' data-target='#add-meter'>仪表添加</button></li>
-                            <li> <button class="top-btn window-btn top-btn2" data-toggle='modal' data-target='#alter-meter'>仪表修改</button></li>
-                            <li> <button class="top-btn window-btn top-btn5" data-toggle='modal' data-target='#remove-meter'>仪表删除</button></li>
+                            <li> <button class="top-btn window-btn top-btn1 top-btns" data-toggle='modal' data-target='#add-meter'>仪表添加</button></li>
+                            <li> <button class="top-btn window-btn top-btn2 top-btns" data-toggle='modal' data-target='#alter-meter'>仪表修改</button></li>
+                            <li> <button class="top-btn window-btn top-btn5" >仪表删除</button></li>
 
                             <div class="clearfix"></div>
                         </ul>
@@ -99,7 +99,7 @@
 
     <!--新增仪表设备弹窗-->
     <div class='modal fade' id='add-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:60%;margin:10% auto; min-width:430px;'>
+        <div class='modal-dialog'style='width:60%;margin:10% auto; min-width:933px;'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -111,7 +111,7 @@
 
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input meter-type">
+                                        <div class="col-lg-6 col-xs-6 inner-input meter-type">
                                             <label for=""  class="input-label">仪表类型：</label>
 
                                             <div class="add-input-father" style="margin-left:10px">
@@ -129,8 +129,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
-                                            <label for="" class="input-label" style="width:125px">表号或代号：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:135px">表号或代号：</label>
                                             <div class="add-input-block" style="margin-left:0">
                                                 <input type="text" class="add-input">
                                             </div>
@@ -151,7 +151,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input build-number">
+                                        <div class="col-lg-6 col-xs-6 inner-input build-number">
                                             <label for=""  class="input-label">楼宇编号：</label>
 
                                             <div class="add-input-block">
@@ -160,8 +160,8 @@
                                             <img class='fdjImg' src="img/fdj.png" alt="" data-toggle='modal' data-target='#choose-building'>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign number-machine" style="margin-bottom:0px;margin-left: 0">
-                                            <label for="" class="input-label" style="width:125px">在线计量设备：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign number-machine" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:135px">在线计量设备：</label>
 
 
                                             <div class="add-input-block" style="margin-left:0">
@@ -173,7 +173,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                        <div class="col-lg-6 col-xs-6 inner-input">
                                             <label for="" >出厂编号：</label>
 
                                             <div class="add-input-block">
@@ -181,8 +181,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
-                                            <label for="" class="input-label">安装位置：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign">
+                                            <label for="" class="input-label" style="width:125px">安装位置：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
@@ -190,7 +190,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                        <div class="col-lg-6 col-xs-6 inner-input">
                                             <label for=""  class="input-label">计量区域：</label>
 
                                             <div class="add-input-block">
@@ -198,8 +198,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign rate type-number">
-                                            <label for="" class="input-label">倍率：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign rate type-number">
+                                            <label for="" class="input-label" style="width:125px">倍率：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
@@ -215,7 +215,7 @@
                                                 <div class="clearfix"></div>
                                             </ul>
                                         </div>
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input bookbuilding">
+                                        <div class="col-lg-6 col-xs-6 inner-input bookbuilding">
                                             <label for="" class="input-label">建档日期：</label>
 
                                             <div class="add-input-block" style="height:33px;">
@@ -224,8 +224,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign  bookbuilding type-number">
-                                            <label for="" class="input-label">建档起数：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign  bookbuilding type-number">
+                                            <label for="" class="input-label" style="width:125px">建档起数：</label>
                                             <div class="add-input-block">
 
                                                 <input type="text" class="add-input" value="">
@@ -234,7 +234,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input  type-number">
+                                        <div class="col-lg-6 col-xs-6 inner-input  type-number">
                                             <label for="" class="input-label">报警下限：</label>
 
                                             <div class="add-input-block">
@@ -242,8 +242,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign  type-number">
-                                            <label for="" class="input-label">报警上限：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign  type-number">
+                                            <label for="" class="input-label" style="width:125px">报警上限：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
@@ -266,7 +266,7 @@
 
     <!--修改仪表设备弹窗-->
     <div class='modal fade' id='alter-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:60%;margin:10% auto; min-width:430px;'>
+        <div class='modal-dialog'style='width:60%;margin:10% auto; min-width:933px;'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -278,7 +278,7 @@
 
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input meter-type">
+                                        <div class="col-lg-6 col-xs-6 inner-input meter-type">
                                             <label for=""  class="input-label">仪表类型：</label>
 
                                             <div class="add-input-father" style="margin-left:10px">
@@ -296,8 +296,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
-                                            <label for="" class="input-label" style="width:125px">表号或代号：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:135px">表号或代号：</label>
                                             <div class="add-input-block" style="margin-left:0">
                                                 <input type="text" class="add-input">
                                             </div>
@@ -318,7 +318,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input build-number">
+                                        <div class="col-lg-6 col-xs-6 inner-input build-number">
                                             <label for=""  class="input-label">楼宇编号：</label>
 
                                             <div class="add-input-block">
@@ -327,8 +327,8 @@
                                             <img class='fdjImg' src="img/fdj.png" alt="" data-toggle='modal' data-target='#choose-building'>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign number-machine" style="margin-bottom:0px;margin-left: 0">
-                                            <label for="" class="input-label" style="width:125px">在线计量设备：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign number-machine" style="margin-bottom:0px;margin-left: 0">
+                                            <label for="" class="input-label" style="width:135px">在线计量设备：</label>
 
 
                                             <div class="add-input-block" style="margin-left:0">
@@ -340,7 +340,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                        <div class="col-lg-6 col-xs-6 inner-input">
                                             <label for="" >出厂编号：</label>
 
                                             <div class="add-input-block">
@@ -348,8 +348,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
-                                            <label for="" class="input-label">安装位置：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign">
+                                            <label for="" class="input-label" style="width:125px">安装位置：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
@@ -357,16 +357,16 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
-                                            <label for="" class="input-label">计量区域：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input">
+                                            <label for=""  class="input-label">计量区域：</label>
 
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign rate type-number">
-                                            <label for="" class="input-label">倍率：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign rate type-number">
+                                            <label for="" class="input-label" style="width:125px">倍率：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>
@@ -382,7 +382,7 @@
                                                 <div class="clearfix"></div>
                                             </ul>
                                         </div>
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input bookbuilding">
+                                        <div class="col-lg-6 col-xs-6 inner-input bookbuilding">
                                             <label for="" class="input-label">建档日期：</label>
 
                                             <div class="add-input-block" style="height:33px;">
@@ -391,8 +391,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign  bookbuilding type-number">
-                                            <label for="" class="input-label">建档起数：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign  bookbuilding type-number">
+                                            <label for="" class="input-label" style="width:125px">建档起数：</label>
                                             <div class="add-input-block">
 
                                                 <input type="text" class="add-input" value="">
@@ -401,7 +401,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input  type-number">
+                                        <div class="col-lg-6 col-xs-6 inner-input  type-number">
                                             <label for="" class="input-label">报警下限：</label>
 
                                             <div class="add-input-block">
@@ -409,8 +409,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign  type-number">
-                                            <label for="" class="input-label">报警上限：</label>
+                                        <div class="col-lg-6 col-xs-6 inner-input add-sign  type-number">
+                                            <label for="" class="input-label" style="width:125px">报警上限：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="">
                                             </div>

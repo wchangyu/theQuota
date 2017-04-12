@@ -58,14 +58,18 @@ $(document).ready(function(){
 
     //调用获取后台数据方法，进行数据获取
     alarmHistory();
+
+    console.log(dataArr);
     //初始化页面table表单
-    var table = $('#dateTables').DataTable({
+    console.log(dataArr1);
+
+        var table = $('#dateTables').DataTable({
             "autoWidth": false,  //用来启用或禁用自动列的宽度计算
             //是否分页
             "destroy": false,//还原初始化了的datatable
-            "paging":true,
+            "paging": true,
             "ordering": false,
-            'searching':false,
+            'searching': false,
             'language': {
                 'emptyTable': '没有数据',
                 'loadingRecords': '加载中...',
@@ -73,145 +77,144 @@ $(document).ready(function(){
                 'lengthMenu': '每页 _MENU_ 件',
                 'zeroRecords': '没有数据',
                 'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
-                "sInfoEmpty" : "记录数为0",
-                "sInfoFiltered" : "(全部记录数 _MAX_ 条)",
+                "sInfoEmpty": "记录数为0",
+                "sInfoFiltered": "(全部记录数 _MAX_ 条)",
                 'paginate': {
-                    'first':      '第一页',
-                    'last':       '最后一页',
-                    'next':       '下一页',
-                    'previous':   '上一页'
+                    'first': '第一页',
+                    'last': '最后一页',
+                    'next': '下一页',
+                    'previous': '上一页'
                 },
                 'infoEmpty': ''
             },
-            'buttons': [
-
-            ],
-            "dom":'B<"clear">lfrtip',
+            'buttons': [],
+            "dom": 'B<"clear">lfrtip',
             //数据源
-            'columns':[
+            'columns': [
                 {
-                    title:'计量设备类型',
-                    data:'f_MeterTypeName',
-                    class:'theHidden'
+                    title: '计量设备类型',
+                    data: 'f_MeterTypeName',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'抄表数据ID',
-                    data:'pK_MTRead',
-                    class:'theHidden'
+                    title: '抄表数据ID',
+                    data: 'pK_MTRead',
+                    class: 'theHidden'
                 },
                 {
-                    title:'能耗类型',
-                    data:'f_mtEnergyType',
-                    render:function(data, type, full, meta){
+                    title: '能耗类型',
+                    data: 'f_mtEnergyType',
+                    render: function (data, type, full, meta) {
                         return getEnergyType(data);
                     },
-                    class:'theHidden'
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'表号（代号）',
-                    data:'f_mtNumber',
-                    class:'theHidden'
+                    title: '表号（代号）',
+                    data: 'f_mtNumber',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'二级单位',
-                    data:'f_UnitName',
-                    class:'theHidden'
+                    title: '二级单位',
+                    data: 'f_UnitName',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'抄表周期名称',
-                    data:'f_CycleName',
-                    class:'theHidden'
+                    title: '抄表周期名称',
+                    data: 'f_CycleName',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'抄表月份',
-                    data:'f_ReadCycleST',
-                    class:'theHidden'
+                    title: '抄表月份',
+                    data: 'f_ReadCycleST',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'绑定楼宇',
-                    data:'pointerName',
-                    class:'theHidden'
+                    title: '绑定楼宇',
+                    data: 'pointerName',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'计量区域',
-                    data:'f_MeasureArea',
-                    class:'theHidden'
+                    title: '计量区域',
+                    data: 'f_MeasureArea',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'安装位置',
-                    data:'f_InstalPosition',
-                    class:'theHidden'
+                    title: '安装位置',
+                    data: 'f_InstalPosition',
+                    class: 'theHidden'
 
                 },
                 {
-                    title:'抄表起始日期',
-                    data:'f_ReadST'
+                    title: '抄表起始日期',
+                    data: 'f_ReadST'
 
                 },
                 {
-                    title:'抄表结束日期',
-                    data:'f_ReadET'
+                    title: '抄表结束日期',
+                    data: 'f_ReadET'
 
                 },
                 {
-                    title:'抄表起数',
-                    data:'f_ReadStartNum'
+                    title: '抄表起数',
+                    data: 'f_ReadStartNum'
 
                 },
                 {
-                    title:'抄表止数',
-                    data:'f_ReadEndNum'
+                    title: '抄表止数',
+                    data: 'f_ReadEndNum'
 
                 },
 
                 {
-                    title:'倍率',
-                    data:'f_Rate'
+                    title: '倍率',
+                    data: 'f_Rate'
 
                 },
                 {
-                    title:'圈数',
-                    data:'f_CycleNum'
+                    title: '圈数',
+                    data: 'f_CycleNum'
 
                 },
                 {
-                    title:'用能量',
-                    data:'f_EnergyValue'
+                    title: '用能量',
+                    data: 'f_EnergyValue'
 
                 },
                 {
-                    title:'抄表人',
-                    data:'f_ReadPerson'
+                    title: '抄表人',
+                    data: 'f_ReadPerson'
 
                 },
                 {
-                    title:'是否结算',
-                    data:'f_IsClearing',
-                    render:function(data, type, full, meta){
-                        if(data == 0){
+                    title: '是否结算',
+                    data: 'f_IsClearing',
+                    render: function (data, type, full, meta) {
+                        if (data == 0) {
                             return '未结算'
-                        }else{
+                        } else {
                             return '已结算'
-                        };
+                        }
+                        ;
                     }
 
                 },
                 {
-                    title:'编辑操作',
+                    title: '编辑操作',
                     "targets": -1,
                     "data": null,
                     "defaultContent": "<button class='top-btn change' data-toggle='modal' data-target='#remove-deploy'>修改</button>"
                 },
                 {
-                    title:'删除操作',
+                    title: '删除操作',
                     "targets": -1,
                     "data": null,
                     "defaultContent": "<button class='top-btn remove' data-toggle='modal' data-target='#remove-meter'>删除</button>"
@@ -219,12 +222,14 @@ $(document).ready(function(){
             ]
         });
 
-    _table = $('#dateTables').dataTable();
+        _table = $('#dateTables').dataTable();
+
+        //给表格添加后台获取到的数据
+        setData();
+        hiddrenId();
 
 
-    //给表格添加后台获取到的数据
-    setData();
-    hiddrenId();
+
 
     var table1 = $('#dateTables1').DataTable({
         "autoWidth": false,  //用来启用或禁用自动列的宽度计算
@@ -290,9 +295,12 @@ $(document).ready(function(){
                 title:'抄表月份',
                 data:'f_ReadCycleST',
                 render:function(data, type, full, meta){
-                    var txt1 = data.split(' ')[0].split('/')[0];
-                    var txt2 = data.split(' ')[0].split('/')[1]
-                    return txt1 + "-" + txt2;
+                    if(data){
+                        var txt1 = data.split(' ')[0].split('/')[0];
+                        var txt2 = data.split(' ')[0].split('/')[1];
+                        return txt1 + "-" + txt2;
+                    }
+
                 }
 
             },
@@ -402,6 +410,7 @@ $(document).ready(function(){
     pushBuildArr();
 
     $('.add-btn').on('click',function(){
+        openNum = 0;
 
         $('#add-deploy .add-input').val('');
         $('#add-deploy .add-input').eq(6).val(0);
@@ -425,6 +434,7 @@ $(document).ready(function(){
         var postData = {};
         var getData = [];
         var newNum = 0;
+
         $.ajax({
             type:'get',
             url:IP + "/UnitMeter/GetSingleMTReadInitData",
@@ -445,8 +455,12 @@ $(document).ready(function(){
                 postData = data;
 
                 var meterName = postData.f_mtNumber;
+                var type = postData.f_mtEnergyType;
+
                 $('#add-deploy .ament-data').children('span').eq(0).html(meterName);
                 $('#add-deploy .ament-data').children('span').eq(1).html(postData.f_MeasureArea);
+                $('#add-deploy .ament-data').children('span').eq(2).html(getEnergyType(type));
+
 
                 $('#add-deploy .add-input').eq(0).val(postData.f_ReadPerson);
                 $('#add-deploy .add-input').eq(1).val(postData.f_ReadRate);
@@ -455,6 +469,10 @@ $(document).ready(function(){
                 $('#add-deploy .add-input').eq(4).val(postData.f_ReadST);
                 $('#add-deploy .add-input').eq(5).val(postData.f_ReadET);
                 $('#add-deploy .add-input').eq(6).attr('range',postData.f_Range);
+                $('#add-deploy .add-input').eq(6).attr('warnUp',postData.f_WarnUp);
+                $('#add-deploy .add-input').eq(6).attr('warnDown',postData.f_WarnDown);
+
+                $('#add-deploy .ament-data').children('span').eq(3).html(postData.f_WarnDown + ' - ' + postData.f_WarnUp);
 
 
             },
@@ -519,8 +537,12 @@ $(document).ready(function(){
                     $('.show-plan').find('font').html('1/'+lengths);
 
                     var meterName = data[0].f_mtNumber;
+                    var type = data[0].f_mtEnergyType;
                     $('#add-deploy .ament-data').children('span').eq(0).html(meterName);
                     $('#add-deploy .ament-data').children('span').eq(1).html(data[0].f_MeasureArea);
+                    $('#add-deploy .ament-data').children('span').eq(2).html(getEnergyType(type));
+
+                    $('#add-deploy .ament-data').children('span').eq(3).html(data[0].f_WarnDown + ' - ' + data[0].f_WarnUp);
 
                     $('#add-deploy .add-input').eq(0).val(data[0].f_ReadPerson);
                     $('#add-deploy .add-input').eq(1).val(data[0].f_ReadRate);
@@ -529,6 +551,8 @@ $(document).ready(function(){
                     $('#add-deploy .add-input').eq(4).val(data[0].f_ReadST);
                     $('#add-deploy .add-input').eq(5).val(data[0].f_ReadET);
                     $('#add-deploy .add-input').eq(6).attr('range',data[0].f_Range);
+                    $('#add-deploy .add-input').eq(6).attr('warnUp',data[0].f_WarnUp);
+                    $('#add-deploy .add-input').eq(6).attr('warnDown',data[0].f_WarnDown);
 
                     $('.in .next-btn').off('click')
                     $('.in .next-btn').on('click',function(){
@@ -566,8 +590,10 @@ $(document).ready(function(){
                         $('#add-deploy .add-input').eq(4).val(data[newNum].f_ReadST);
                         $('#add-deploy .add-input').eq(5).val(data[newNum].f_ReadET);
                         $('#add-deploy .add-input').eq(6).attr('range',data[newNum].f_Range);
+                        $('#add-deploy .add-input').eq(6).attr('warnUp',data[newNum].f_WarnUp);
+                        $('#add-deploy .add-input').eq(6).attr('warnDown',data[newNum].f_WarnDown);
 
-
+                        $('#add-deploy .ament-data').children('span').eq(3).html(data[newNum].f_WarnDown + ' - ' + data[newNum].f_WarnUp);
                         $('#jump-meter').modal('hide');
 
                     });
@@ -610,6 +636,20 @@ $(document).ready(function(){
 
                 return false;
             };
+
+            var warnUp = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnUp');
+            var warnDown = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnDown');
+
+            var energyValue = $(this).parents('.modal-header').find('.add-input').eq(7).val();
+
+            console.log(warnDown,warnUp);
+
+            if(energyValue < warnDown || energyValue >  warnUp){
+                myAlter('超出用能量有效范围，请重新填写');
+                getFocus1( $(this).parents('.modal-header').find('.add-input').eq(3));
+
+                return false;
+            }
 
             console.log(getData);
             if(getData.length != 0){
@@ -658,9 +698,24 @@ $(document).ready(function(){
                         return false
                     }
 
+                    //没有启用多表输入模式
                     if(getData.length == 0){
                         $('#add-deploy').modal('hide');
-                        ajaxSuccess();
+
+                        _table = $('#dateTables').dataTable();
+                        _table.fnClearTable();
+                        alarmHistory();
+                        //给表格添加后台获取到的数据
+                        setData();
+                        hiddrenId();
+
+                        _table = $('#dateTables1').dataTable();
+                        _table.fnClearTable();
+                        //给表格添加后台获取到的数据
+                        setData(dataArr1);
+                        hiddrenId();
+
+
                         $('.onClicks').attr('color','#307f7a');
                         getTreeMessage();
 
@@ -689,6 +744,8 @@ $(document).ready(function(){
                         $('#add-deploy .add-input').eq(4).val(getData[newNum].f_ReadST);
                         $('#add-deploy .add-input').eq(5).val(getData[newNum].f_ReadET);
                         $('#add-deploy .add-input').eq(6).attr('range',getData[newNum].f_Range);
+
+                        $('#add-deploy .ament-data').children('span').eq(3).html(data[newNum].f_WarnDown + ' - ' + data[newNum].f_WarnUp);
                     }
 
 
@@ -746,8 +803,10 @@ $(document).ready(function(){
                 postData = data;
 
                 var meterName = postData.f_mtNumber;
+                var type = postData.f_mtEnergyType;
                 $('#remove-deploy .ament-data').children('span').eq(0).html(meterName);
                 $('#remove-deploy .ament-data').children('span').eq(1).html(postData.f_MeasureArea);
+                $('#remove-deploy .ament-data').children('span').eq(2).html(getEnergyType(type));
 
                 $('#remove-deploy .add-input').eq(0).val(postData.f_ReadPerson);
                 $('#remove-deploy .add-input').eq(1).val(postData.f_ReadRate);
@@ -757,6 +816,10 @@ $(document).ready(function(){
                 $('#remove-deploy .add-input').eq(4).val(postData.f_ReadST);
                 $('#remove-deploy .add-input').eq(5).val(postData.f_ReadET);
                 $('#remove-deploy .add-input').eq(6).attr('range',postData.f_Range);
+                $('#remove-deploy .add-input').eq(6).attr('warnUp',postData.f_WarnUp);
+                $('#remove-deploy .add-input').eq(6).attr('warnDown',postData.f_WarnDown);
+
+                $('#remove-deploy .ament-data').children('span').eq(3).html(postData.f_WarnDown + ' - ' + postData.f_WarnUp);
 
                 console.log(postData.f_CycleNum);
                 $('#remove-deploy .add-input').eq(6).val(postData.f_CycleNum);
@@ -795,6 +858,20 @@ $(document).ready(function(){
 
                 return false;
             };
+
+            var warnUp = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnUp');
+            var warnDown = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnDown');
+
+            var energyValue = $(this).parents('.modal-header').find('.add-input').eq(7).val();
+
+            console.log(warnDown,warnUp);
+
+            if(energyValue < warnDown || energyValue >  warnUp){
+                myAlter('超出用能量有效范围，请重新填写');
+                getFocus1( $(this).parents('.modal-header').find('.add-input').eq(3));
+
+                return false;
+            }
 
             postData.f_ReadPerson = $(this).parents('.modal-header').find('.add-input').eq(0).val();
 
@@ -1025,6 +1102,7 @@ function getAccount(){
 
         success: function (data)
         {
+
             var txt = data.f_ClearingDate;
            if(data == ''){
                importantNum = 0
@@ -1071,10 +1149,15 @@ function alarmHistory(){
         success:function(result){
             $('#theLoading').modal('hide');
             console.log(result);
+
             for(var i=0;i<result.length;i++){
                 dataArr.push(result[i]);
             }
-            dataArr1.push(dataArr[0]);
+
+            if(dataArr.length > 0){
+                dataArr1.push(dataArr[0]);
+            }
+
         },
         error:function (XMLHttpRequest, textStatus, errorThrown) {
             $('#theLoading').modal('hide');
@@ -1157,7 +1240,7 @@ var zNodes =[
 var buildArr = [];
 
 
-
+//用能量的计算
 $('.end-number').on('blur',function(){
     var startNum = parseFloat($(this).parents('.row').find('.add-input').eq(0).val());
     console.log(startNum);
@@ -1174,8 +1257,7 @@ $('.end-number').on('blur',function(){
         getFocus1($(this));
         return false;
     }else if(endNum == ''){
-        myAlter('抄表止数不能为空');
-        getFocus1($(this));
+
         return false;
     }else if(parseFloat(endNum) < startNum){
         myAlter('止数小于起数，请输入圈数');
@@ -1225,6 +1307,8 @@ $('.cycleNum').on('blur',function(){
     if(isNaN(cycleNum) || cycleNum < 0 || cycleNum % 1 != 0){
         myAlter('圈数必须为非负整数');
         getFocus1($(this));
+        return false;
+    }else if(endNum == ''){
         return false;
     }else if(parseFloat(endNum) < startNum && cycleNum == 0){
         myAlter('止数小于起数，圈数必须大于0');
@@ -1301,12 +1385,12 @@ function getBuildTree(){
                    var name1 = meterArr[j-1].f_mtNumber;
                    var isRead = meterArr[j-1].isMeterRead;
                    var id11 = meterArr[j-1].meterID;
-
+                   var type = getEnergyType(meterArr[j-1].f_mtEnergyType);
                    var names;
                    if(isRead == '1'){
-                       names = "<font color='#307f7a' class='treeFont' ids='"+id11+"'>"+ name1+"</font>"
+                       names = "<font color='#307f7a' class='treeFont' ids='"+id11+"'>"+ name1+" ("+type+")</font>"
                    }else{
-                       names = "<font color='#b2041a' class='treeFont' ids='"+id11+"'>"+ name1+"</font>"
+                       names = "<font color='#b2041a' class='treeFont' ids='"+id11+"'>"+ name1+" ("+type+")</font>"
                    }
                    var id1 = i+'' + j + '';
                    var id2 = parseInt(id1);
@@ -1342,18 +1426,17 @@ getBuildTree();
 //树状图下方统计信息
 function getTreeMessage(){
     var length = $('.treeFont').length;
-    console.log(length);
     var num = 0;
     for(var i=0; i<length; i++){
         var txt = $('.treeFont').eq(i).attr('color');
-        console.log(txt);
+
         if(txt == '#b2041a'){
-            console.log('222');
+
             num ++;
         }
 
     }
-    console.log(num);
+
 
     $('.tree-bottom p span').html(length);
     $('.tree-bottom p b').html(num + " ");
@@ -1379,6 +1462,9 @@ $('#dateTables4 tbody').on('click','tr',function(){
 $('#choose-building .btn-primary').on('click',function(){
     var dom = $('#dateTables4').find('.onFocus');
     console.log(dom);
+
+    //存放能耗类型
+    var typeArr=[];
     if(dom.length == 0){
         myAlter('请选择某个楼宇进行操作');
         return false;
@@ -1386,11 +1472,68 @@ $('#choose-building .btn-primary').on('click',function(){
         var txt =  dom.children().eq(1).find('span').html();
         var id = dom.children().eq(0).html();
 
+        for(var i=0; i<buildArr.length; i++){
+            if(id == buildArr[i].pointerID){
+                 typeArr = buildArr[i].meterEnergyTypes;
+
+            }
+        };
+
+        console.log(typeArr);
+        var html = '';
+        for(var i=0; i<typeArr.length; i++){
+            html += '<li ids="'+typeArr[i]+'">'+getEnergyType(typeArr[i])+'</li>'
+        }
+
+
         $('#choose-building').modal('hide');
         dom.removeClass('onFocus');
 
         $('.in').find('.add-inputs').eq(0).val(txt);
         $('.in').find('.add-inputs').eq(0).attr('ids',id);
+
+        if(typeArr.length != 0){
+            $('.in').find('.add-inputs').eq(1).find('span').html(getEnergyType(typeArr[0]));
+            $('.in').find('.add-inputs').eq(1).find('span').attr('ids',typeArr[0]);
+
+            $('.in').find('.add-inputs').eq(1).parents('.add-input-father').find('ul').html(html);
+
+            $(document).on('click', function () {
+                if ($('.add-select-block').is(':hidden')) {
+                    $('.add-select-block').css({
+                        display: 'none'
+                    });
+                    rotateNum = 1;
+                    var num = rotateNum * 180;
+                    var string = num + 'deg';
+                    $('.add-input-select').children('div').css({
+                        'transform': 'rotate(' + string + ')'
+                    })
+                }
+
+            });
+
+            $('.add-select-block li').on('click',function(){
+                var text = $(this).html();
+                var num0 = $(this).attr('ids');
+                var num1 = $(this).attr('factor');
+                var num2 = $(this).attr('unit');
+                $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
+                $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').html(text);
+                $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('ids',num0);
+                $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('factor',num1);
+                $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('unit',num2);
+                rotateNum++;
+                var num = rotateNum * 180;
+                var string = num + 'deg';
+                $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('div').css({
+
+                    'transform':'rotate('+string+')'
+                })
+            });
+        }
+
+
 
 });
 

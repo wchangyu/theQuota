@@ -461,6 +461,10 @@ $(document).ready(function(){
                     $('#alter-meter').find('.get-online-message').removeAttr('disabled');
                     $('#alter-meter').find('.get-online-message').addClass('top-btn');
 
+                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','不可输入');
+                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('readOnly','true');
+                    $('#alter-meter').find('.type-number').eq(3).find('.add-input').attr('readOnly','true');
+
 
                 }else{
                     $('#alter-meter').find('.number-machine').find('.add-input').removeAttr('data-target');
@@ -482,6 +486,12 @@ $(document).ready(function(){
 
                     $('#alter-meter').find('.get-online-message').attr('disabled','true');
                     $('#alter-meter').find('.get-online-message').removeClass('top-btn');
+
+
+
+                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','');
+                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').removeAttr('readOnly');
+                    $('#alter-meter').find('.type-number').eq(3).find('.add-input').removeAttr('readOnly');
                 }
 
             },
@@ -637,14 +647,15 @@ $(document).ready(function(){
                 $('#theLoading').modal('hide');
                 console.log(data);
                 if(data == 0){
+                    $('#remove-meter').modal('show');
+
                     $("#remove-meter h4").html('确定删除 <span style="color:red">'+txt+'</span> ?');
                 }else if(data == 1){
+                    $('#remove-meter').modal('show');
                     $('#remove-meter h4').html('已有抄表数据，是否继续删除？')
                 }else if(data == 2){
-                    $('#remove-meter h4').html('已关联二级单位，无法删除！');
-                    $('#remove-meter').one('click','btn-primary',function(){
-                       $('#remove-meter').modal('hide');
-                    });
+                    $('#remove-meter').modal('hide');
+                    myAlter('已关联二级单位，无法删除!');
                     return false;
                 }
 
@@ -736,6 +747,9 @@ $(document).ready(function(){
                     myAlter("请求失败！");
                 }
             });
+        });
+        $('#remove-meter').on('click','.btn-default',function(){
+            $('#remove-meter').modal('hide');
         })
     });
 
@@ -1157,6 +1171,14 @@ function putMeterType(dom){
 
         $('#add-meter').find('.get-online-message').attr('disabled','true');
         $('#add-meter').find('.get-online-message').removeClass('top-btn');
+
+        $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','');
+        $('#add-meter').find('.type-number').eq(2).find('.add-input').removeAttr('readOnly');
+        $('#add-meter').find('.type-number').eq(3).find('.add-input').removeAttr('readOnly');
+
+        $('#alter-meter').find('.get-online-message').attr('disabled','true');
+        $('#add-meter').find('.get-online-message').removeClass('top-btn');
+
         if(arr4[0] != 100){
             $('#add-meter').find('.rate').find('.add-input').attr('readOnly','true');
         }
@@ -1179,17 +1201,29 @@ function putMeterType(dom){
         $('#add-meter').find('.bookbuilding').eq(0).find('span').css({
             display:'inline-block'
         });
+
+
+
+        $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','不可输入');
+        $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('readOnly','true');
+        $('#add-meter').find('.type-number').eq(3).find('.add-input').attr('readOnly','true');
+
+        $('#add-meter').find('.get-online-message').addClass('top-btn');
+        $('#alter-meter').find('.get-online-message').removeAttr('disabled');
     }
     $(dom).eq(0).parent().parent().find('.add-input').eq(12).val(arr3[0]);
 }
 
 
 
-$('.top-btn1').on('click',function(){
+$('.top-btns').on('click',function(){
     console.log('11');
     putMeterType('.meter-type');
 
     //仪表类型改变时 报警上限 数采仪编号 跟着改变
+    $('.add-select-meter li').off('click');
+    $('.add-select-block li').off('click');
+
     $('.add-select-meter li').on('click',function(){
         var num = $(this).attr('unit');
         var num0 = $(this).attr('factor');
@@ -1202,6 +1236,7 @@ $('.top-btn1').on('click',function(){
 
         $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('span').html('');
         console.log(txt);
+        //手抄表
         if(num0 == 0){
 
 
@@ -1233,6 +1268,13 @@ $('.top-btn1').on('click',function(){
                 display:'none'
             });
 
+            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').attr('placeHolder','');
+            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').removeAttr('readOnly');
+            $(this).parents('.deploy-form').find('.type-number').eq(3).find('.add-input').removeAttr('readOnly');
+
+
+
+
         }else {
             $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','从在线计量设备列表中选择');
 
@@ -1258,8 +1300,14 @@ $('.top-btn1').on('click',function(){
                 display:'block'
             });
 
+            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').attr('placeHolder','不可输入');
+            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').attr('readOnly','true');
+            $(this).parents('.deploy-form').find('.type-number').eq(3).find('.add-input').attr('readOnly','true');
+
+
             var doms = $('.in');
-            if(doms.attr('id') == '#add-meter'){
+            console.log(doms.attr('id'));
+            if(doms.attr('id') == 'add-meter'){
                 if(txt != ''){
                     console.log('111');
                     getNumbered('#add-meter');
@@ -1383,9 +1431,8 @@ $('#choose-building').on('click','.btn-primary',function(){
     }else{
 
             console.log('222');
-            getNumbered1('alter-meter');
-        $("#alter-meter").find('.add-input').eq(4).val('');
-        $("#alter-meter").find('.add-input').eq(4).attr('ids','');
+            getNumbered1('#alter-meter');
+
 
     }
 
@@ -1547,7 +1594,9 @@ function getNumbered1(dom){
     var txt1 = $(dom).find('.add-input').eq(0).children('span').attr('type');
     var txt2 = $(dom).find('.add-input').eq(3).attr('ids');
     var txt3 = $(dom).find('.add-input').eq(4).attr('ids');
+    console.log(txt2,txt3);
     if(!txt3){
+        console.log('nnn');
         txt3 = 0;
     }
     setTimeout(function(){
@@ -1745,7 +1794,18 @@ function checkedNull(dom){
                     return false;
                 };
             }
-        }else if(i==5){
+        }else if(i == 9){
+            if(online == 0){
+                if( $(dom).find('.input-label').eq(i).next().find('input').val() == ''){
+                    var txt = $(dom).find('.input-label').eq(i).next().find('input').parent().prev().html().split('：')[0];
+
+                    console.log(txt);
+                    myAlter(txt + " 不能为空");
+                    getFocus1($(dom).find('.input-label').eq(i).next().find('input'));
+                    return false;
+                };
+            }
+        }else if(i==7){
             if(online == 0){
                 if( $(dom).find('.input-label').eq(i).next().find('input').val() == ''){
                     var txt = $(dom).find('.input-label').eq(i).next().find('input').parent().prev().html().split('：')[0];
@@ -1777,7 +1837,7 @@ function checkedNull(dom){
             if($(dom).find('.input-label').eq(i).next().find('.add-input-select').find('span').html() == ''){
                 var txt = $(dom).children('.input-label').eq(i).html().split('：')[0];
                 $('#check-text').modal('show');
-                myAlter(txt + " 不能为空")
+                myAlter(txt + " 不能为空");
                 return false;
             }
         }
@@ -1794,10 +1854,10 @@ function checkedNumber(dom){
         if($(dom).find('.type-number').eq(i).find('input').val() != ""){
             var txt = $(dom).find('.type-number').eq(i).find('input').val() / 1;
 
-            if(isNaN(txt)){
+            if(isNaN(txt) || txt < 0 ){
                 var txt1 = $(dom).find('.type-number').eq(i).children('label').html().split('：')[0];
                 console.log(txt1);
-                myAlter(txt1 + " 必须为数字")
+                myAlter(txt1 + " 必须为非负数字")
                 getFocus1($(dom).find('.type-number').eq(i).find('input'));
                 return false;
             }
@@ -1819,3 +1879,4 @@ function jumpNow(){
     dom.click();
 
 }
+

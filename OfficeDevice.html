@@ -49,7 +49,7 @@
                         <!--右侧查询部分-->
                         <div class="main-content-right col-lg-9 col-md-8 col-sm-12 col-xs-12">
                             <ul class="main-content-header">
-                                <li class="main-content-header-lists0">仪表操作</li>
+                                <li class="main-content-header-lists0">条件查询</li>
                             </ul>
 
                             <!--搜索部分-->
@@ -137,12 +137,9 @@
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                     <div class="add-title">累加子账户维护</div>
 
-                    <div class="showCompany search-test-inner1 row" style="padding-top:15px;margin-bottom:15px">
+                    <div class="showCompany search-test-inner1 row" style="padding-top:15px">
 
-                        <div class="legend" style="height:30px;">
-                            <div style="float:right;margin-right:50px;"><span><img src="img/add-sign.png"></span> <b> 可添加</b> <span> <img src="img/minus-sign.png"></span> <b> 可删除</b> <span><img src="img/minus-sign1.png"></span> <b> 不可删除</b> </div>
 
-                        </div>
                         <!-- 搜索框结构 -->
                         <div class="col-sm-6 col-xs-6">
 
@@ -191,6 +188,24 @@
                             </div>
                         </div>
 
+                        <div class="legend" style="height:30px;margin-top:20px;float:left;width:100%">
+                            <div style="float:right;margin-right:50px;">
+                                <span>
+                                    <img src="img/add-sign.png">
+                                </span>
+                                <b> 可添加 </b>
+                                <span>
+                                    <img src="img/minus-sign.png">
+                                </span>
+                                <b> 可删除</b>
+                                <span>
+                                    <img src="img/minus-sign1.png">
+                                </span>
+                                <b> 不可删除</b>
+                            </div>
+
+                        </div>
+
                     </div>
                     <div class='modal-footer'>
                         <button type='button' class='btn btn-primary top-btn'>提交更改</button>
@@ -209,12 +224,8 @@
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
                     <div class="add-title">公摊比例账户维护</div>
 
-                    <div class="showCompany search-test-inner1 row" style="padding-top:15px;margin-bottom:15px">
+                    <div class="showCompany search-test-inner1 row" style="padding-top:15px;">
 
-                        <div class="legend" style="height:30px;">
-                            <div style="float:right;margin-right:50px;"><span><img src="img/add-sign.png"></span> <b> 可添加</b> <span> <img src="img/minus-sign.png"></span> <b> 可删除</b> <span><img src="img/minus-sign1.png"></span> <b> 不可删除</b> </div>
-
-                        </div>
 
                         <!-- 搜索框结构 -->
                         <div class="col-sm-5 col-xs-5">
@@ -223,10 +234,10 @@
 
                             <!--表头-->
                             <h4 style="margin-bottom:15px">待选计量设备列表
-                                <button class="top-btn choose-building" data-toggle='modal' data-target='#choose-building' style="margin-left:18px;margin-right:8px;">按楼查看</button>
+                                <button class="top-btn choose-building" data-toggle='modal' data-target='#choose-building' style="margin-left:18px;margin-right:3px;">按楼查看</button>
                                 <button class="top-btn show-all">显示全部</button>
 
-                                <button class="top-btn push-all" style="margin-left:10px">添加全部</button>
+                                <button class="top-btn push-all" style="margin-left:4px">添加全部</button>
                             </h4>
 
 
@@ -259,6 +270,24 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <!--图例-->
+                        <div class="legend" style="height:30px;margin-top:20px;float:left;width:100%">
+                            <div style="float:right;margin-right:50px;">
+                                <span>
+                                    <img src="img/add-sign.png">
+                                </span>
+                                <b> 可添加 </b>
+                                <span>
+                                    <img src="img/minus-sign.png">
+                                </span>
+                                <b> 可删除</b>
+                                <span>
+                                    <img src="img/minus-sign1.png">
+                                </span>
+                                <b> 不可删除</b>
+                            </div>
+
                         </div>
 
                     </div>
@@ -333,7 +362,7 @@
                                             <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表起始日期：</label>
 
                                             <div class="add-input-block">
-                                                <input type="text" class="add-input" value="" readonly="true">
+                                                <input type="text" class="add-input startDates" value="" readonly="true">
                                             </div>
                                         </div>
 
@@ -341,7 +370,7 @@
                                             <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表起数：</label>
 
                                             <div class="add-input-block">
-                                                <input type="text" class="add-input" value="" readonly="true">
+                                                <input type="text" class="add-input read-start" value="" readonly="true">
                                             </div>
                                         </div>
 
@@ -349,15 +378,15 @@
                                             <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表结束日期：</label>
 
                                             <div class="add-input-block">
-                                                <input type="text" class="add-input chooseDate" value=""  placeholder="选择时间">
+                                                <input type="text" class="add-input chooseDate endDates" value=""  placeholder="选择时间">
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input type-number">
                                             <label for="" class="input-label" style="width:135px;margin-right:40px;">设备终止读数：</label>
 
                                             <div class="add-input-block">
-                                                <input type="text" class="add-input end-number" value="" placeholder="请输入终止读数">
+                                                <input type="text" class="add-input end-number read-end" value="" placeholder="请输入终止读数">
                                             </div>
                                         </div>
 

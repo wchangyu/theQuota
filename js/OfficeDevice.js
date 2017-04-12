@@ -74,7 +74,9 @@ $(document).ready(function(){
             'processing': '查询中...',
             'lengthMenu': '每页 _MENU_ 件',
             'zeroRecords': '没有数据',
-            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
+            "sInfoEmpty" : "记录数为0",
+            "sInfoFiltered" : "(全部记录数 _MAX_ 条)",
             'paginate': {
                 'first':      '第一页',
                 'last':       '最后一页',
@@ -300,7 +302,7 @@ $(document).ready(function(){
         "paging":false,
         "ordering": false,
         'searching':true,
-        "sScrollY": '340px',
+        "sScrollY": '415px',
         "bPaginate": false,
         //"scrollCollapse": true,
         'language': {
@@ -362,7 +364,7 @@ $(document).ready(function(){
         "paging":false,
         "ordering": false,
         'searching':false,
-        "sScrollY": '340px',
+        "sScrollY": '415px',
         "bPaginate": false,
         //"scrollCollapse": true,
         'language': {
@@ -417,7 +419,7 @@ $(document).ready(function(){
                     }else if(row.f_mtOnline == 1){
                         return '<input  value="'+data+'" disabled="true"> '
                     }else if(row.f_mtOnline == 0){
-                        return '<input class="chooseDate wait-change0" value="'+data+'"> '
+                        return '<input class="chooseDate wait-change0 small-picture" value="'+data+'" readonly="true"> '
                     }
                 }
             },
@@ -433,7 +435,7 @@ $(document).ready(function(){
                     }else if(row.f_mtOnline == 1){
                         return '<input style="width:75px" value="'+data+'" disabled="true"> '
                     }else if(row.f_mtOnline == 0){
-                        return '<input class="wait-change1" style="width:75px" value="'+data+'"> '
+                        return '<input class="wait-change1 read-number" style="width:75px" value="'+data+'"> '
                     }
 
                 }
@@ -450,7 +452,7 @@ $(document).ready(function(){
         "paging":false,
         "ordering": false,
         'searching':true,
-        "sScrollY": '340px',
+        "sScrollY": '415px',
         "bPaginate": false,
         //"scrollCollapse": true,
         'language': {
@@ -573,6 +575,12 @@ $(document).ready(function(){
 
         $('#accum-preseve .btn-primary').off('click');
         $('#accum-preseve .btn-primary').on('click',function(){
+
+            //判断输入是否正确
+            if( !checkedReadNum('#accum-preseve')){
+
+                return false;
+            };
 
             $('#present-message').modal('show');
 
@@ -721,6 +729,12 @@ $(document).ready(function(){
         $('#accum-preseve .btn-primary').off('click');
         $('#accum-preseve .btn-primary').on('click',function(){
 
+            //判断输入是否正确
+            if( !checkedReadNum('#accum-preseve')){
+
+                return false;
+            };
+
             //
             $('#present-message').modal('show');
 
@@ -796,7 +810,7 @@ $(document).ready(function(){
         "paging":false,
         "ordering": false,
         'searching':true,
-        "sScrollY": '340px',
+        "sScrollY": '415px',
         "bPaginate": false,
         //"scrollCollapse": true,
         'language': {
@@ -858,7 +872,7 @@ $(document).ready(function(){
         "paging":false,
         "ordering": false,
         'searching':false,
-        "sScrollY": '340px',
+        "sScrollY": '422px',
         "bPaginate": false,
         //"scrollCollapse": true,
         'language': {
@@ -913,7 +927,7 @@ $(document).ready(function(){
                     }else if(row.f_mtOnline == 1){
                         return '<input  value="'+data+'" disabled="true"> '
                     }else if(row.f_mtOnline == 0){
-                        return '<input class="chooseDate wait-change0" value="'+data+'"> '
+                        return '<input class="chooseDate wait-change0 small-picture wait-push" value="'+data+'"> '
                     }
                 }
             },
@@ -928,7 +942,7 @@ $(document).ready(function(){
                     }else if(row.f_mtOnline == 1){
                         return '<input style="width:75px" value="'+data+'" disabled="true"> '
                     }else if(row.f_mtOnline == 0){
-                        return '<input class="wait-change1" style="width:75px" value="'+data+'"> '
+                        return '<input class="wait-change1 wait-push read-number" style="width:75px" value="'+data+'"> '
                     }
                 }
             },
@@ -1027,7 +1041,7 @@ $(document).ready(function(){
         $('#accum-shared .btn-primary').off('click');
         $('#accum-shared .btn-primary').on('click',function(){
             //检验是否填写正确
-            if(!checkedNull2('#accum-shared')){
+            if(!checkedReadNum('#accum-shared') ||  !checkedNull2('#accum-shared')){
                 console.log('ii');
                 return false;
             };
@@ -1185,12 +1199,22 @@ $(document).ready(function(){
                     },
                     {
                         title:'抄表起始日期',
-                        data:'f_ReadET'
+                        data:'f_ReadET',
+                        render:function(data, type, row, meta){
+
+                            return '<span class="startDate">'+data+'</span> '
+                        }
+
+
 
                     },
                     {
                         title:'抄表起数',
-                        data:'f_ReadEndNum'
+                        data:'f_ReadEndNum',
+                        render:function(data, type, row, meta){
+
+                                return '<span class="startNum">'+data+'</span> '
+                        }
 
                     },
                     {
@@ -1201,7 +1225,7 @@ $(document).ready(function(){
                             if(row.f_mtOnline == 1){
                                 return '<input  value="'+data+'" disabled="true"> '
                             }else if(row.f_mtOnline == 0){
-                                return '<input class="chooseDate wait-push0 wait-push" txt="抄表结束日期" value=""> '
+                                return '<input class="chooseDate wait-push0 wait-push small-picture endDates" txt="抄表结束日期" value=""> '
                             }
                         }
                     },
@@ -1378,7 +1402,7 @@ $(document).ready(function(){
             $('#cancel-meter .btn-primary').on('click',function(){
 
                 //判断输入是否正确
-                if(!checkedNull1('#cancel-meter')){
+                if(!checkedNull1('#cancel-meter') || !CompareDate1('#cancel-meter') || !checkedEndNum('#cancel-meter') || !checkedCycleNum('#cancel-meter')){
                     console.log('ii');
                     return false;
                 };
@@ -1403,16 +1427,27 @@ $(document).ready(function(){
                     },
                     success: function (data) {
                         $('#theLoading').modal('hide');
-                        $('#cancel-meter').modal('hide');
+
 
                         console.log(data);
                         if(data.validateNumber == 5){
                             var arr = data.f_mtNumberInfos;
-
+                            var html = '';
                             for(var i=0; i<arr.length; i++){
-
+                                html += arr[i].key + '注销失败 <br /> 原因：' + arr[i].valueStr + '<br />'
                             }
+                            myAlter(html);
+                            return false;
                         }
+                        if(data.validateNumber == 1){
+                            myAlter('参数错误，请联系管理员');
+                            return false;
+                        }
+                        if(data.validateNumber == 3){
+                            myAlter('执行失败');
+                            return false;
+                        }
+                        $('#cancel-meter').modal('hide');
                         _table = $('#dateTables').dataTable();
                         _table.fnClearTable();
                         alarmHistory(importantId);
@@ -1757,7 +1792,7 @@ $(document).ready(function(){
         $('#change-meter .btn-primary').off('click');
         $('#change-meter .btn-primary').on('click',function(){
             //判断输入是否正确
-            if(!checkedNull('#change-meter')){
+            if(!checkedNull('#change-meter') || !checkedNumber('#change-meter') || !checkedCycle('#change-meter') || !CompareDate('#change-meter')){
                 return false;
             };
 
@@ -1796,9 +1831,28 @@ $(document).ready(function(){
                 },
                 success: function (data) {
                     $('#theLoading').modal('hide');
-                    $('#change-meter').modal('hide');
+
                     console.log(data);
 
+                    if(data.validateNumber == 5){
+                        var arr = data.f_mtNumberInfos;
+                        var html = '';
+                        for(var i=0; i<arr.length; i++){
+                            html += arr[i].key + '更换失败 <br /> 原因：' + arr[i].valueStr + '<br />'
+                        }
+                        myAlter(html);
+                        return false;
+                    }
+                    if(data.validateNumber == 1){
+                        myAlter('参数错误');
+                        return false;
+                    }
+                    if(data.validateNumber == 3){
+                        myAlter('执行失败');
+                        return false;
+                    }
+
+                    $('#change-meter').modal('hide');
                     _table = $('#dateTables').dataTable();
                     _table.fnClearTable();
                     alarmHistory(importantId);
@@ -1826,7 +1880,6 @@ $(document).ready(function(){
 
 
 });
-
 
 
 var waitArr = [];
@@ -2381,8 +2434,8 @@ function tableChange(){
         var id = $(this).parents('tr').find('.theHidden').html();
         var txt = $(this).val();
         if(isNaN(txt) || txt < 0){
-            myAlter('建档起数必须为非负数字');
-            getFocus1($(this));
+            //myAlter('建档起数必须为非负数字');
+            //getFocus1($(this));
             return false;
         }
         for(var i=0; i<selectArr.length; i++){
@@ -2410,15 +2463,12 @@ function tableChange(){
 
         var id = $(this).parents('tr').find('.theHidden').html();
         var txt = $(this).val();
-        //if(txt == ''){
-        //    return false;
-        //}else if(){
-        //
-        //        myAlter('公摊比例输入错误');
-        //        getFocus1($(this));
-        //        return false;
-        //
-        //}
+        if(txt == ''){
+            return false;
+        }else if(isNaN(txt) || txt < 0 || txt == 0  || txt > 1){
+
+                return false;
+        }
 
         for(var i=0; i<selectArr.length; i++){
             if(id == selectArr[i].pK_Meter){
@@ -2451,13 +2501,13 @@ function tableChanges(){
         var txt = $(this).val();
         var startNum = parseFloat($(this).parents('tr').children().eq(6).html());
         if(isNaN(txt) || txt < 0 || txt == 0){
-            myAlter('设备终止读数错误');
-            getFocus1($(this));
+            //myAlter('设备终止读数错误');
+            //getFocus1($(this));
             return false;
         }else if(parseFloat(txt) < startNum){
-            myAlter('止数小于起数，请输入圈数');
-            $(this).parents('tr').find('.wait-push2').val('');
-            getFocus1($(this).parents('tr').find('.wait-push2'));
+            //myAlter('止数小于起数，请输入圈数');
+            //$(this).parents('tr').find('.wait-push2').val('');
+            //getFocus1($(this).parents('tr').find('.wait-push2'));
         }
         for(var i=0; i<logoutArr.length; i++){
             if(id == logoutArr[i].pK_Meter){
@@ -2474,8 +2524,8 @@ function tableChanges(){
         var txt = $(this).val();
 
         if(isNaN(txt) || txt < 0 || txt == 0){
-            myAlter('圈数输入错误');
-            getFocus1($(this));
+            //myAlter('圈数输入错误');
+            //getFocus1($(this));
             return false;
         }
         for(var i=0; i<logoutArr.length; i++){
@@ -2788,40 +2838,9 @@ function buildClick(){
     });
 };
 
-//更换弹窗中输入的验证
-$('.end-number').on('blur',function(){
-    var txt = $(this).val();
-    var txt1 = parseInt($(this).val());
-    var startNum = parseInt($(this).parents('.deploy-form').find('.add-input').eq(1).val());
-    console.log(startNum)
-    if(isNaN(txt) || txt < 0 || txt == 0){
-        myAlter('设备终止读数输入错误');
-        getFocus1($(this));
-        return false;
-    }else if(txt1 < startNum){
-        myAlter('止数小于起数，请输入圈数');
-        $(this).parents('.deploy-form').find('.add-input').eq(4).val('');
-        getFocus1($(this).parents('.deploy-form').find('.add-input').eq(4));
-    }
 
-});
 
-$('.cycle-number').on('blur',function(){
-    var txt = $(this).val();
-    var startNum = $(this).parents('.deploy-form').find('.add-input').eq(1).val();
-    var endNum =  $(this).parents('.deploy-form').find('.add-input').eq(3).val();
-    console.log(startNum)
-    if(txt % 1 !== 0 || txt < 0 ){
-        myAlter('圈数输入错误');
-        getFocus1($(this));
-        return false;
-    }else if(endNum < startNum && txt == 0){
-        myAlter('止数小于起数，圈数必须大于0');
-        $(this).parents('.deploy-form').find('.add-input').eq(4).val('');
-        getFocus1($(this).parents('.deploy-form').find('.add-input').eq(4));
-    }
 
-});
 
 //选择日期插件
 $('.chooseDate').datepicker(
@@ -2934,3 +2953,169 @@ function checkedNull2(dom){
     }
     return true;
 }
+
+//检验是否为数字
+function checkedNumber(dom){
+    var num = $(dom).find('.type-number').length;
+
+    for(var i=0; i<num; i++){
+        if($(dom).find('.type-number').eq(i).find('input').val() != ""){
+            var txt = $(dom).find('.type-number').eq(i).find('input').val() / 1;
+
+            if(isNaN(txt) || txt < 0 ){
+                var txt1 = $(dom).find('.type-number').eq(i).children('label').html().split('：')[0];
+                console.log(txt1);
+                myAlter(txt1 + " 必须为非负数字")
+                getFocus1($(dom).find('.type-number').eq(i).find('input'));
+                return false;
+            }
+        }
+
+    }
+    return true;
+}
+
+//检验圈数输入是否正确
+function checkedCycle(dom){
+    var num = $(dom).find('.read-start').length;
+
+    for(var i=0; i<num; i++){
+        var startNum = parseInt($(dom).find('.read-start').eq(i).val());
+        var endNum = parseInt($(dom).find('.read-end').eq(i).val());
+        var txt = parseInt($(dom).find('.cycle-number').eq(i).val());
+        if(txt % 1 !== 0 || txt < 0 ){
+            myAlter('圈数输入错误');
+            getFocus1($(dom).find('.cycle-number').eq(i));
+            return false;
+        }else if(endNum < startNum && txt == 0){
+            myAlter('止数小于起数，圈数必须大于0');
+            $(this).parents('.deploy-form').find('.add-input').eq(4).val('');
+            getFocus1($(dom).find('.cycle-number').eq(i));
+            return false
+        }
+
+    }
+    return true;
+}
+
+//检验开始结束日期设置是否合理
+function CompareDate(dom) {
+    var num = $(dom).find('.startDates').length;
+
+    for(var i=0; i<num; i++){
+        var d1 = $(dom).find('.startDates').eq(i).val().split(" ")[0].split("/").join('-');
+        var d2 = $(dom).find('.endDates').eq(i).val();
+
+        if((new Date(d1.replace(/-/g,"\/"))) < (new Date(d2.replace(/-/g,"\/")))){
+
+        }else{
+            myAlter('结束日期必须大于开始日期');
+            getFocus1($(dom).find('.endDates').eq(i));
+            return false;
+        }
+
+
+    }
+    return true;
+
+}
+
+//检验建档读数
+function checkedReadNum(dom){
+    var length = $(dom).find('.read-number').length;
+    for(var i=0; i<length; i++){
+        var txt = $(dom).find('.read-number').eq(i).val();
+        if(txt == ''){
+            myAlter('建档读数不能为空');
+
+            getFocus1($(dom).find('.read-number').eq(i));
+
+
+            return false;
+        }else if(isNaN(txt) || txt < 0){
+
+
+            myAlter('建档读数必须为非负数字');
+
+            getFocus1($(dom).find('.read-number').eq(i));
+
+
+            return false;
+        }
+    }
+    return true;
+}
+
+//检验注销中的开始结束日期是否合理
+function CompareDate1(dom) {
+    var num = $(dom).find('.startDate').length;
+
+    for(var i=0; i<num; i++){
+        var d1 = $(dom).find('.startDate').eq(i).html().split(" ")[0].split("/").join('-');
+        console.log(d1);
+        var d2 = $(dom).find('.endDates').eq(i).val();
+        console.log(d2);
+        if((new Date(d1.replace(/-/g,"\/"))) < (new Date(d2.replace(/-/g,"\/")))){
+
+        }else{
+            myAlter('结束日期必须大于开始日期');
+            getFocus1($(dom).find('.endDates').eq(i));
+            return false;
+        }
+
+
+    }
+    return true;
+
+}
+
+//检验设备终止读数
+function checkedEndNum(dom){
+    var length = $(dom).find('.wait-push1').length;
+    for(var i=0; i<length; i++){
+        var txt = $(dom).find('.wait-push1').eq(i).val();
+        var startNum = $(dom).find('.startNum').eq(i).html();
+
+        var cycNum = parseInt($(dom).find('.wait-push2').eq(i).val());
+        if(isNaN(txt) || txt < 0){
+
+
+            myAlter('设备终止读数必须为非负数字');
+
+            getFocus1($(dom).find('.wait-push1').eq(i));
+
+
+            return false;
+        }
+    }
+    return true;
+}
+
+//检验圈数
+function checkedCycleNum(dom){
+    var num = $(dom).find('.wait-push2').length;
+
+    for(var i=0; i<num; i++){
+
+        var txt = $(dom).find('.wait-push2').eq(i).val();
+
+        var endNum = $(dom).find('.wait-push1').eq(i).val();
+        var startNum = $(dom).find('.startNum').eq(i).html();
+
+        if(txt % 1 !== 0 || txt < 0 ){
+            myAlter('圈数必须为非负整数');
+            getFocus1($(dom).find('.wait-push2').eq(i));
+            return false;
+        }else if(parseFloat(endNum) < parseFloat(startNum) && txt < 1){
+            myAlter('止数小于起数，圈数必须大于0');
+
+            getFocus1($(dom).find('.wait-push2').eq(i));
+
+
+            return false;
+        }
+
+    }
+    return true;
+}
+
