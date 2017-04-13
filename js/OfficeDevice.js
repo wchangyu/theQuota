@@ -1201,8 +1201,12 @@ $(document).ready(function(){
                         title:'抄表起始日期',
                         data:'f_ReadET',
                         render:function(data, type, row, meta){
+                            if(row.f_mtOnline == 1){
+                                return '<span class="">'+data+'</span> '
+                            }else if(row.f_mtOnline == 0){
+                                return '<span class="startDate">'+data+'</span> '
+                            }
 
-                            return '<span class="startDate">'+data+'</span> '
                         }
 
 

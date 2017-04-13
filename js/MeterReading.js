@@ -637,10 +637,10 @@ $(document).ready(function(){
                 return false;
             };
 
-            var warnUp = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnUp');
-            var warnDown = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnDown');
+            var warnUp = parseFloat($(this).parents('.modal-header').find('.add-input').eq(6).attr('warnUp'));
+            var warnDown = parseFloat($(this).parents('.modal-header').find('.add-input').eq(6).attr('warnDown'));
 
-            var energyValue = $(this).parents('.modal-header').find('.add-input').eq(7).val();
+            var energyValue = parseFloat($(this).parents('.modal-header').find('.add-input').eq(7).val());
 
             console.log(warnDown,warnUp);
 
@@ -698,6 +698,7 @@ $(document).ready(function(){
                         return false
                     }
 
+
                     //没有启用多表输入模式
                     if(getData.length == 0){
                         $('#add-deploy').modal('hide');
@@ -720,32 +721,39 @@ $(document).ready(function(){
                         getTreeMessage();
 
                     }else{
-                        var lengths = getData.length;
-                        newNum ++;
 
-                        if(newNum == lengths){
-                            location.reload();
-                        }
 
-                        var num = newNum + 1;
-                        $('.show-plan').find('font').html(num + '/'+lengths);
+                            var lengths = getData.length;
+                            newNum ++;
 
-                        $('#add-deploy .add-input').val('');
-                        $('#add-deploy .add-input').eq(6).val(0);
+                            if(newNum == lengths){
+                                location.reload();
+                            };
 
-                        var meterName = getData[newNum].f_mtNumber;
-                        $('#add-deploy .ament-data').children('span').eq(0).html(meterName);
-                        $('#add-deploy .ament-data').children('span').eq(1).html(getData[newNum].f_MeasureArea);
+                            myAlter('提交成功,请继续输入');
 
-                        $('#add-deploy .add-input').eq(0).val(getData[newNum].f_ReadPerson);
-                        $('#add-deploy .add-input').eq(1).val(getData[newNum].f_ReadRate);
-                        $('#add-deploy .add-input').eq(2).val(getData[newNum].f_ReadStartNum);
+                            var num = newNum + 1;
+                            $('.show-plan').find('font').html(num + '/'+lengths);
 
-                        $('#add-deploy .add-input').eq(4).val(getData[newNum].f_ReadST);
-                        $('#add-deploy .add-input').eq(5).val(getData[newNum].f_ReadET);
-                        $('#add-deploy .add-input').eq(6).attr('range',getData[newNum].f_Range);
+                            $('#add-deploy .add-input').val('');
+                            $('#add-deploy .add-input').eq(6).val(0);
 
-                        $('#add-deploy .ament-data').children('span').eq(3).html(data[newNum].f_WarnDown + ' - ' + data[newNum].f_WarnUp);
+                            var meterName = getData[newNum].f_mtNumber;
+                            $('#add-deploy .ament-data').children('span').eq(0).html(meterName);
+                            $('#add-deploy .ament-data').children('span').eq(1).html(getData[newNum].f_MeasureArea);
+
+                            $('#add-deploy .add-input').eq(0).val(getData[newNum].f_ReadPerson);
+                            $('#add-deploy .add-input').eq(1).val(getData[newNum].f_ReadRate);
+                            $('#add-deploy .add-input').eq(2).val(getData[newNum].f_ReadStartNum);
+
+                            $('#add-deploy .add-input').eq(4).val(getData[newNum].f_ReadST);
+                            $('#add-deploy .add-input').eq(5).val(getData[newNum].f_ReadET);
+                            $('#add-deploy .add-input').eq(6).attr('range',getData[newNum].f_Range);
+
+                            $('#add-deploy .ament-data').children('span').eq(3).html(data[newNum].f_WarnDown + ' - ' + data[newNum].f_WarnUp);
+
+
+
                     }
 
 
@@ -859,10 +867,10 @@ $(document).ready(function(){
                 return false;
             };
 
-            var warnUp = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnUp');
-            var warnDown = $(this).parents('.modal-header').find('.add-input').eq(6).attr('warnDown');
+            var warnUp = parseFloat($(this).parents('.modal-header').find('.add-input').eq(6).attr('warnUp'));
+            var warnDown = parseFloat($(this).parents('.modal-header').find('.add-input').eq(6).attr('warnDown'));
 
-            var energyValue = $(this).parents('.modal-header').find('.add-input').eq(7).val();
+            var energyValue = parseFloat($(this).parents('.modal-header').find('.add-input').eq(7).val());
 
             console.log(warnDown,warnUp);
 
@@ -918,7 +926,18 @@ $(document).ready(function(){
                         return false
                     }
 
-                    ajaxSuccess();
+                    _table = $('#dateTables').dataTable();
+                    _table.fnClearTable();
+                    alarmHistory();
+                    //给表格添加后台获取到的数据
+                    setData();
+                    hiddrenId();
+
+                    _table = $('#dateTables1').dataTable();
+                    _table.fnClearTable();
+                    //给表格添加后台获取到的数据
+                    setData(dataArr1);
+                    hiddrenId();
 
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -1053,7 +1072,19 @@ $(document).ready(function(){
                         myAlter('此抄表记录由注销或跟换计量设备产生，无法删除');
                         return false;
                     }
-                    ajaxSuccess();
+
+                    _table = $('#dateTables').dataTable();
+                    _table.fnClearTable();
+                    alarmHistory();
+                    //给表格添加后台获取到的数据
+                    setData();
+                    hiddrenId();
+
+                    _table = $('#dateTables1').dataTable();
+                    _table.fnClearTable();
+                    //给表格添加后台获取到的数据
+                    setData(dataArr1);
+                    hiddrenId();
 
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) {

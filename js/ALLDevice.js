@@ -273,7 +273,7 @@ $(document).ready(function(){
         };
 
         //获取要提交的数据
-        var number0 =  $("#alter-meter .add-input").eq(0).find('span').attr('factor');
+        var number0 =  $("#add-meter .add-input").eq(0).find('span').attr('factor');
         var meterID = $("#add-meter .add-input").eq(0).find('span').attr('ids');
         var number = $("#add-meter .add-input").eq(1).val();
         var numberID = $("#add-meter .add-input").eq(2).find('span').attr('ids');
@@ -287,11 +287,17 @@ $(document).ready(function(){
         var area = $("#add-meter .add-input").eq(7).val();
         var rate = $("#add-meter .add-input").eq(8).val();
         var buildDate;
+
         if(number0 == 0){
+
             buildDate = $("#add-meter .add-input").eq(9).val();
         }else{
+
             buildDate = $("#add-meter .bookbuilding").eq(0).find('span').html();
         };
+
+
+
         var startNum = $("#add-meter .add-input").eq(10).val();
         var warnDown = $("#add-meter .add-input").eq(11).val();
         var warnUp = $("#add-meter .add-input").eq(12).val();
