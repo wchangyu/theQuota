@@ -399,3 +399,7 @@ label {
 .fdjImg{
     cursor: pointer;
 }
+.modal-backdrop.in {
+    filter: alpha(opacity=30);
+    opacity: 0.3 !important;
+}

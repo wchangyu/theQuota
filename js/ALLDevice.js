@@ -7,12 +7,13 @@ $(document).ready(function(){
 
     //select 优化动画
 
+
     $(document).on('click', function () {
         if ($('.add-select-block').is(':hidden')) {
             $('.add-select-block').css({
                 display: 'none'
             });
-            rotateNum = 1;
+            rotateNum = 2;
             var num = rotateNum * 180;
             var string = num + 'deg';
             $('.add-input-select').children('div').css({
@@ -43,12 +44,15 @@ $(document).ready(function(){
         var num1 = $(this).attr('factor');
         var num2 = $(this).attr('unit');
         var num3 = $(this).attr('type');
+        var num4 = $(this).attr('range');
+        console.log(num4);
         $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').html(text);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('ids',num0);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('factor',num1);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('unit',num2);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('type',num3);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('range',num4);
         rotateNum++;
         var num = rotateNum * 180;
         var string = num + 'deg';
@@ -75,7 +79,7 @@ $(document).ready(function(){
             'emptyTable': '没有数据',
             'loadingRecords': '加载中...',
             'processing': '查询中...',
-            'lengthMenu': '每页 _MENU_ 件',
+            'lengthMenu': '每页 _MENU_ 条',
             'zeroRecords': '没有数据',
             'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
             "sInfoEmpty" : "记录数为0",
@@ -148,7 +152,7 @@ $(document).ready(function(){
                 data:'cNameT'
             },
             {
-                title:'出场编号',
+                title:'出厂编号',
                 data:'f_FactoryNumber'
 
             },
@@ -267,7 +271,7 @@ $(document).ready(function(){
     $('#add-meter .btn-primary').on('click',function(){
 
         //判断输入是否正确
-        if(!checkedNull('#add-meter') || !checkedNumber('#add-meter')){
+        if(!checkedNull('#add-meter') || !checkedNumber('#add-meter') || !checkedStartNum('#add-meter')){
             console.log('ok');
             return false;
         };
@@ -340,6 +344,7 @@ $(document).ready(function(){
                 $('#theLoading').modal('hide');
                 if(data == 2){
                     myAlter('计量设备已存在');
+                    getFocus1($('#add-meter .add-input').eq(1));
                     return false;
                 }
                 if(data == 3){
@@ -357,6 +362,8 @@ $(document).ready(function(){
                 $('#add-meter').modal('hide');
 
                 ajaxSuccess();
+                //完成后清空input框
+                $(this).parent().parent().parent().find('input').val('');
 
             },
             error:function (data, textStatus, errorThrown) {
@@ -370,10 +377,11 @@ $(document).ready(function(){
 
                 $('#add-meter').modal('hide');
                 myAlter(num);
+                //完成后清空input框
+                $(this).parent().parent().parent().find('input').val('');
             }
         });
-        //完成后清空input框
-        $(this).parent().parent().parent().find('input').val('');
+
     });
 
     //修改功能
@@ -406,9 +414,9 @@ $(document).ready(function(){
             },
             success: function (data) {
                 $('#theLoading').modal('hide');
-                console.log(data);
+
                 postData = data;
-                console.log();
+                console.log(meterType);
                 for(var i=0 ; i<meterType.length;i++){
                     if(data.fK_MeterType_Meter == meterType[i].pK_MeterType){
                         $('#alter-meter').find('.add-input').eq(0).find('span').html(meterType[i].f_MeterTypeName);
@@ -416,6 +424,7 @@ $(document).ready(function(){
                         $('#alter-meter').find('.add-input').eq(0).find('span').attr('factor',meterType[i].f_mtOnline);
                         $('#alter-meter').find('.add-input').eq(0).find('span').attr('unit',meterType[i].f_WarnUp);
                         $('#alter-meter').find('.add-input').eq(0).find('span').attr('type',meterType[i].f_mtEnergyType);
+                        $('#alter-meter').find('.add-input').eq(0).find('span').attr('range',meterType[i].f_Range);
 
                     }
                 }
@@ -448,39 +457,53 @@ $(document).ready(function(){
                 $('#alter-meter').find('.add-input').eq(11).val(data.f_WarnDown);
                 $('#alter-meter').find('.add-input').eq(12).val(data.f_WarnUp);
 
-                $('#alter-meter').find('.rate').find('.add-input').attr('readOnly','true');
+                $('#alter-meter').find('.rate').find('.add-input').attr('disabled','true');
 
                 if($('#alter-meter').find('.add-input').eq(0).find('span').attr('factor') == 1){
                     getNumbered1('#alter-meter');
                     $('#alter-meter').find('.number-machine').find('img').attr('data-target','#choose-instrument');
+                    $('#alter-meter').find('.number-machine').find('img').css({
+                        display:'inline-block'
+                    });
+
                     $('#alter-meter').find('.number-machine').find('.add-input').removeAttr('placeHolder');
 
-                    $('#alter-meter').find('.bookbuilding').find('.add-input').css('readOnly',"true");
+                    $('#alter-meter').find('.bookbuilding').find('.add-input').css('disabled',"true");
                     $('#alter-meter').find('.bookbuilding').eq(0).find('.add-input').css({
                         display:'none'
                     });
+
+                    $('#alter-meter').find('.bookbuilding').eq(0).find('.add-input-block').css({
+
+                        backgroundColor: 'rgb(235, 235, 228)'
+                    });
+
                     $('#alter-meter').find('.bookbuilding').eq(0).find('span').css({
                         display:'inline-block'
                     });
                     $('#alter-meter').find('.bookbuilding').eq(0).find('span').html(data.f_FilingDT);
+                    $('#alter-meter').find('.bookbuilding').eq(1).find('.add-input').attr('disabled','true');
 
-                    $('#alter-meter').find('.get-online-message').removeAttr('disabled');
+                    $('#alter-meter').find('.get-online-message').removeAttr('disabledd');
                     $('#alter-meter').find('.get-online-message').addClass('top-btn');
 
                     $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','不可输入');
-                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('readOnly','true');
-                    $('#alter-meter').find('.type-number').eq(3).find('.add-input').attr('readOnly','true');
+                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('disabled','true');
+                    $('#alter-meter').find('.type-number').eq(3).find('.add-input').attr('disabled','true');
 
 
                 }else{
                     $('#alter-meter').find('.number-machine').find('.add-input').removeAttr('data-target');
                     $('#alter-meter').find('.number-machine').find('.add-input').attr('placeHolder','不可输入');
+                    $('#alter-meter').find('.number-machine').find('img').css({
+                        display:'none'
+                    });
 
                     if($('#add-meter').find('.rate').find('span').attr('type') == 100){
-                        $('#add-meter').find('.rate').find('.add-input').removeAttr('readOnly');
+                        $('#add-meter').find('.rate').find('.add-input').removeAttr('disabled');
                     }
 
-                    $('#alter-meter').find('.bookbuilding').find('.add-input').removeAttr('readOnly');
+                    $('#alter-meter').find('.bookbuilding').find('.add-input').removeAttr('disabled');
                     $('#alter-meter').find('.bookbuilding').eq(0).find('.add-input').css({
                         display:'inline-block'
                     });
@@ -490,15 +513,17 @@ $(document).ready(function(){
                     $('#alter-meter').find('.bookbuilding').eq(0).find('.add-input').val(data.f_FilingDT);
 
 
-                    $('#alter-meter').find('.get-online-message').attr('disabled','true');
+                    $('#alter-meter').find('.get-online-message').attr('disabledd','true');
                     $('#alter-meter').find('.get-online-message').removeClass('top-btn');
 
-
+                    $('#alter-meter').find('.bookbuilding').eq(1).find('.add-input').removeAttr('disabled');
 
                     $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','');
-                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').removeAttr('readOnly');
-                    $('#alter-meter').find('.type-number').eq(3).find('.add-input').removeAttr('readOnly');
+                    $('#alter-meter').find('.type-number').eq(2).find('.add-input').removeAttr('disabled');
+                    $('#alter-meter').find('.type-number').eq(3).find('.add-input').removeAttr('disabled');
                 }
+
+                changeColor()
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -518,7 +543,7 @@ $(document).ready(function(){
         $('#alter-meter .btn-primary').on('click',function() {
 
             //判断输入是否正确
-            if (!checkedNull('#alter-meter') || !checkedNumber('#alter-meter')) {
+            if (!checkedNull('#alter-meter') || !checkedNumber('#alter-meter') || !checkedStartNum('#alter-meter')) {
                 console.log('ok');
                 return false;
             };
@@ -585,6 +610,7 @@ $(document).ready(function(){
                     $('#theLoading').modal('hide');
                     if(data == 2){
                         myAlter('计量设备已存在');
+                        getFocus1($('#add-meter .add-input').eq(1));
                         return false;
                     }
                     if(data == 3){
@@ -760,6 +786,19 @@ $(document).ready(function(){
     });
 
 });
+
+function changeColor(){
+    $('.add-input-block').css({
+
+        backgroundColor: 'white'
+    });
+    $('.add-input:disabled').parent('.add-input-block').css({
+
+        backgroundColor: 'rgb(235, 235, 228)'
+    });
+
+}
+changeColor();
 
 //楼宇搜索功能
 //数采仪搜索功能
@@ -1100,6 +1139,7 @@ function getMeterType(){
         },
         success: function (result) {
             $('#theLoading').modal('hide');
+            console.log(result);
             for (var i = 0; i < result.length; i++) {
                 meterType.push(result[i]);
             }
@@ -1136,6 +1176,7 @@ function putMeterType(dom){
     var arr2 = [];
     var arr3 = [];
     var arr4 = [];
+    var arr5 = [];
     var txt = meterType;
     var html2 = '';
     for(var i=0 ; i < txt.length; i++){
@@ -1144,15 +1185,17 @@ function putMeterType(dom){
         var state = txt[i].f_mtOnline;
         var topNum = txt[i].f_WarnUp;
         var num0 = txt[i].f_mtEnergyType;
+        var range = txt[i].f_Range;
         arr0.push(state);
         arr1.push(id);
         arr2.push(type);
         arr3.push(topNum);
         arr4.push(num0);
+        arr5.push(range);
     }
     for(var i = 0 ; i < arr2.length; i++){
 
-        html2 += '<li ids="'+arr1[i]+'" factor="'+ arr0[i]+'" unit="'+arr3[i]+'" type="'+arr4[i]+'">'+ arr2[i]+'</li>'
+        html2 += '<li ids="'+arr1[i]+'" factor="'+ arr0[i]+'" unit="'+arr3[i]+'" type="'+arr4[i]+'" range="'+arr5[i]+'">'+ arr2[i]+'</li>'
     }
     for(var i=0; i<$(dom).length; i++){
         $(dom).eq(i).find('.add-input-select').eq(0).find('span').html(arr2[0]);
@@ -1161,11 +1204,12 @@ function putMeterType(dom){
         $(dom).eq(i).find('.add-input-select').eq(0).find('span').attr('factor',arr0[0]);
         $(dom).eq(i).find('.add-input-select').eq(0).find('span').attr('unit',arr3[0]);
         $(dom).eq(i).find('.add-input-select').eq(0).find('span').attr('type',arr4[0]);
+        $(dom).eq(i).find('.add-input-select').eq(0).find('span').attr('range',arr5[0]);
     }
     if(arr0[0] == 0){
 
         $('#add-meter').find('.number-machine').find('.number-machine').find('.add-input').attr('placeHolder','不可输入');
-        $('#add-meter').find('.number-machine').find('.add-input').attr('readOnly',"true");
+        $('#add-meter').find('.number-machine').find('.add-input').attr('disabled',"true");
         $('#add-meter').find('.number-machine').find('img').removeAttr('data-target');
         $('#add-meter').find('.number-machine').find('img').css({
             display:'none'
@@ -1173,20 +1217,20 @@ function putMeterType(dom){
 
         $('#add-meter').find('.rate').find('.add-input').attr('placeHolder','');
         $('#add-meter').find('.rate').find('.add-input').val(1);
-        $('#add-meter').find('.rate').find('.add-input').removeAttr('readOnly');
+        $('#add-meter').find('.rate').find('.add-input').removeAttr('disabled');
 
-        $('#add-meter').find('.get-online-message').attr('disabled','true');
+        $('#add-meter').find('.get-online-message').attr('disabledd','true');
         $('#add-meter').find('.get-online-message').removeClass('top-btn');
 
         $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','');
-        $('#add-meter').find('.type-number').eq(2).find('.add-input').removeAttr('readOnly');
-        $('#add-meter').find('.type-number').eq(3).find('.add-input').removeAttr('readOnly');
+        $('#add-meter').find('.type-number').eq(2).find('.add-input').removeAttr('disabled');
+        $('#add-meter').find('.type-number').eq(3).find('.add-input').removeAttr('disabled');
 
-        $('#alter-meter').find('.get-online-message').attr('disabled','true');
+        $('#alter-meter').find('.get-online-message').attr('disabledd','true');
         $('#add-meter').find('.get-online-message').removeClass('top-btn');
 
         if(arr4[0] != 100){
-            $('#add-meter').find('.rate').find('.add-input').attr('readOnly','true');
+            $('#add-meter').find('.rate').find('.add-input').attr('disabled','true');
         }
 
     }else if(arr0[0] == 1){
@@ -1198,9 +1242,9 @@ function putMeterType(dom){
 
         $('#add-meter').find('.rate').find('.add-input').attr('placeHolder','自动获取');
         $('#add-meter').find('.rate').find('.add-input').val('');
-        $('#add-meter').find('.rate').find('.add-input').attr('readOnly',"true");
+        $('#add-meter').find('.rate').find('.add-input').attr('disabled',"true");
 
-        $('#add-meter').find('.bookbuilding').find('.add-input').attr('readOnly',"true");
+        $('#add-meter').find('.bookbuilding').find('.add-input').attr('disabled',"true");
         $('#add-meter').find('.bookbuilding').eq(0).find('.add-input').css({
             display:'none'
         });
@@ -1211,13 +1255,14 @@ function putMeterType(dom){
 
 
         $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','不可输入');
-        $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('readOnly','true');
-        $('#add-meter').find('.type-number').eq(3).find('.add-input').attr('readOnly','true');
+        $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('disabled','true');
+        $('#add-meter').find('.type-number').eq(3).find('.add-input').attr('disabled','true');
 
         $('#add-meter').find('.get-online-message').addClass('top-btn');
         $('#alter-meter').find('.get-online-message').removeAttr('disabled');
     }
     $(dom).eq(0).parent().parent().find('.add-input').eq(12).val(arr3[0]);
+    changeColor()
 }
 
 
@@ -1250,22 +1295,22 @@ $('.top-btns').on('click',function(){
             $(this).parents('.deploy-form').find('.number-machine').find('img').css({
                 display:'none'
             });
-            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('readOnly',"true");
+            $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('disabled',"true");
             $(this).parents('.deploy-form').find('.number-machine').find('img').removeAttr('data-target');
             $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
 
             $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('placeHolder','');
             $(this).parents('.deploy-form').find('.rate').find('.add-input').val(1);
-            $(this).parents('.deploy-form').find('.rate').find('.add-input').removeAttr('readOnly');
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').removeAttr('disabled');
             if(num1 != 100){
-                $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('readOnly',"true");
+                $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('disabled',"true");
             }
 
 
             $(this).parents('.deploy-form').find('.get-online-message').attr('disabled','true');
             $(this).parents('.deploy-form').find('.get-online-message').removeClass('top-btn');
 
-            $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').removeAttr('readOnly');
+            $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').removeAttr('disabled');
 
             $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
                 display:'inline-block'
@@ -1275,8 +1320,8 @@ $('.top-btns').on('click',function(){
             });
 
             $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').attr('placeHolder','');
-            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').removeAttr('readOnly');
-            $(this).parents('.deploy-form').find('.type-number').eq(3).find('.add-input').removeAttr('readOnly');
+            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').removeAttr('disabled');
+            $(this).parents('.deploy-form').find('.type-number').eq(3).find('.add-input').removeAttr('disabled');
 
 
 
@@ -1293,12 +1338,12 @@ $('.top-btns').on('click',function(){
 
             $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('placeHolder','自动获取');
             $(this).parents('.deploy-form').find('.rate').find('.add-input').val('');
-            $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('readOnly',"true");
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('disabled',"true");
 
             $(this).parents('.deploy-form').find('.get-online-message').removeAttr('disabled');
             $(this).parents('.deploy-form').find('.get-online-message').addClass('top-btn');
 
-            $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').attr('readOnly',"true");
+            $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').attr('disabled',"true");
             $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
                 display:'none'
             });
@@ -1307,8 +1352,8 @@ $('.top-btns').on('click',function(){
             });
 
             $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').attr('placeHolder','不可输入');
-            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').attr('readOnly','true');
-            $(this).parents('.deploy-form').find('.type-number').eq(3).find('.add-input').attr('readOnly','true');
+            $(this).parents('.deploy-form').find('.type-number').eq(2).find('.add-input').attr('disabled','true');
+            $(this).parents('.deploy-form').find('.type-number').eq(3).find('.add-input').attr('disabled','true');
 
 
             var doms = $('.in');
@@ -1328,6 +1373,7 @@ $('.top-btns').on('click',function(){
 
         }
         $(this).parents('.deploy-form').find('.add-input').eq(12).val(num);
+        changeColor()
 
     });
     $('.add-select-block li').on('click',function(){
@@ -1336,12 +1382,14 @@ $('.top-btns').on('click',function(){
         var num1 = $(this).attr('factor');
         var num2 = $(this).attr('unit');
         var num3 = $(this).attr('type');
+        var num4 = $(this).attr('range');
         $(this).parents('.add-input-father').children('.add-select-block').slideToggle();
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').html(text);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('ids',num0);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('factor',num1);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('unit',num2);
         $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('type',num3);
+        $(this).parents('.add-input-father').children('.add-input-block').children('.add-input-select').children('span').attr('range',num4);
         rotateNum++;
         var num = rotateNum * 180;
         var string = num + 'deg';
@@ -1433,12 +1481,18 @@ $('#choose-building').on('click','.btn-primary',function(){
             getNumbered('#add-meter');
         $("#add-meter").find('.add-input').eq(4).val('');
         $("#add-meter").find('.add-input').eq(4).attr('ids','');
+        $("#add-meter").find('.bookbuilding').eq(0).find('span').html('');
+        $("#add-meter").find('.bookbuilding').eq(1).find('input').val('');
 
     }else{
 
             console.log('222');
             getNumbered1('#alter-meter');
 
+        $("#alter-meter").find('.add-input').eq(4).val('');
+        $("#alter-meter").find('.add-input').eq(4).attr('ids','');
+        $("#alter-meter").find('.bookbuilding').eq(0).find('span').html('');
+        $("#alter-meter").find('.bookbuilding').eq(1).find('input').val('');
 
     }
 
@@ -1458,10 +1512,15 @@ $('#choose-instrument').on('click','.btn-primary',function(){
 
         $('.in .add-input').eq(8).val(rate);
 
+        $(".in").find('.bookbuilding').eq(0).find('span').html('');
+        $(".in").find('.bookbuilding').eq(1).find('input').val('');
+
     }else{
         myAlter('请选择在线计量设备后进行提交');
     }
 });
+
+
 
 
 //仪表类型改变时 报警上限 在线计量设备编号 跟着改变
@@ -1481,22 +1540,22 @@ $('.add-select-meter li').on('click',function(){
 
 
         $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('placeHolder','不可输入');
-        $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('readOnly',"true");
+        $(this).parents('.deploy-form').find('.number-machine').find('.add-input').attr('disabled',"true");
         $(this).parents('.deploy-form').find('.number-machine').find('img').removeAttr('data-target');
         $(this).parents('.deploy-form').find('.number-machine').find('.add-input').val('');
 
         $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('placeHolder','');
         $(this).parents('.deploy-form').find('.rate').find('.add-input').val(1);
-        $(this).parents('.deploy-form').find('.rate').find('.add-input').removeAttr('readOnly');
+        $(this).parents('.deploy-form').find('.rate').find('.add-input').removeAttr('disabled');
         if(num1 != 100){
-            $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('readOnly',"true");
+            $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('disabled',"true");
         }
 
 
-        $(this).parents('.deploy-form').find('.get-online-message').attr('disabled','true');
+        $(this).parents('.deploy-form').find('.get-online-message').attr('disabledd','true');
         $(this).parents('.deploy-form').find('.get-online-message').removeClass('top-btn');
 
-        $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').removeAttr('readOnly');
+        $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').removeAttr('disabled');
 
         $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
             display:'inline-block'
@@ -1513,12 +1572,12 @@ $('.add-select-meter li').on('click',function(){
 
         $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('placeHolder','自动获取');
         $(this).parents('.deploy-form').find('.rate').find('.add-input').val('');
-        $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('readOnly',"true");
+        $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('disabled',"true");
 
-        $(this).parents('.deploy-form').find('.get-online-message').removeAttr('disabled');
+        $(this).parents('.deploy-form').find('.get-online-message').removeAttr('disabledd');
         $(this).parents('.deploy-form').find('.get-online-message').addClass('top-btn');
 
-        $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').attr('readOnly',"true");
+        $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').attr('disabled',"true");
         $(this).parents('.deploy-form').find('.bookbuilding').eq(0).find('.add-input').css({
             display:'none'
         });
@@ -1884,5 +1943,23 @@ function jumpNow(){
     console.log(dom);
     dom.click();
 
+}
+
+//检验建档起数
+function checkedStartNum(dom){
+    var range = $(dom).find('.add-input').eq(0).find('span').attr('range');
+
+
+        if(parseFloat($(dom).find('.start-number').find('input').val()) > parseFloat(range)){
+
+                var txt1 = $(dom).find('.start-number').children('label').html().split('：')[0];
+                console.log(txt1);
+                myAlter(txt1 + " 必须小于量程");
+                getFocus1($(dom).find('.start-number').find('input'));
+                return false;
+
+        }
+
+    return true;
 }
 

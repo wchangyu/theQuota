@@ -5,7 +5,7 @@
 var userName = 'xiaohong';
 var IP1 = "http://192.168.1.113/BEEWebAPI/api";
 var IP2 = 'http://211.100.28.180/DingEAPI/api';
-var IP = IP1;
+var IP = IP2;
 
 var theTimes = 10000;
 var energyType = {
@@ -199,6 +199,8 @@ function getFocus1(dom){
     });
 }
 
+$('.modal').attr('data-backdrop','static');
+
 //判断仪表状态
 function getMtonline(num){
     if(num == 0){
@@ -217,6 +219,7 @@ function getMtonline(num){
 //        return false;
 //    }
 //})
+
 
 $('.chooseDate').on('focus',function(){
     var that = $(this);

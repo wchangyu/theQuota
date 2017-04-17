@@ -3,3 +3,10 @@
     width:125px;
 }
 
+.modal-backdrop.in {
+    filter: alpha(opacity=30);
+    opacity: 0.3 !important;
+}
+#dateTables_info{
+    display: none !important;
+}

@@ -19,7 +19,7 @@ $(document).ready(function(){
                 'emptyTable': '没有数据',
                 'loadingRecords': '加载中...',
                 'processing': '查询中...',
-                'lengthMenu': '每页 _MENU_ 件',
+                'lengthMenu': '每页 _MENU_ 条',
                 'zeroRecords': '没有数据',
                 'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
                 "sInfoEmpty": "记录数为0",

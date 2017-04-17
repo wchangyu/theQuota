@@ -167,3 +167,7 @@ table th,td{
     border-radius: 50%;
     display: none;
 }
+.modal-backdrop.in {
+    filter: alpha(opacity=30);
+    opacity: 0.3 !important;
+}

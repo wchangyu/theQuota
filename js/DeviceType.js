@@ -94,7 +94,7 @@ $(document).ready(function() {
             $('.add-select-block').css({
                 display: 'none'
             });
-            rotateNum = 1;
+            rotateNum = 2;
             var num = rotateNum * 180;
             var string = num + 'deg';
             $('.add-input-select').children('div').css({
@@ -137,6 +137,10 @@ $(document).ready(function() {
 
             'transform':'rotate('+string+')'
         })
+    });
+
+    $('.add-input-arrow').css({
+        transform: 'rotate(0deg)'
     });
 
     //添加操作

@@ -555,4 +555,11 @@ table td{
     background:url(../img/smallTimes.png) no-repeat 130px center;
     background-size: auto 80%;
 }
+.modal-backdrop.in {
+    filter: alpha(opacity=30);
+    opacity: 0.3 !important;
+}
+body{
+    padding-right: 0 !important;
+}
 

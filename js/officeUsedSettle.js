@@ -4,21 +4,23 @@ $(document).ready(function(){
         "autoWidth": false,  //用来启用或禁用自动列的宽度计算
         //是否分页
         "destroy": false,//还原初始化了的datatable
-        "paging":false,
+        "paging": true,
         "ordering": false,
-        'searching':false,
+        'searching': false,
         'language': {
             'emptyTable': '没有数据',
             'loadingRecords': '加载中...',
             'processing': '查询中...',
             'lengthMenu': '每页 _MENU_ 件',
             'zeroRecords': '没有数据',
-            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
+            "sInfoEmpty": "记录数为0",
+            "sInfoFiltered": "(全部记录数 _MAX_ 条)",
             'paginate': {
-                'first':      '第一页',
-                'last':       '最后一页',
-                'next':       '下一页',
-                'previous':   '上一页'
+                'first': '第一页',
+                'last': '最后一页',
+                'next': '下一页',
+                'previous': '上一页'
             },
             'infoEmpty': ''
         },

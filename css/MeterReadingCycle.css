@@ -185,3 +185,7 @@ a:hover{
     border-color: #3ea49d;
     width: 80px;
 }
+.modal-backdrop.in {
+    filter: alpha(opacity=30);
+    opacity: 0.3 !important;
+}

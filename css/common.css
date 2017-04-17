@@ -257,3 +257,7 @@ b{
     margin-right: 25px;
     color: #333 !important;
 }
+.modal-backdrop.in {
+    filter: alpha(opacity=30);
+    opacity: 0.3 !important;
+}

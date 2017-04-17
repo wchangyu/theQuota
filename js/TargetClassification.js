@@ -13,7 +13,7 @@ $(document).ready(function(){
             $('.add-select-block').css({
                 display:'none'
             }) ;
-            rotateNum = 1;
+            rotateNum = 2;
             var num = rotateNum * 180;
             var string = num + 'deg';
             $('.add-input-select').children('div').css({

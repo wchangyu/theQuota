@@ -11,7 +11,7 @@ $(document).ready(function(){
             $('.add-select-block').css({
                 display: 'none'
             });
-            rotateNum = 1;
+            rotateNum = 2;
             var num = rotateNum * 180;
             var string = num + 'deg';
             $('.add-input-select').children('div').css({
@@ -72,7 +72,7 @@ $(document).ready(function(){
             'emptyTable': '没有数据',
             'loadingRecords': '加载中...',
             'processing': '查询中...',
-            'lengthMenu': '每页 _MENU_ 件',
+            'lengthMenu': '每页 _MENU_ 条',
             'zeroRecords': '没有数据',
             'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
             "sInfoEmpty" : "记录数为0",
@@ -146,7 +146,7 @@ $(document).ready(function(){
 
             },
             {
-                title:'出场编号',
+                title:'出厂编号',
                 data:'f_FactoryNumber'
 
             },
@@ -205,11 +205,11 @@ $(document).ready(function(){
                 "data": 'f_ChildAccount',
                 render:function(data, type, full, meta){
                     if(data == 0){
-                        return  "<button class='top-btn remove' data-toggle='modal' data-target='#change-meter'>更换</button>"
+                        return  "<button class='top-btn remove'>更换</button>"
                     }else if(data == 1){
                         return '无'
                     }else if(data ==2){
-                        return  "<button class='top-btn remove' data-toggle='modal' data-target='#change-meter'>更换</button>"
+                        return  "<button class='top-btn remove' >更换</button>"
                     }
 
                 }
@@ -353,7 +353,14 @@ $(document).ready(function(){
                 render:function(data, type, full, meta){
                     return '<span title="'+data+'">'+data+'</span>'
                 }
+            },
+            {
+                title:'量程',
+                data:'f_Range',
+                class:'theHidden'
+
             }
+
         ]
     });
 
@@ -371,7 +378,7 @@ $(document).ready(function(){
             'emptyTable': '没有数据',
             'loadingRecords': '加载中...',
             'processing': '查询中...',
-            'lengthMenu': '每页 _MENU_ 件',
+            'lengthMenu': '每页 _MENU_ 条',
             'zeroRecords': '没有数据',
             'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
             'search':'搜索:',
@@ -436,6 +443,23 @@ $(document).ready(function(){
                         return '<input style="width:75px" value="'+data+'" disabled="true"> '
                     }else if(row.f_mtOnline == 0){
                         return '<input class="wait-change1 read-number" style="width:75px" value="'+data+'"> '
+                    }
+
+                }
+
+            },
+            {
+                title:'量程',
+                data:'f_Range',
+                class:'theHidden',
+                render:function(data, type, row, meta){
+
+                    if(row.isBindingUnitMeter == 1){
+                        return '<input style="width:75px" value="'+data+'"  disabled="true"> '
+                    }else if(row.f_mtOnline == 1){
+                        return '<input style="width:75px" value="'+data+'" disabled="true"> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<input class="range" style="width:75px" value="'+data+'"> '
                     }
 
                 }
@@ -577,10 +601,17 @@ $(document).ready(function(){
         $('#accum-preseve .btn-primary').on('click',function(){
 
             //判断输入是否正确
-            if( !checkedReadNum('#accum-preseve')){
+            if( !checkedReadNum('#accum-preseve') || !checkedStartNum('#accum-preseve')){
 
                 return false;
             };
+
+
+
+            if(selectArr.length == selectNum){
+                myAlter('没有要提交的数据');
+                return false;
+            }
 
             $('#present-message').modal('show');
 
@@ -730,10 +761,15 @@ $(document).ready(function(){
         $('#accum-preseve .btn-primary').on('click',function(){
 
             //判断输入是否正确
-            if( !checkedReadNum('#accum-preseve')){
+            if( !checkedReadNum('#accum-preseve') || !checkedStartNum('#accum-preseve')){
 
                 return false;
             };
+
+            if(selectArr.length == selectNum){
+                myAlter('没有要提交的数据');
+                return false;
+            }
 
             //
             $('#present-message').modal('show');
@@ -861,6 +897,12 @@ $(document).ready(function(){
                 render:function(data, type, full, meta){
                     return '<span title="'+data+'">'+data+'</span>'
                 }
+            },
+            {
+                title:'量程',
+                data:'f_Range',
+                class:'theHidden'
+
             }
         ]
     });
@@ -966,6 +1008,23 @@ $(document).ready(function(){
 
                     }
                 }
+            },
+            {
+                title:'量程',
+                data:'f_Range',
+                class:'theHidden',
+                render:function(data, type, row, meta){
+
+                    if(row.isBindingUnitMeter == 1){
+                        return '<input style="width:75px" value="'+data+'"  disabled="true"> '
+                    }else if(row.f_mtOnline == 1){
+                        return '<input style="width:75px" value="'+data+'" disabled="true"> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<input class="range" style="width:75px" value="'+data+'"> '
+                    }
+
+                }
+
             }
 
         ]
@@ -1041,10 +1100,15 @@ $(document).ready(function(){
         $('#accum-shared .btn-primary').off('click');
         $('#accum-shared .btn-primary').on('click',function(){
             //检验是否填写正确
-            if(!checkedReadNum('#accum-shared') ||  !checkedNull2('#accum-shared')){
+            if(!checkedReadNum('#accum-shared') ||  !checkedNull2('#accum-shared') || !checkedStartNum('#accum-shared')){
                 console.log('ii');
                 return false;
             };
+
+            if(selectArr.length == selectNum){
+                myAlter('没有要提交的数据');
+                return false;
+            }
 
             $('#present-message').modal('show');
 
@@ -1222,7 +1286,7 @@ $(document).ready(function(){
 
                     },
                     {
-                        title:'抄表结束日期',
+                        title:'<span><img src="img/asterisk.png"/></span>抄表结束日期',
                         data:'meterEndDate',
                         class:'adjust-comment',
                         render:function(data, type, row, meta){
@@ -1234,20 +1298,20 @@ $(document).ready(function(){
                         }
                     },
                     {
-                        title:'设备终止读数',
+                        title:'<span><img src="img/asterisk.png"/></span>设备终止读数',
                         data:'meterEndNumber',
                         class:'adjust-comment',
                         render:function(data, type, row, meta){
                             if(row.f_mtOnline == 1){
-                                return '<input style="width:75px" value="'+data+'" disabled="true"> '
+                                return '<input style="width:85px" value="'+data+'" disabled="true"> '
                             }else if(row.f_mtOnline == 0){
-                                return '<input  style="width:75px" txt="设备终止读数" class="wait-push1 wait-push" value=""> '
+                                return '<input  style="width:85px" txt="设备终止读数" class="wait-push1 wait-push" value=""> '
                             }
                         }
 
                     },
                     {
-                        title:'圈数',
+                        title:'<img src="img/asterisk.png"/>圈数',
                         data:'f_CycleNum',
                         class:'adjust-comment',
                         render:function(data, type, row, meta){
@@ -1260,7 +1324,7 @@ $(document).ready(function(){
 
                     },
                     {
-                        title:'抄表人',
+                        title:'<img src="img/asterisk.png"/>抄表人',
                         data:'f_ReadPerson',
                         class:'adjust-comment',
                         render:function(data, type, row, meta){
@@ -1308,11 +1372,24 @@ $(document).ready(function(){
 
                     },
                     {
-                        title:'注销原因',
+                        title:'<img src="img/asterisk.png"/>注销原因',
                         "targets": -1,
                         "data": null,
                         "class":'theReson',
                         "defaultContent": '<textarea name="yj" txt="注销原因" cols="30" rows="2" style="resize:none;" class="wait-push4 wait-push">'
+                    },
+                    {
+                        title:'量程',
+                        data:'f_Range',
+                        class:'theHidden',
+                        render:function(data, type, row, meta){
+                            if(row.f_mtOnline == 1){
+                                return '<input style="width:85px"  value="'+data+'"> '
+                            }else if(row.f_mtOnline == 0){
+                                return '<input  style="width:85px"   value="'+data+'" class="range"> '
+                            }
+                        }
+
                     }
                 ]
             });
@@ -1360,8 +1437,9 @@ $(document).ready(function(){
                 },
                 success: function (data) {
                     $('#theLoading').modal('hide');
-                    console.log(data);
+
                     logoutArr = data.cancelMeterModels;
+                    console.log(logoutArr);
                     var alterText = data.validateNumber;
                     if(alterText == 1){
                         myAlter('注销失败，请联系管理员');
@@ -1421,7 +1499,8 @@ $(document).ready(function(){
                     url: IP + "/UnitMeter/PostCancelMeter",
                     async: false,
                     timeout: theTimes,
-                    data:postData,
+                    contentType: 'application/json',
+                    data: JSON.stringify(postData),
                     beforeSend: function () {
 
                     },
@@ -1561,6 +1640,7 @@ $(document).ready(function(){
 
         idArr.push(obj);
 
+        console.log(idArr);
 
         $.ajax({
             type: 'get',
@@ -1583,16 +1663,18 @@ $(document).ready(function(){
                 console.log(data);
                 var alterText = data.validateNumber;
                 if(alterText == 1){
-                    myAlter('注销失败，请联系管理员');
                     $('#change-meter').modal('hide');
+
+                    myAlter('更换失败，请联系管理员');
+
                     return false;
                 };
                 if(alterText == 3){
-                    myAlter('注销失败');
-                    $('#change-meter').modal('hide');
+                    myAlter('更换失败');
+
                     return false;
                 };
-
+                $('#change-meter').modal('show');
                 dataObj = data.cancelMeterModels[0];
                 console.log(dataObj);
 
@@ -1635,6 +1717,8 @@ $(document).ready(function(){
 
                 $('#change-meter .add-input').eq(2).val(dataObj.meterEndDate);
                 $('#change-meter .add-input').eq(4).val(dataObj.f_CycleNum);
+                $('#change-meter .add-input').eq(4).attr('range',dataObj.f_Range);
+
                 $('#change-meter .add-input').eq(5).val(dataObj.f_ReadPerson);
 
 
@@ -1749,6 +1833,8 @@ $(document).ready(function(){
                     setDatas(tableArr);
                     hiddrenId();
 
+                    $('#dateTables7_filter input').attr('placeHolder',' 请输入表号或代号进行搜索');
+
                     $('#dateTables7 tbody').on('click','tr',function(){
                         $('#dateTables7 tr').removeClass('onFocus');
                         $(this).addClass('onFocus');
@@ -1796,7 +1882,7 @@ $(document).ready(function(){
         $('#change-meter .btn-primary').off('click');
         $('#change-meter .btn-primary').on('click',function(){
             //判断输入是否正确
-            if(!checkedNull('#change-meter') || !checkedNumber('#change-meter') || !checkedCycle('#change-meter') || !CompareDate('#change-meter')){
+            if(!checkedNull('#change-meter') || !checkedNumber('#change-meter') || !checkedCycle('#change-meter') || !CompareDate('#change-meter') || !checkedEndNum1('#change-meter')){
                 return false;
             };
 
@@ -1825,7 +1911,8 @@ $(document).ready(function(){
                 url: IP + "/UnitMeter/PostChangeMeter",
                 async: false,
                 timeout: theTimes,
-                data:postData,
+                contentType: 'application/json',
+                data: JSON.stringify(postData),
                 beforeSend: function () {
 
                 },
@@ -1862,10 +1949,12 @@ $(document).ready(function(){
                     alarmHistory(importantId);
                     setData();
                     hiddrenId();
+                    $('#change-meter .add-input').val('');
 
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $('#theLoading').modal('hide');
+
                     console.log(textStatus);
 
                     if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
@@ -1875,7 +1964,7 @@ $(document).ready(function(){
                     myAlter("请求失败！");
                 }
             })
-            $('#change-meter .add-input').val('');
+
         });
 
 
@@ -1884,6 +1973,12 @@ $(document).ready(function(){
 
 
 });
+
+$('.add-input:disabled').parent('.add-input-block').css({
+
+    backgroundColor: 'rgb(235, 235, 228)'
+});
+
 
 
 var waitArr = [];
@@ -1915,6 +2010,13 @@ $('.show-all-unit').on('click',function(){
     $('#ul1').css({
         display:'block'
     });
+
+    var id = $('.search-value0').attr('ids');
+    for(var i=0; i<$('.search-li0').length; i++){
+        if(id == $('.search-li0').eq(i).attr('data-id')){
+            $('.search-li0').eq(i).click();
+        }
+    }
 
     //$('.search-value0').val('');
     //$('.search-value0').attr('placeHolder','请输入单位名称进行搜索')
@@ -2910,7 +3012,15 @@ function checkedNull(dom){
             $('#check-text').modal('show');
             myAlter(txt + " 不能为空")
             return false;
-        }
+        };
+        if( $(dom).find('.input-label').eq(i).next().find('textarea').val() == ''){
+            var txt = $(dom).find('.input-label').eq(i).next().find('textarea').parent().prev().html().split('：')[0];
+
+            console.log(txt);
+            myAlter(txt + " 不能为空")
+            getFocus1($(dom).find('.input-label').eq(i).next().find('textarea'));
+            return false;
+        };
     }
     return true;
 }
@@ -3079,12 +3189,19 @@ function checkedEndNum(dom){
     for(var i=0; i<length; i++){
         var txt = $(dom).find('.wait-push1').eq(i).val();
         var startNum = $(dom).find('.startNum').eq(i).html();
+        var range = parseFloat( $(dom).find('.range').eq(i).val());
 
-        var cycNum = parseInt($(dom).find('.wait-push2').eq(i).val());
         if(isNaN(txt) || txt < 0){
 
 
             myAlter('设备终止读数必须为非负数字');
+
+            getFocus1($(dom).find('.wait-push1').eq(i));
+
+
+            return false;
+        }else if(parseFloat(txt) > range){
+            myAlter('设备终止读数必须小于量程');
 
             getFocus1($(dom).find('.wait-push1').eq(i));
 
@@ -3122,4 +3239,37 @@ function checkedCycleNum(dom){
     }
     return true;
 }
+
+//检验建档起数是否小于量程
+function checkedStartNum(dom) {
+    var num = $(dom).find('.range').length;
+
+    for(var i=0; i<num; i++){
+        var readNum = parseFloat($(dom).find('.range').eq(i).parents('tr').find('.wait-change1').val());
+        var range = parseFloat($(dom).find('.range').eq(i).val());
+        if(readNum > range){
+
+                myAlter("建档读数必须小于量程")
+                getFocus1($(dom).find('.range').eq(i).parents('tr').find('.wait-change1'));
+                return false;
+
+        }
+
+    }
+    return true;
+}
+
+//检验更换仪表中的终止读数
+function checkedEndNum1(dom){
+    var num1 = $(dom).find('.end-number').val();
+    var num2 = $(dom).find('.cycle-number').attr('range');
+    if(parseFloat(num1) > parseFloat(num2)){
+        myAlter('设备终止读数不能大于量程');
+        getFocus1($(dom).find('.end-number'));
+        return false
+    }
+    return true;
+}
+
+
 

@@ -11,7 +11,7 @@ $(document).ready(function(){
             $('.add-select-block').css({
                 display: 'none'
             });
-            rotateNum = 1;
+            rotateNum = 2;
             var num = rotateNum * 180;
             var string = num + 'deg';
             $('.add-input-select').children('div').css({
@@ -74,7 +74,7 @@ $(document).ready(function(){
                 'emptyTable': '没有数据',
                 'loadingRecords': '加载中...',
                 'processing': '查询中...',
-                'lengthMenu': '每页 _MENU_ 件',
+                'lengthMenu': '每页 _MENU_ 条',
                 'zeroRecords': '没有数据',
                 'info': '第 _PAGE_ 页 / 总 _PAGES_ 页  总记录数为 _TOTAL_ 条',
                 "sInfoEmpty": "记录数为0",
@@ -412,6 +412,8 @@ $(document).ready(function(){
     $('.add-btn').on('click',function(){
         openNum = 0;
 
+        var closeLoad = 0;
+
         $('#add-deploy .add-input').val('');
         $('#add-deploy .add-input').eq(6).val(0);
         $('#add-deploy .add-inputs').val('');
@@ -422,7 +424,10 @@ $(document).ready(function(){
         $('#add-deploy .show-plan font').html('0/0');
         $('#add-deploy .next-btn').css({
             display:'none'
-        })
+        });
+        $('.show-plan').css({
+            display:'none'
+        });
 
         //判断是否结算
         if(importantNum == 1){
@@ -432,7 +437,7 @@ $(document).ready(function(){
 
         //获取添加弹窗中的数据
         var postData = {};
-        var getData = [];
+         getData = [];
         var newNum = 0;
 
         $.ajax({
@@ -471,6 +476,8 @@ $(document).ready(function(){
                 $('#add-deploy .add-input').eq(6).attr('range',postData.f_Range);
                 $('#add-deploy .add-input').eq(6).attr('warnUp',postData.f_WarnUp);
                 $('#add-deploy .add-input').eq(6).attr('warnDown',postData.f_WarnDown);
+                $('#add-deploy .add-input').eq(6).attr('energy',type);
+
 
                 $('#add-deploy .ament-data').children('span').eq(3).html(postData.f_WarnDown + ' - ' + postData.f_WarnUp);
 
@@ -496,6 +503,13 @@ $(document).ready(function(){
             if(!checkedNull1('.push-meters')){
                 return false;
             };
+
+            $('.in .next-btn').css({
+                display:'inline-block'
+            });
+            $('.show-plan').css({
+                display:'block'
+            });
 
             var buildID = $(this).parents('.push-meters').find('.add-inputs').eq(0).attr('ids');
             var energy = $(this).parents('.push-meters').find('.add-inputs').eq(1).find('span').attr('ids');
@@ -570,6 +584,10 @@ $(document).ready(function(){
                     });
 
                     $('#jump-meter .btn-primary').off('click');
+                    $('#jump-meter .btn-default').off('click');
+                    $('#jump-meter .btn-default').on('click',function(){
+                        newNum -- ;
+                    })
                     $('#jump-meter .btn-primary').on('click',function(){
 
                         var num = newNum + 1;
@@ -620,7 +638,7 @@ $(document).ready(function(){
         $('#add-deploy .btn-primary').on('click',function(){
 
             //判断必填项是否全部填写
-            if(!checkedNull('#add-deploy')){
+            if(!checkedNull('#add-deploy') || !checkedEndNum('#add-deploy')){
                 return false;
             };
 
@@ -642,7 +660,7 @@ $(document).ready(function(){
 
             var energyValue = parseFloat($(this).parents('.modal-header').find('.add-input').eq(7).val());
 
-            console.log(warnDown,warnUp);
+            console.log(energyValue);
 
             if(energyValue < warnDown || energyValue >  warnUp){
                 myAlter('超出用能量有效范围，请重新填写');
@@ -662,7 +680,7 @@ $(document).ready(function(){
             postData.f_ReadEndNum = $(this).parents('.modal-header').find('.add-input').eq(3).val();
             postData.f_ReadET = $(this).parents('.modal-header').find('.add-input').eq(5).val();
             postData.f_CycleNum = $(this).parents('.modal-header').find('.add-input').eq(6).val();
-            postData.f_EnergyValue = $(this).parents('.modal-header').find('.add-input').eq(7).val();
+            postData.f_EnergyValue = energyValue;
 
             postData.userID = userName;
             postData.f_ReadInputDT = '';
@@ -698,7 +716,7 @@ $(document).ready(function(){
                         return false
                     }
 
-
+                    console.log(getData.length);
                     //没有启用多表输入模式
                     if(getData.length == 0){
                         $('#add-deploy').modal('hide');
@@ -710,10 +728,12 @@ $(document).ready(function(){
                         setData();
                         hiddrenId();
 
+                        console.log(dataArr1);
+
                         _table = $('#dateTables1').dataTable();
                         _table.fnClearTable();
                         //给表格添加后台获取到的数据
-                        setData(dataArr1);
+                        setDatas(dataArr1);
                         hiddrenId();
 
 
@@ -731,6 +751,8 @@ $(document).ready(function(){
                             };
 
                             myAlter('提交成功,请继续输入');
+
+                            closeLoad = 1;
 
                             var num = newNum + 1;
                             $('.show-plan').find('font').html(num + '/'+lengths);
@@ -750,7 +772,7 @@ $(document).ready(function(){
                             $('#add-deploy .add-input').eq(5).val(getData[newNum].f_ReadET);
                             $('#add-deploy .add-input').eq(6).attr('range',getData[newNum].f_Range);
 
-                            $('#add-deploy .ament-data').children('span').eq(3).html(data[newNum].f_WarnDown + ' - ' + data[newNum].f_WarnUp);
+                            $('#add-deploy .ament-data').children('span').eq(3).html(getData[newNum].f_WarnDown + ' - ' + getData[newNum].f_WarnUp);
 
 
 
@@ -774,7 +796,21 @@ $(document).ready(function(){
 
 
 
-        })
+        });
+
+        $('#add-deploy .btn-default').off('click');
+        $('#add-deploy .btn-default').on('click',function(){
+            if(closeLoad == 1){
+                location.reload();
+            }
+        });
+
+        $('#add-deploy .close').off('click');
+        $('#add-deploy .close').on('click',function(){
+            if(closeLoad == 1){
+                location.reload();
+            }
+        });
 
     });
 
@@ -812,6 +848,7 @@ $(document).ready(function(){
 
                 var meterName = postData.f_mtNumber;
                 var type = postData.f_mtEnergyType;
+                var typeUnit = getEnergyUnit(type);
                 $('#remove-deploy .ament-data').children('span').eq(0).html(meterName);
                 $('#remove-deploy .ament-data').children('span').eq(1).html(postData.f_MeasureArea);
                 $('#remove-deploy .ament-data').children('span').eq(2).html(getEnergyType(type));
@@ -826,12 +863,13 @@ $(document).ready(function(){
                 $('#remove-deploy .add-input').eq(6).attr('range',postData.f_Range);
                 $('#remove-deploy .add-input').eq(6).attr('warnUp',postData.f_WarnUp);
                 $('#remove-deploy .add-input').eq(6).attr('warnDown',postData.f_WarnDown);
+                $('#remove-deploy .add-input').eq(6).attr('energy',type);
 
                 $('#remove-deploy .ament-data').children('span').eq(3).html(postData.f_WarnDown + ' - ' + postData.f_WarnUp);
 
                 console.log(postData.f_CycleNum);
                 $('#remove-deploy .add-input').eq(6).val(postData.f_CycleNum);
-                $('#remove-deploy .add-input').eq(7).val(postData.f_EnergyValue);
+                $('#remove-deploy .add-input').eq(7).val(postData.f_EnergyValue +" " + typeUnit);
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -850,7 +888,7 @@ $(document).ready(function(){
         $('#remove-deploy .btn-primary').on('click',function(){
 
             //判断必填项是否全部填写
-            if(!checkedNull('#remove-deploy')){
+            if(!checkedNull('#remove-deploy') || !checkedEndNum('#remove-deploy')){
                 return false;
             };
 
@@ -887,7 +925,7 @@ $(document).ready(function(){
             postData.f_ReadEndNum = $(this).parents('.modal-header').find('.add-input').eq(3).val();
             postData.f_ReadET = $(this).parents('.modal-header').find('.add-input').eq(5).val();
             postData.f_CycleNum = $(this).parents('.modal-header').find('.add-input').eq(6).val();
-            postData.f_EnergyValue = $(this).parents('.modal-header').find('.add-input').eq(7).val();
+            postData.f_EnergyValue = energyValue;
 
             postData.userID = userName;
 
@@ -925,6 +963,10 @@ $(document).ready(function(){
                         myAlter('已有抄表记录，无法修改');
                         return false
                     }
+                    if(data == 16){
+                        myAlter('非手工抄表不允许修改');
+                        return false
+                    }
 
                     _table = $('#dateTables').dataTable();
                     _table.fnClearTable();
@@ -936,7 +978,7 @@ $(document).ready(function(){
                     _table = $('#dateTables1').dataTable();
                     _table.fnClearTable();
                     //给表格添加后台获取到的数据
-                    setData(dataArr1);
+                    setDatas(dataArr1);
                     hiddrenId();
 
                 },
@@ -964,6 +1006,8 @@ $(document).ready(function(){
         var id = $(this).parents('tr').find('td').eq(1).html();
         var txt = $(this).parents('tr').find('td').eq(18).html();
         var name = $(this).parents('tr').find('td').eq(3).html();
+        var date1 = $(this).parents('tr').find('td').eq(10).html().split(' ')[0];
+        var date2 = $(this).parents('tr').find('td').eq(11).html().split(' ')[0];
         var id1;
         var id2;
         console.log(id);
@@ -973,6 +1017,7 @@ $(document).ready(function(){
         };
 
         $('#remove-meter p b').html(name);
+        $('#remove-meter p strong').html(date1 + " - " + date2);
 
         $.ajax({
             type: 'get',
@@ -1069,7 +1114,7 @@ $(document).ready(function(){
                         return false
                     }
                     if(data == 12){
-                        myAlter('此抄表记录由注销或跟换计量设备产生，无法删除');
+                        myAlter('非手工抄表不允许删除');
                         return false;
                     }
 
@@ -1083,7 +1128,8 @@ $(document).ready(function(){
                     _table = $('#dateTables1').dataTable();
                     _table.fnClearTable();
                     //给表格添加后台获取到的数据
-                    setData(dataArr1);
+                    console.log(dataArr1);
+                    setDatas(dataArr1);
                     hiddrenId();
 
                 },
@@ -1108,7 +1154,14 @@ $(document).ready(function(){
 
 });
 
+$('.add-input:disabled').parent('.add-input-block').css({
+
+    backgroundColor: 'rgb(235, 235, 228)'
+});
+
 var importantID = window.location.search.split('=')[1];
+
+var getData;
 
 var importantNum = 0;
 var startID;
@@ -1277,11 +1330,17 @@ $('.end-number').on('blur',function(){
     console.log(startNum);
     var endNum = $(this).val();
 
+    var type = parseInt($(this).parents('.modal-header').find('.add-input').eq(6).attr('energy'));
+
+    var typeUnit = " " + getEnergyUnit(type);
+
     var cycleNum = parseInt($(this).parents('.modal-header').find('.add-input').eq(6).val());
 
     var range = parseFloat($(this).parents('.modal-header').find('.add-input').eq(6).attr('range'));
 
     var rate = parseFloat($(this).parents('.modal-header').find('.add-input').eq(1).val());
+
+    console.log(cycleNum);
 
     if(isNaN(endNum) || endNum < 0){
         myAlter('抄表止数必须为非负数字');
@@ -1290,7 +1349,11 @@ $('.end-number').on('blur',function(){
     }else if(endNum == ''){
 
         return false;
-    }else if(parseFloat(endNum) < startNum){
+    }else if(isNaN(cycleNum)){
+
+        console.log('11');
+        return false;
+    }else if(parseFloat(endNum) < startNum && parseInt(cycleNum) < 1){
         myAlter('止数小于起数，请输入圈数');
         $(this).parents('.modal-header').find('.add-input').eq(6).val('');
         getFocus1($(this).parents('.modal-header').find('.add-input').eq(6));
@@ -1298,7 +1361,7 @@ $('.end-number').on('blur',function(){
     }else if(cycleNum == 0){
         var num0 = parseFloat(endNum) - startNum;
         var  pushNum = num0 * rate;
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum+ typeUnit);
 
     }else if(parseFloat(endNum) > startNum){
         var num = parseFloat(endNum) - startNum;
@@ -1306,20 +1369,20 @@ $('.end-number').on('blur',function(){
         var num0 = num + num1;
         var pushNum = num0 * rate;
 
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum+ typeUnit);
     }else if(parseFloat(endNum) == startNum){
         var num1 = range * cycleNum;
         var num0 = num1;
         var  pushNum = num0 * rate;
 
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum+ typeUnit);
     }else{
         var num1 = range - startNum + parseFloat(endNum);
         var num2 = range * cycleNum;
         var num0 = num1 + num2;
 
         var pushNum = num0 * rate;
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum + typeUnit);
     }
 
 });
@@ -1332,6 +1395,10 @@ $('.cycleNum').on('blur',function(){
     var cycleNum = $(this).val();
 
     var range = parseFloat($(this).attr('range'));
+
+    var type = parseInt($(this).attr('energy'));
+
+    var typeUnit = " " +  getEnergyUnit(type);
 
     var rate = parseFloat($(this).parents('.modal-header').find('.add-input').eq(1).val());
 
@@ -1349,7 +1416,7 @@ $('.cycleNum').on('blur',function(){
     }else if(cycleNum == 0){
         var num0 = parseFloat(endNum) - startNum;
         var  pushNum = num0 * rate;
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum + typeUnit);
 
     }else if(parseFloat(endNum) > startNum){
         var num = parseFloat(endNum) - startNum;
@@ -1357,20 +1424,20 @@ $('.cycleNum').on('blur',function(){
         var num0 = num + num1;
         var pushNum = num0 * rate;
 
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum + typeUnit);
     }else if(parseFloat(endNum) == startNum){
         var num1 = range * parseInt(cycleNum);
         var num0 = num1;
         var  pushNum = num0 * rate;
 
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum + typeUnit);
     }else{
         var num1 = range - startNum + parseFloat(endNum);
         var num2 = range * parseInt(cycleNum);
         var num0 = num1 + num2;
 
         var pushNum = num0 * rate;
-        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum);
+        $(this).parents('.modal-header').find('.add-input').eq(7).val( pushNum + typeUnit);
     }
 
 });
@@ -1572,16 +1639,17 @@ var openNum = 0;
 
 $('.meters-btn').on('click',function(){
     if(openNum % 2 == 0){
-        $('.in .next-btn').css({
-            display:'inline-block'
-        })
         $('.in .meters-btn').html('关闭多表输入模式');
         openNum ++;
     }else{
         $('.in .next-btn').css({
             display:'none'
         });
+        $('.show-plan').css({
+            display:'none'
+        });
         $('.in .meters-btn').html('开启多表输入模式');
+        getData = [];
         openNum ++;
     }
     $('.push-meters').slideToggle();
@@ -1752,5 +1820,22 @@ function checkedNull1(dom){
             return false;
         }
     }
+    return true;
+}
+
+//检验抄表止数
+function checkedEndNum(dom){
+    var range = $(dom).find('.cycleNum').attr('range');
+
+    console.log(range);
+    if(parseFloat($(dom).find('.end-number').val()) > parseFloat(range)){
+
+
+        myAlter("抄表止数 必须小于量程");
+        getFocus1($(dom).find('.end-number'));
+        return false;
+
+    }
+
     return true;
 }
