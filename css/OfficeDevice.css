@@ -552,7 +552,7 @@ table td{
     cursor: pointer;
 }
 .small-picture{
-    background:url(../img/smallTimes.png) no-repeat 130px center;
+    background:url(../img/smallTimes.png) no-repeat 140px center;
     background-size: auto 80%;
 }
 .modal-backdrop.in {

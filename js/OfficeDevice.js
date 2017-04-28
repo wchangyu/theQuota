@@ -93,9 +93,16 @@ $(document).ready(function(){
         'columns':[
             {
                 title:'选择',
-                "targets": -1,
                 "data": null,
-                "defaultContent": "<input type='checkbox' class='tableCheck'/>"
+                render:function(data, type, row, meta){
+                    if(row.f_CancelFlag == 0){
+
+                        return "<input type='checkbox' class='tableCheck'/>"
+                    }else{
+                        return "<input type='checkbox' class='tableCheck  hasLogout' disabled='disabled'/>"
+                    }
+
+                }
 
             },
             {
@@ -121,7 +128,7 @@ $(document).ready(function(){
 
             },
             {
-                title:'仪表状态',
+                title:'是否在线',
                 data:'f_onlineName'
 
             },
@@ -191,8 +198,12 @@ $(document).ready(function(){
 
             },
             {
-                title:'公摊比例',
-                data:'f_EquallyShared'
+                title:'公摊比例(%)',
+                data:'f_EquallyShared',
+                render:function(data, type, full, meta){
+                   return data * 100
+
+                }
 
             },
             {
@@ -203,14 +214,19 @@ $(document).ready(function(){
             {
                 title:'操作',
                 "data": 'f_ChildAccount',
-                render:function(data, type, full, meta){
-                    if(data == 0){
-                        return  "<button class='top-btn remove'>更换</button>"
-                    }else if(data == 1){
-                        return '无'
-                    }else if(data ==2){
-                        return  "<button class='top-btn remove' >更换</button>"
+                render:function(data, type, row, meta){
+                    if(row.f_CancelFlag == 1){
+                        return "无"
+                    }else{
+                        if(data == 0){
+                            return  "<button class='top-btn remove'>更换</button>"
+                        }else if(data == 1){
+                            return '无'
+                        }else if(data ==2){
+                            return  "<button class='top-btn remove' >更换</button>"
+                        }
                     }
+
 
                 }
             }
@@ -222,6 +238,14 @@ $(document).ready(function(){
     //给表格添加后台获取到的数据
     setData();
     hiddrenId();
+
+    //翻页时调用已注销行的显示
+    $('#dateTables_paginate').on('click',function(){
+        console.log(1111);
+        changeColor();
+    });
+
+    changeColor()
 
     //头部搜索功能
 
@@ -277,6 +301,8 @@ $(document).ready(function(){
                 //给表格添加后台获取到的数据
                 setData();
                 hiddrenId();
+
+                changeColor()
 
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -422,11 +448,11 @@ $(document).ready(function(){
                 class:'adjust-comment',
                 render:function(data, type, row, meta){
                     if(row.isBindingUnitMeter == 1){
-                        return '<input  value="'+data+'" disabled="true"> '
+                        return '<input style="width:165px;" value="'+data+'" disabled="true"> '
                     }else if(row.f_mtOnline == 1){
-                        return '<input  value="'+data+'" disabled="true"> '
+                        return '<input style="width:165px;" class="chooseDate wait-change0 small-picture" onfocus="getChangeRead('+row.f_PointerID+','+row.cDataID+',this)" value="'+data+'" readonly="true"> '
                     }else if(row.f_mtOnline == 0){
-                        return '<input class="chooseDate wait-change0 small-picture" value="'+data+'" readonly="true"> '
+                        return '<input style="width:165px;" class="chooseDate wait-change0 small-picture" value="'+data+'" readonly="true"> '
                     }
                 }
             },
@@ -438,11 +464,11 @@ $(document).ready(function(){
                 render:function(data, type, row, meta){
 
                     if(row.isBindingUnitMeter == 1){
-                        return '<input style="width:75px" value="'+data+'"  disabled="true"> '
+                        return '<input style="width:85px" value="'+data+'"  disabled="true" title="'+data+'"> '
                     }else if(row.f_mtOnline == 1){
-                        return '<input style="width:75px" value="'+data+'" disabled="true"> '
+                        return '<input style="width:85px" value="'+data+'" disabled="true" title="'+data+'"> '
                     }else if(row.f_mtOnline == 0){
-                        return '<input class="wait-change1 read-number" style="width:75px" value="'+data+'"> '
+                        return '<input class="wait-change1 read-number" style="width:75px" value="'+data+'" title="'+data+'"> '
                     }
 
                 }
@@ -456,9 +482,7 @@ $(document).ready(function(){
 
                     if(row.isBindingUnitMeter == 1){
                         return '<input style="width:75px" value="'+data+'"  disabled="true"> '
-                    }else if(row.f_mtOnline == 1){
-                        return '<input style="width:75px" value="'+data+'" disabled="true"> '
-                    }else if(row.f_mtOnline == 0){
+                    }else{
                         return '<input class="range" style="width:75px" value="'+data+'"> '
                     }
 
@@ -965,11 +989,11 @@ $(document).ready(function(){
                 class:'adjust-comment',
                 render:function(data, type, row, meta){
                     if(row.isBindingUnitMeter == 1){
-                        return '<input  value="'+data+'" disabled="true"> '
+                        return '<input style="width:165px;" value="'+data+'" disabled="true"> '
                     }else if(row.f_mtOnline == 1){
-                        return '<input  value="'+data+'" disabled="true"> '
+                        return '<input style="width:165px;" class="chooseDate wait-change0 small-picture" onfocus="getChangeRead('+row.f_PointerID+','+row.cDataID+',this)" value="'+data+'" readonly="true"> '
                     }else if(row.f_mtOnline == 0){
-                        return '<input class="chooseDate wait-change0 small-picture wait-push" value="'+data+'"> '
+                        return '<input style="width:165px;" class="chooseDate wait-change0 small-picture" value="'+data+'" readonly="true"> '
                     }
                 }
             },
@@ -977,33 +1001,34 @@ $(document).ready(function(){
                 title:'建档读数',
                 data:'f_FilingNumber',
                 class:'adjust-comment',
-                render:function(data, type, row, meta){
+                render:function(data, type, row, meta) {
 
-                    if(row.isBindingUnitMeter == 1){
-                        return '<input style="width:75px" value="'+data+'"  disabled="true"> '
-                    }else if(row.f_mtOnline == 1){
-                        return '<input style="width:75px" value="'+data+'" disabled="true"> '
-                    }else if(row.f_mtOnline == 0){
-                        return '<input class="wait-change1 wait-push read-number" style="width:75px" value="'+data+'"> '
+                    if (row.isBindingUnitMeter == 1) {
+                        return '<input style="width:75px" value="' + data + '"  disabled="true"> '
+                    } else if (row.f_mtOnline == 1) {
+                        return '<input style="width:75px" value="' + data + '" disabled="true"> '
+                    } else if (row.f_mtOnline == 0) {
+                        return '<input class="wait-change1 read-number" style="width:75px" value="' + data + '"> '
                     }
                 }
             },
             {
-                title:'公摊比例',
+                title:'公摊比例（%）',
                 data:'f_EquallyShared',
                 class:'adjust-comment',
                 render:function(data, type, row, meta){
+                    var num = parseFloat(data) * 100
 
                     if(row.isBindingUnitMeter == 1){
 
-                            return '<input style="width:75px" value="'+data+'"  disabled="true"> '
+                            return '<input style="width:75px" value="'+num+'"  disabled="true"> '
 
                     }else {
 
-                        if(data == 0){
+                        if(num == 0){
                             return '<input class="wait-change2" style="width:75px" value=""> '
                         }else{
-                            return '<input class="wait-change2" style="width:75px" value="'+data+'"> '
+                            return '<input class="wait-change2" style="width:75px" value="'+num+'"> '
                         }
 
                     }
@@ -1145,15 +1170,19 @@ $(document).ready(function(){
                         myAlter('执行失败')
                     }else if(data.validateNumber == 5){
                         var html='';
-                        for(var i=0; i<data.meterNumbers.length;i++){
-                            if(i == data.meterNumbers.length-1){
-                                html+=data.memeterNumbers[i]
+                        var arr = data.meterNumbers;
+
+                        for(var i=0; i<arr.length;i++){
+                            console.log(arr.length);
+                            if(i == arr.length-1){
+                                console.log(arr);
+                                html+=arr[i]
                             }else{
-                                html+=data.memeterNumbers[i] + ",";
+                                html+=arr[i] + ",";
                             }
 
                         }
-                        myAlter(html + '公摊表分配比例超额');
+                        myAlter(html + ' 公摊表分配比例超额');
 
                     }
                     _table = $('#dateTables').dataTable();
@@ -1291,9 +1320,9 @@ $(document).ready(function(){
                         class:'adjust-comment',
                         render:function(data, type, row, meta){
                             if(row.f_mtOnline == 1){
-                                return '<input  value="'+data+'" disabled="true"> '
+                                return '<input style="width:160px;" value="'+data+'" disabled="true"> '
                             }else if(row.f_mtOnline == 0){
-                                return '<input class="chooseDate wait-push0 wait-push small-picture endDates" txt="抄表结束日期" value=""> '
+                                return '<input style="width:160px;" class="chooseDate wait-push0 wait-push small-picture endDates" txt="抄表结束日期" value=""> '
                             }
                         }
                     },
@@ -1361,7 +1390,7 @@ $(document).ready(function(){
                                 if(length != 0){
                                       var html = '';
                                       for(var i=0 ; i<length; i++){
-                                          html+='<label for="unit-name" style="margin-right:5px;">'+ row.cancelMeterApportions[i].f_UnitName+':</label><input type="text" txt="公摊比例" class="ratio wait-push" style="width:45px" value="'+row.cancelMeterApportions[i].f_EquallyShared+'">';
+                                          html+='<label for="unit-name" style="margin-right:5px;">'+ row.cancelMeterApportions[i].f_UnitName+':</label><input type="text" txt="公摊比例" class="ratio wait-push" style="width:45px" value="'+(row.cancelMeterApportions[i].f_EquallyShared) * 100 +'">';
                                       }
                                     return html
                                 }else{
@@ -1488,68 +1517,74 @@ $(document).ready(function(){
                     console.log('ii');
                     return false;
                 };
+                $('#present-logout').modal('show');
                 var postData = {};
                 postData.cancelMeterModels= logoutArr;
                 postData.pK_Unit = importantId;
                 postData.userID = userName;
 
                 console.log(postData);
-                $.ajax({
-                    type: 'post',
-                    url: IP + "/UnitMeter/PostCancelMeter",
-                    async: false,
-                    timeout: theTimes,
-                    contentType: 'application/json',
-                    data: JSON.stringify(postData),
-                    beforeSend: function () {
+                $('#present-logout .btn-primary').off('click');
+                $('#present-logout .btn-primary').on('click',function(){
+                    $.ajax({
+                        type: 'post',
+                        url: IP + "/UnitMeter/PostCancelMeter",
+                        async: false,
+                        timeout: theTimes,
+                        contentType: 'application/json',
+                        data: JSON.stringify(postData),
+                        beforeSend: function () {
 
-                    },
+                        },
 
-                    complete: function () {
+                        complete: function () {
 
-                    },
-                    success: function (data) {
-                        $('#theLoading').modal('hide');
+                        },
+                        success: function (data) {
+                            $('#theLoading').modal('hide');
+                            $('#present-logout').modal('hide');
 
-
-                        console.log(data);
-                        if(data.validateNumber == 5){
-                            var arr = data.f_mtNumberInfos;
-                            var html = '';
-                            for(var i=0; i<arr.length; i++){
-                                html += arr[i].key + '注销失败 <br /> 原因：' + arr[i].valueStr + '<br />'
+                            console.log(data);
+                            if(data.validateNumber == 5){
+                                var arr = data.f_mtNumberInfos;
+                                var html = '';
+                                for(var i=0; i<arr.length; i++){
+                                    html += arr[i].key + '注销失败 <br /> 原因：' + arr[i].valueStr + '<br />'
+                                }
+                                myAlter(html);
+                                return false;
                             }
-                            myAlter(html);
-                            return false;
-                        }
-                        if(data.validateNumber == 1){
-                            myAlter('参数错误，请联系管理员');
-                            return false;
-                        }
-                        if(data.validateNumber == 3){
-                            myAlter('执行失败');
-                            return false;
-                        }
-                        $('#cancel-meter').modal('hide');
-                        _table = $('#dateTables').dataTable();
-                        _table.fnClearTable();
-                        alarmHistory(importantId);
-                        setData();
-                        hiddrenId();
+                            if(data.validateNumber == 1){
+                                myAlter('参数错误，请联系管理员');
+                                return false;
+                            }
+                            if(data.validateNumber == 3){
+                                myAlter('执行失败');
+                                return false;
+                            }
+                            $('#cancel-meter').modal('hide');
+                            _table = $('#dateTables').dataTable();
+                            _table.fnClearTable();
+                            alarmHistory(importantId);
+                            setData();
+                            hiddrenId();
 
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        $('#theLoading').modal('hide');
-                        $('#cancel-meter').modal('hide');
-                        console.log(textStatus);
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            $('#theLoading').modal('hide');
+                            $('#cancel-meter').modal('hide');
+                            $('#present-logout').modal('hide');
+                            console.log(textStatus);
 
-                        if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
-                            ajaxTimeoutTest.abort();
-                            myAlter("超时");
+                            if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                                ajaxTimeoutTest.abort();
+                                myAlter("超时");
+                            }
+                            myAlter("请求失败！");
                         }
-                        myAlter("请求失败！");
-                    }
-                })
+                    })
+                });
+
             });
 
         },300)
@@ -1621,6 +1656,18 @@ $(document).ready(function(){
                 render:function(data, type, full, meta){
                     return '<span title="'+data+'">'+data+'</span>'
                 }
+            },
+            {
+                title:'是否在线',
+                data:'f_mtOnline',
+                class:'theHidden',
+                render:function(data, type,row, meta){
+                   if(data == 1){
+                       return '<span ids1="'+row.f_PointerID+'" ids2="'+row.cDataID+'">'+data+'</span>'
+                   }else{
+                       return '<span>'+data+'</span>'
+                   }
+                }
             }
         ]
     });
@@ -1679,6 +1726,9 @@ $(document).ready(function(){
                 console.log(dataObj);
 
                 var tableArr = [];
+
+                $('#change-meter .add-input').eq(7).attr('ids1','');
+                $('#change-meter .add-input').eq(7).attr('ids2','');
 
                 $('.ament-data').eq(0).find('span').html(dataObj.f_mtNumber);
                 var type = dataObj.f_mtEnergyType;
@@ -1855,6 +1905,15 @@ $(document).ready(function(){
                     var date = $('.onFocus td').eq(1).html();
                     var num = $('.onFocus td').eq(2).html();
                     var name = $('.onFocus td').eq(3).find('span').html();
+                    var onLine = $('.onFocus td').eq(5).find('span').html();
+
+                    if(onLine == 1){
+                        $('#change-meter .add-input').eq(7).attr('ids1',$('.onFocus td').eq(5).find('span').attr('ids1'));
+                        $('#change-meter .add-input').eq(7).attr('ids2',$('.onFocus td').eq(5).find('span').attr('ids2'));
+                    }else{
+                        $('#change-meter .add-input').eq(7).attr('ids1','');
+                        $('#change-meter .add-input').eq(7).attr('ids2','');
+                    }
 
                     $('#change-meter .add-input').eq(6).val(name);
                     $('#change-meter .add-input').eq(6).attr('ids',id);
@@ -2571,7 +2630,7 @@ function tableChange(){
         var txt = $(this).val();
         if(txt == ''){
             return false;
-        }else if(isNaN(txt) || txt < 0 || txt == 0  || txt > 1){
+        }else if(isNaN(txt) || txt < 0 || txt == 0  || txt > 100){
 
                 return false;
         }
@@ -2579,7 +2638,7 @@ function tableChange(){
         for(var i=0; i<selectArr.length; i++){
             if(id == selectArr[i].pK_Meter){
 
-                selectArr[i].f_EquallyShared = txt;
+                selectArr[i].f_EquallyShared = parseFloat(txt / 100);
             }
         }
     });
@@ -2698,7 +2757,7 @@ function tableChanges(){
         var txt = $(this).val();
         console.log(index);
 
-        if(isNaN(txt) || txt < 0 || txt == 0 || txt > 1){
+        if(isNaN(txt) || txt < 0 || txt == 0 || txt > 100){
             myAlter('公摊比例输入错误');
             getFocus1($(this));
             return false;
@@ -2717,14 +2776,14 @@ function tableChanges(){
                         console.log(num);
                     }
                     console.log(num);
-                    if(num > 1){
-                        myAlter('公摊比例总和不能大于1，请重新填写');
+                    if(num > 100){
+                        myAlter('公摊比例总和不能大于100，请重新填写');
                         $(this).val('');
                         getFocus1($(this).parents('tr').find('.ratio').eq(0));
                         return false;
                     }
 
-                logoutArr[i].cancelMeterApportions[index].f_EquallyShared = txt;
+                logoutArr[i].cancelMeterApportions[index].f_EquallyShared = (txt / 100);
             }
         }
     });
@@ -2930,6 +2989,8 @@ $('#ul1 li').on('click',function(){
 
 });
 
+
+
 //点击搜索到的信息时
 function buildClick(){
     $('.search-value-list0 li').on('click',function(){
@@ -2945,7 +3006,79 @@ function buildClick(){
 };
 
 
+//改变建档日期时获取对应的建档读数
+function getChangeRead (num1,num2,dom){
+    //日期控件
+    var txt1 = $(dom).val();
+    setTimeout(function(){
+            $('.day').one('click',function(){
+                console.log('ok');
+                $(dom).blur();
+                $('.datepicker').css({
+                    display:'none'
+                });
+                setTimeout(function(){
+                    var txt = $(dom).val();
+                    console.log(num1,num2,txt)
+                    $.ajax({
+                        type: 'get',
+                        url: IP + "/UnitMeter/GetMeterFilingDataByDT",
+                        async: false,
+                        timeout: theTimes,
+                        data:{
+                            pointerID : num1,
+                            F_CDataID : num2,
+                            FilingDT  : txt
+                        },
+                        beforeSend: function () {
 
+                        },
+
+                        complete: function () {
+
+                        },
+                        success: function (data) {
+                            $('#theLoading').modal('hide');
+                            console.log(data);
+                            if(data.returnFlag == 0){
+                                myAlter('当前日期无建档数据，本次操作无效');
+                                $(dom).val(txt1);
+                            }else if(data.returnFlag == 1){
+                                $(dom).parent().next().find('input').val(data.f_FilingNumber);
+                                $(dom).parent().next().find('input').attr('title',data.f_FilingNumber);
+
+                                var id = $(dom).parents('tr').children().eq(1).html();
+                                for(var i=0; i<selectArr.length; i++){
+                                    if(id == selectArr[i].pK_Meter){
+
+                                        selectArr[i].f_FilingNumber = data.f_FilingNumber;
+                                        selectArr[i].f_FilingDT = txt;
+                                    }
+                                }
+                            }else if(data.returnFlag == 1){
+                                myAlter('日期格式错误，请填写正确日期');
+                                $(dom).val(txt1);
+                            }
+
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            $('#theLoading').modal('hide');
+                            console.log(textStatus);
+
+                            if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                                ajaxTimeoutTest.abort();
+                                myAlter("超时");
+                            }
+                            myAlter("请求失败！");
+                        }
+                    });
+                },50)
+
+            });
+    },100)
+
+
+}
 
 
 //选择日期插件
@@ -2957,6 +3090,69 @@ $('.chooseDate').datepicker(
         format: 'yyyy-mm-dd'
     }
 );
+
+//更换计量设备时，改变事件，建档读数跟着改变
+$('#change-meter .add-input').eq(7).on('focus',function(){
+
+    var that = $(this);
+    var txt1 = $(this).val();
+    if(that.attr('ids1') == ''){
+        console.log('111');
+        return false;
+    }
+    setTimeout(function(){
+        $('.day').one('click',function(){
+
+            setTimeout(function(){
+                var txt = that.val();
+                var num1 = that.attr('ids1');
+                var num2 = that.attr('ids2');
+                $.ajax({
+                    type: 'get',
+                    url: IP + "/UnitMeter/GetMeterFilingDataByDT",
+                    async: false,
+                    timeout: theTimes,
+                    data:{
+                        pointerID : num1,
+                        F_CDataID : num2,
+                        FilingDT  : txt
+                    },
+                    beforeSend: function () {
+
+                    },
+
+                    complete: function () {
+
+                    },
+                    success: function (data) {
+                        $('#theLoading').modal('hide');
+                        console.log(data);
+                        if(data.returnFlag == 0){
+                            myAlter('当前日期无建档数据，本次操作无效');
+                            that.val(txt1);
+                        }else if(data.returnFlag == 1){
+                            $('#change-meter .add-input').eq(8).val(data.f_FilingNumber);
+                        }else if(data.returnFlag == 1){
+                            myAlter('日期格式错误，请填写正确日期');
+                            that.val(txt1);
+                        }
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('#theLoading').modal('hide');
+                        console.log(textStatus);
+
+                        if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                            ajaxTimeoutTest.abort();
+                            myAlter("超时");
+                        }
+                        myAlter("请求失败！");
+                    }
+                });
+            },50)
+        });
+    },100)
+});
 
 
 //点击确定时触发
@@ -2987,11 +3183,13 @@ function showResult(){
 
 
 function ajaxSuccess1(id){
+    $('#orgNameInput').prop('checked',false);
     _table = $('#dateTables').dataTable();
     _table.fnClearTable();
     alarmHistory(id);
     setData();
     hiddrenId();
+    changeColor()
 }
 
 //检验是否必填项全部填写
@@ -3043,6 +3241,7 @@ function checkedNull1(dom){
     return true;
 }
 
+//检验公摊比例是否输入正确
 function checkedNull2(dom){
     var length = $(dom).find('.wait-change2').length;
     for(var i=0; i<length; i++){
@@ -3054,10 +3253,10 @@ function checkedNull2(dom){
 
 
             return false;
-        }else      if(isNaN(txt) || txt < 0 || txt == 0  || txt > 1){
+        }else  if(isNaN(txt) || txt < 0 || txt == 0  || txt > 100){
 
 
-            myAlter('公摊比例为大于0小于1的数字');
+            myAlter('公摊比例为大于0小于100的数字');
 
             getFocus1($(dom).find('.wait-change2').eq(i));
 
@@ -3270,6 +3469,18 @@ function checkedEndNum1(dom){
     }
     return true;
 }
+
+//已注销的行显示
+function changeColor(){
+    var length = $('.hasLogout').length;
+    for(var i=0; i<length; i++){
+        $('.hasLogout').eq(i).parents('tr').css({
+            color:'#aaa'
+        })
+    }
+}
+
+
 
 
 

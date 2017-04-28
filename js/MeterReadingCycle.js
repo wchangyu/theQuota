@@ -1,6 +1,7 @@
 /**
  * Created by admin on 2017/2/17.
  */
+
 $(document).ready(function(){
 
     $('input').attr('maxlength', '50');
@@ -67,6 +68,19 @@ $(document).ready(function(){
                             return '未结算'
                         }else {
                             return '已结算'
+                        }
+
+                    }
+
+                },
+                {
+                    title:'在线表数据状态',
+                    data:'f_ImportOnlineMeter',
+                    render:function(data, type, full, meta){
+                        if(data == 0){
+                            return '<span style="color:darkred">未导入</span>'
+                        }else {
+                            return '<span style="color:#307f7a">已导入</span>'
                         }
 
                     }
@@ -373,6 +387,7 @@ $(document).ready(function(){
                     var txt = data.validateNumber;
                     if(txt == 99){
                         myAlter('在线表数据生成成功');
+                        ajaxSuccess();
                     }else if(txt == 1){
                         myAlter('执行失败，请联系管理员')
                     }else if(txt == 3){

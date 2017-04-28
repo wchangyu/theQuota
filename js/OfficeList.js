@@ -443,7 +443,10 @@ $(document).ready(function(){
                 },
                 {
                     title:'百分比减免',
-                    data:'f_PercentageReduction'
+                    data:'f_PercentageReduction',
+                    render:function(data, type, row, meta){
+                        return (data * 100)
+                    }
                 },
                 {
                     title:'查看备注',
@@ -557,7 +560,7 @@ $(document).ready(function(){
         var SpecialtyID = $('#add-unit .first-row .inner-input').eq(5).find('.add-input').children('span').attr('ids');
         var factor = $('#add-unit .first-row .inner-input').eq(5).find('.add-input').children('span').attr('factor');
         var unitRoom = $('#add-unit .first-row .inner-input').eq(6).find('.add-input').val();
-        var reduction = $('#add-unit .first-row .inner-input').eq(7).find('.add-input').val();
+        var reduction = $('#add-unit .first-row .inner-input').eq(7).find('.add-input').val() / 100;
         var remark1 = $('#add-unit .first-row .inner-input').eq(8).find('.add-input').val();
         var remark2 = $('#add-unit .first-row .inner-input').eq(9).find('.add-input').val();
         var remark3 = $('#add-unit .first-row .inner-input').eq(10).find('.add-input').val();
@@ -1027,7 +1030,7 @@ $(document).ready(function(){
 
                 };
                 $('#alter-unit .inner-input .add-input').eq(6).val(data.f_UnitRoom);
-                $('#alter-unit .inner-input .add-input').eq(7).val(data.f_PercentageReduction);
+                $('#alter-unit .inner-input .add-input').eq(7).val(data.f_PercentageReduction * 100);
                 $('#alter-unit .inner-input .add-input').eq(8).val(data.f_Comment1);
                 $('#alter-unit .inner-input .add-input').eq(9).val(data.f_Comment2);
                 $('#alter-unit .inner-input .add-input').eq(10).val(data.f_Comment3);
@@ -1077,7 +1080,7 @@ $(document).ready(function(){
             var SpecialtyID = $('#alter-unit  .inner-input').eq(5).find('.add-input').children('span').attr('ids');
             var factor = $('#alter-unit  .inner-input').eq(5).find('.add-input').children('span').attr('factor');
             var unitRoom = $('#alter-unit  .inner-input').eq(6).find('.add-input').val();
-            var reduction = $('#alter-unit  .inner-input').eq(7).find('.add-input').val();
+            var reduction = $('#alter-unit  .inner-input').eq(7).find('.add-input').val() / 100;
             var remark1 = $('#alter-unit  .inner-input').eq(8).find('.add-input').val();
             var remark2 = $('#alter-unit  .inner-input').eq(9).find('.add-input').val();
             var remark3 = $('#alter-unit  .inner-input').eq(10).find('.add-input').val();
@@ -2661,6 +2664,7 @@ function alarmHistory(){
             $('#theLoading').modal('hide');
         },
         success:function(result){
+            console.log(result);
             $('#theLoading').modal('hide');
             for(var i=0;i<result.length;i++){
                 dataArr.push(result[i]);

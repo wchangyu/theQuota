@@ -126,13 +126,11 @@ $(document).ready(function(){
                 {
                     title: '抄表周期名称',
                     data: 'f_CycleName',
-                    class: 'theHidden'
 
                 },
                 {
                     title: '抄表月份',
                     data: 'f_ReadCycleST',
-                    class: 'theHidden'
 
                 },
                 {
@@ -288,12 +286,14 @@ $(document).ready(function(){
             },
             {
                 title:'抄表周期名称',
-                data:'f_CycleName'
+                data:'f_CycleName',
+                class:'theHidden'
 
             },
             {
                 title:'抄表月份',
                 data:'f_ReadCycleST',
+                class:'theHidden',
                 render:function(data, type, full, meta){
                     if(data){
                         var txt1 = data.split(' ')[0].split('/')[0];
@@ -1309,13 +1309,15 @@ var setting = {
     //    chkboxType: { "Y": "s", "N": "ps" }
     //},
     view: {
-        nameIsHTML: true
+        nameIsHTML: true,
+        showTitle :false
     },
     data: {
         simpleData: {
             enable: true
         }
-    },
+    }
+
 };
 var zNodes =[
 

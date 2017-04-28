@@ -3,9 +3,9 @@
  */
 
 var userName = 'xiaohong';
-var IP1 = "http://192.168.1.113/BEEWebAPI/api";
+var IP1 = "http://192.168.1.112/BEEWebAPI/api";
 var IP2 = 'http://211.100.28.180/DingEAPI/api';
-var IP = IP2;
+var IP = IP1;
 
 var theTimes = 10000;
 var energyType = {
@@ -114,6 +114,21 @@ function ajaxSuccess(){
 
 }
 
+//深拷贝的方法
+function deepCopy(src,obj){
+
+    obj = obj || (Array.isArray(src) ? [] : {});
+    for(var i in src){
+        if(src.hasOwnProperty(i)){
+            if(typeof src[i] == 'object' && src[i]!=null){
+                obj[i] = Array.isArray(src[i]) ? [] : {};
+                deepCopy(src[i],obj[i]);
+            }else{
+                obj[i] = src[i];
+            }
+        }
+    }
+}
 
 
 //获取对应的能耗类型
@@ -220,7 +235,7 @@ function getMtonline(num){
 //    }
 //})
 
-
+//日期控件
 $('.chooseDate').on('focus',function(){
     var that = $(this);
     setTimeout(function(){
@@ -235,3 +250,4 @@ $('.chooseDate').on('focus',function(){
     },100)
 
 });
+

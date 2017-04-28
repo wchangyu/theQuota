@@ -33,7 +33,7 @@
                                     <div class="add-input-block" style="margin-left:10px;">
                                         <input type="text" class="add-input search-value search-value0" value="" placeholder="请输入单位名称进行搜索" >
                                     </div>
-                                    <button class="top-btn show-all-unit" style="margin-left:10px;;margin-top:10px;margin-bottom:10px;">显示全部</button>
+                                    <button class="top-btn show-all-unit" style="margin-left:6px;;margin-top:10px;margin-bottom:10px;">显示全部</button>
                                     <div style="height:6px"></div>
                                     <ul class="search-value-list search-value-list0" style="background:white"></ul>
 
@@ -103,13 +103,13 @@
                                 <li> <button class="top-btn window-btn top-btn1" data-toggle='modal' data-target='#accum-preseve'>累加子账户维护</button></li>
                                 <li> <button class="top-btn window-btn top-btn2" data-toggle='modal' data-target='#accum-preseve'>累减子账户维护</button></li>
                                 <li> <button class="top-btn window-btn top-btn3" data-toggle='modal' data-target='#accum-shared'>公摊比例账户维护</button></li>
-                                <li> <button class="top-btn window-btn top-btn4"  data-toggle='modal' data-target='#cancel-meter'>注销计量设备</button></li>
+                                <li> <button class="top-btn window-btn top-btn4"  data-toggle='modal' data-target='#cancel-meter'>注销子账户</button></li>
 
                                 <div class="clearfix"></div>
                             </ul>
 
                             <ul class="main-content-header">
-                                <li class="main-content-header-lists0">仪表列表</li>
+                                <li class="main-content-header-lists0">计量设备列表</li>
                             </ul>
 
                             <div class="main-content-table" style="overflow: auto;width:100%;">
@@ -302,11 +302,11 @@
 
     <!--注销计量设备弹窗-->
     <div class='modal fade' id='cancel-meter' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:1280px;margin:50px auto'>
+        <div class='modal-dialog'style='width:1330px;margin:50px auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">注销计量设备</div>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">注销子账户</div>
                     <!--展示表格-->
                     <div class="main-content-table">
                         <table class="table table-striped" id="dateTables1">
@@ -334,7 +334,7 @@
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px;">更换仪表计量设备</div>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px;">更换计量设备</div>
                     <!--展示表格-->
                     <div class="ament-data" style="margin-left:30px;margin-right:30px;"><b>表号或代号：</b>
                         <span>*********表</span>
@@ -352,11 +352,13 @@
                         <span>手抄表</span>
                     </div>
                     <div class="row">
+
+
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="min-height:330px">
                             <div class="add-deploy" style="border:none;margin-top:0;min-height:310px">
                                 <form action="" method="get" class="deploy-form" style="margin-bottom:20px">
 
-                                    <div class="row">
+                                    <div class="row" style="margin-bottom:10px;">
 
                                         <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
                                             <label for="" class="input-label" style="width:135px;margin-right:40px;">抄表起始日期：</label>
@@ -406,15 +408,24 @@
                                             </div>
                                         </div>
 
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <ul class="main-content-header" style="float:left;width:92%;margin-bottom:0;margin-left:18px;">
+                                            <li class="main-content-header-lists0" style="height:24px;line-height:24px;">新表信息</li>
+                                        </ul>
+
                                         <div class="col-lg-8 col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:10px;margin-left: 0">
                                             <label for="" class="input-label" style="width:170px">新计量设备：</label>
                                             <div class="add-input-block">
                                                 <input type="text" class="add-input" value="" placeholder="从计量设备列表中选择" disabled="true">
                                             </div>
                                             <img src="img/fdj.png" class="choose-num" alt="选择仪表" data-toggle="modal" data-target="#choose-meter">
-                                            <a href="ALLDevice.html" target="_Blank">请点击添加计量设备</a>
+                                            <!--<a href="ALLDevice.html" target="_Blank">请点击添加计量设备</a>-->
                                         </div>
-
                                     </div>
 
 
@@ -490,7 +501,7 @@
                     </div>
 
                     <div class='modal-footer'>
-                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
                         <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
                     </div>
                 </div>
@@ -526,7 +537,7 @@
                     </div>
 
                     <div class='modal-footer'>
-                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
                         <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
                     </div>
                 </div>
@@ -558,6 +569,22 @@
                 <div class='modal-header'>
                     <h3 style="margin-bottom:20px">提示</h3>
                     <p style="font-size:18px">请在核对所有信息无误后点击确定进行提交。 <br/> <span style="color:red;font-size:14px">注：提交修改后只能通过注销或更换操作取消绑定。</span></p>
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--是否确定注销弹窗-->
+    <div class='modal fade' id='present-logout' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:360px;margin:100px auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">提示</h3>
+                    <p style="font-size:18px">请在核对所有信息无误后点击确定进行注销。 <br/> <span style="color:red;font-size:14px">注：注销后可重新绑定子账户。</span></p>
                     <div class='modal-footer' style="border:none">
                         <button type='button' class='btn btn-primary top-btn'>确定</button>
                         <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>

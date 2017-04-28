@@ -2,6 +2,7 @@
  * Created by admin on 2017/2/13.
  */
 
+
 var rotateNum = 1;
 $(document).ready(function(){
 
@@ -120,7 +121,7 @@ $(document).ready(function(){
 
             },
             {
-                title:'计量设备状态',
+                title:'是否在线',
                 data:'f_onlineName'
 
             },
@@ -484,7 +485,7 @@ $(document).ready(function(){
                     $('#alter-meter').find('.bookbuilding').eq(0).find('span').html(data.f_FilingDT);
                     $('#alter-meter').find('.bookbuilding').eq(1).find('.add-input').attr('disabled','true');
 
-                    $('#alter-meter').find('.get-online-message').removeAttr('disabledd');
+                    $('#alter-meter').find('.get-online-message').removeAttr('disabled');
                     $('#alter-meter').find('.get-online-message').addClass('top-btn');
 
                     $('#alter-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','不可输入');
@@ -513,7 +514,7 @@ $(document).ready(function(){
                     $('#alter-meter').find('.bookbuilding').eq(0).find('.add-input').val(data.f_FilingDT);
 
 
-                    $('#alter-meter').find('.get-online-message').attr('disabledd','true');
+                    $('#alter-meter').find('.get-online-message').attr('disabled','true');
                     $('#alter-meter').find('.get-online-message').removeClass('top-btn');
 
                     $('#alter-meter').find('.bookbuilding').eq(1).find('.add-input').removeAttr('disabled');
@@ -658,7 +659,7 @@ $(document).ready(function(){
 
         var index = $(dom).index() + 1;
         var id = dom.children().eq(1).html();
-        var txt = $(dom).children().eq(0).html();
+        var txt = $(dom).children().eq(5).html();
 
         $.ajax({
             type: 'get',
@@ -1219,14 +1220,14 @@ function putMeterType(dom){
         $('#add-meter').find('.rate').find('.add-input').val(1);
         $('#add-meter').find('.rate').find('.add-input').removeAttr('disabled');
 
-        $('#add-meter').find('.get-online-message').attr('disabledd','true');
+        $('#add-meter').find('.get-online-message').attr('disabled','true');
         $('#add-meter').find('.get-online-message').removeClass('top-btn');
 
         $('#add-meter').find('.type-number').eq(2).find('.add-input').attr('placeHolder','');
         $('#add-meter').find('.type-number').eq(2).find('.add-input').removeAttr('disabled');
         $('#add-meter').find('.type-number').eq(3).find('.add-input').removeAttr('disabled');
 
-        $('#alter-meter').find('.get-online-message').attr('disabledd','true');
+        $('#alter-meter').find('.get-online-message').attr('disabled','true');
         $('#add-meter').find('.get-online-message').removeClass('top-btn');
 
         if(arr4[0] != 100){
@@ -1552,7 +1553,7 @@ $('.add-select-meter li').on('click',function(){
         }
 
 
-        $(this).parents('.deploy-form').find('.get-online-message').attr('disabledd','true');
+        $(this).parents('.deploy-form').find('.get-online-message').attr('disabled','true');
         $(this).parents('.deploy-form').find('.get-online-message').removeClass('top-btn');
 
         $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').removeAttr('disabled');
@@ -1574,7 +1575,7 @@ $('.add-select-meter li').on('click',function(){
         $(this).parents('.deploy-form').find('.rate').find('.add-input').val('');
         $(this).parents('.deploy-form').find('.rate').find('.add-input').attr('disabled',"true");
 
-        $(this).parents('.deploy-form').find('.get-online-message').removeAttr('disabledd');
+        $(this).parents('.deploy-form').find('.get-online-message').removeAttr('disabled');
         $(this).parents('.deploy-form').find('.get-online-message').addClass('top-btn');
 
         $(this).parents('.deploy-form').find('.bookbuilding').find('.add-input').attr('disabled',"true");
@@ -1815,6 +1816,9 @@ $('.get-online-message').on('click',function(){
                 console.log(data);
                 if(data.returnFlag == 0){
                     myAlter('无建档信息，请联系管理员');
+                    return false;
+                }else if(data.returnFlag == 2){
+                    myAlter('参数错误，请联系管理员');
                     return false;
                 }else{
                     var txt1 = data.f_FilingDT;

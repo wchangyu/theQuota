@@ -233,6 +233,7 @@ b{
 .chooseDate {
     background: url(../img/times.png) no-repeat 160px center;
     background-size: auto 80%;
+    cursor: pointer;
 }
 
 .input-blocked input, select {
@@ -260,4 +261,21 @@ b{
 .modal-backdrop.in {
     filter: alpha(opacity=30);
     opacity: 0.3 !important;
+}
+
+.theHidden{
+    display: none !important;
+}
+
+.condition-query li select {
+    width: 160px;
+    border: 1px solid #a9a9a9;
+    height: 30px;
+}
+
+.condition-query select {
+    border: none;
+    height: 30px !important;
+    outline: none;
+    margin: 0 5px;
 }

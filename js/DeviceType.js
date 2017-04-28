@@ -16,6 +16,7 @@ $(document).ready(function() {
         "ordering": false,
         'searching': false,
         "sScrollY": '740px',
+        'sScrollX':true,
         "bPaginate": false,
         "scrollCollapse": true,
         'language': {
@@ -38,7 +39,7 @@ $(document).ready(function() {
         //数据源
         'columns': [
             {
-                title: '计量设备名称',
+                title: '计量设备类型名称',
                 data: "f_MeterTypeName"
 
             },
@@ -53,7 +54,7 @@ $(document).ready(function() {
                 data: "f_EnergyName"
             },
             {
-                title: '计量设备状态',
+                title: '是否在线',
                 data: 'f_onlineName'
             },
             {

@@ -1,6 +1,6 @@
 
 .inner-input label{
-    width:125px;
+    width:146px !important;
 }
 
 .modal-backdrop.in {
@@ -9,4 +9,9 @@
 }
 #dateTables_info{
     display: none !important;
+}
+th, td { white-space: nowrap; }
+div.dataTables_wrapper {
+    width: 1050px;
+    margin: 0 0;
 }
