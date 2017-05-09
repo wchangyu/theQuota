@@ -115,80 +115,6 @@ $(document).ready(function(){
     _table = $('#dateTables').dataTable();
     dataArr = [];
 
-    $.ajax({
-        type: 'get',
-        url: IP + "/AboveQuota/GetUnitAboveQuotas",
-        async: false,
-        timeout: theTimes,
-        data:{
-            accountSTStr : "2017-2-1",
-            accountETStr :  "2017-2-28",
-            quotaAccountWay : 0,
-            userID : userName,
-            unitVirtualID : -1
-        },
-        beforeSend: function () {
-            $('#theLoading').modal('show');
-        },
-
-        complete: function () {
-
-        },
-        success: function (data) {
-            $('#theLoading').modal('hide');
-            console.log(data);
-            if(data.validateNumber == 1){
-                myAlter('参数错误，请联系管理员');
-                return false;
-            }
-            if(data.validateNumber == 3){
-                myAlter('执行失败，请联系管理员');
-                return false;
-            }
-            isWrong = 0;
-            $('.the-wrong').css({
-                display:'none'
-            });
-            theHint = '';
-            if(data.validateNumber == 5){
-                isWrong = 1;
-                $('.the-wrong').css({
-                    display:'inline-block'
-                })
-                var html = '';
-                for(var i=0; i<data.f_mtNumberInfos.length; i++){
-                    if(i == data.f_mtNumberInfos.length-1){
-                        html +='<span style="font-weight: 400">'+data.f_mtNumberInfos[i].key + ' : ' +data.f_mtNumberInfos[i].valueStr + '。</span>'
-                    }else{
-                        html += '<span style="font-weight: 400">'+data.f_mtNumberInfos[i].key + ' : ' +data.f_mtNumberInfos[i].valueStr + '，</span><br />'
-                    }
-
-                }
-                myAlter(html);
-                theHint = html;
-            }
-
-            var arr = data.aboveQuotaChilds;
-
-            for(var i=0; i< arr.length; i++){
-                dataArr.push(arr[i]);
-            }
-            _table.fnClearTable();
-            setData();
-            hiddrenId();
-
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            $('#theLoading').modal('hide');
-            console.log(textStatus);
-
-            if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
-                ajaxTimeoutTest.abort();
-                myAlter("超时");
-            }
-            myAlter("请求失败！");
-        }
-    });
     //查寻指定日期下的超额用能列表
     $('.top-refer').on('click',function(){
 
@@ -658,9 +584,14 @@ $(document).ready(function(){
 
         console.log(isWrong);
 
+        if(dataArr.length == 0){
+            myAlter('当前无用能信息，无法生成 !');
+            return false;
+        }
+
         if(isWrong == 1){
            $('#theHint'  ).modal('show');
-            $('#theHint p b').html('二级单位用能信息表生成过程中存在错误，是否继续生成临时超额用能列表');
+            $('#theHint p b').html('二级单位用能信息表生成过程中存在错误，是否继续生成临时超额用能列表?');
 
 
         }else{
