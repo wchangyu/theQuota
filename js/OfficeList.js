@@ -419,7 +419,8 @@ $(document).ready(function(){
                 },
                 {
                     title:'剩余额度',
-                    data:'remainingAmount'
+                    data:'remainingAmount',
+                    class:'theHidden'
                 },
                 {
                     title:'单位专业',

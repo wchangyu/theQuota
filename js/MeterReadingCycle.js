@@ -355,7 +355,7 @@ $(document).ready(function(){
     });
 
     //生成在线表数据
-    $('.create-data').on('click',function(){
+    $('#dateTables ').on('click','.create-data',function(){
         var id = $(this).parents('tr').children().eq(1).html();
         console.log(id);
         var txt = $(this).parents('tr').children().eq(0).html();

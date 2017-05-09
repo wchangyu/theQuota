@@ -269,6 +269,9 @@ $(document).ready(function(){
     });
 
     //添加功能
+    $('.top-btn1').on('click',function(){
+        $('#add-meter').find('input').val('');
+    });
     $('#add-meter .btn-primary').on('click',function(){
 
         //判断输入是否正确

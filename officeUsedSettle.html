@@ -64,6 +64,7 @@
 
 
                                 <li> <button class="top-btn window-btn top-btn2" >临时生成超额用能列表</button></li>
+                                <li class="the-wrong" style="display: none"><img src="img/theWrong.png" alt=""><a href="javascript:;" class="openWrong">查看错误</a></li>
 
                                 <div class="clearfix"></div>
                             </ul>
@@ -145,7 +146,7 @@
                                 <a href="#" hidefocus="true">水</a>
                                 <a href="#" hidefocus="true">气</a>
                             </div>
-                            <div class="swiper-container" style="height:400px;padding-top:20px;">
+                            <div class="swiper-container" style="padding-top:20px;">
                                 <!--定额列表-->
                                 <div class="ament-data" style="margin-left:0px;margin-right:30px;">
                                     <b>用电单价：</b>
@@ -286,6 +287,26 @@
             </div>
         </div>
     </div>
+
+    <!--是否就错误信息生成超额用能列表-->
+    <div class='modal fade' id='theHint' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='max-width:700px;margin:150px auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:18px">提示</h3>
+                    <p style="font-size:20px"> <b style="color:red"></b> </p>
+
+                    <div class='modal-footer' style="border:none">
+
+                        <button type='button' class='btn btn-primary top-btn' data-dismiss='modal'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
     <!--自定义弹窗-->
     <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>

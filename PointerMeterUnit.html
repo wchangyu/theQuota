@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="row">
+    <div class="col-md-12">
+        <div class="out-content">
+            <div class="inner-content">
+                <div class="main-content main-tree">
+                    <!--左侧树状图-->
+                    <div class="main-content-left" style="width:350px;position:absolute;left:0;top:0;padding-left:25px;padding-right:15px">
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">楼宇计量设备列表</li>
+                        </ul>
+                        <!--树状图-->
+                        <div class="content_wrap" style="text-align: center;">
+
+
+                            <div class="zTreeDemoBackground left">
+                                <input type="text" id="key" placeholder="请输入计量设备名称">
+                                <div class="tip" style="width:230px;height:30px;color:red;margin:0 auto;display:none;">*抱歉，没找到您要搜索的内容</div>
+                                <ul id="treeMultiple" class="ztree" style="height: 650px; width:230px; overflow-y: auto;margin:0 auto"></ul>
+                            </div>
+
+                            <div style="height:50px;" class="tree-bottom">
+                                <p>当前共 <span> 50 </span> 块手工表  还剩 <b> 10 </b>块需要抄表</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--右侧数据部分-->
+                    <div class="main-content-right " style="margin-left:350px;">
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">计量设备管理</li>
+                        </ul>
+
+                        <div class="main-content-body row">
+
+                            <div class="col-md-3" style="margin-bottom:20px;">
+                                <button class="top-btn add-btn" data-toggle='modal' data-target='#add-deploy'
+                                        style="margin-left:30px;">更改公摊比例</button>
+
+                            </div>
+                        </div>
+                        <!--表格部分-->
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-content-table" style="overflow: auto;">
+                                <table class="table table-striped"  id="dateTables1" style="margin-bottom:15px;min-width:1200px">
+
+                                </table>
+
+                                <table class="table table-striped" id="dateTables" style="min-width:1200px">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

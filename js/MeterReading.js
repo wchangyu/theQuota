@@ -299,6 +299,8 @@ $(document).ready(function(){
                         var txt1 = data.split(' ')[0].split('/')[0];
                         var txt2 = data.split(' ')[0].split('/')[1];
                         return txt1 + "-" + txt2;
+                    }else{
+                        return '';
                     }
 
                 }
@@ -1504,7 +1506,7 @@ function getBuildTree(){
             $.fn.zTree.init($("#treeMultiple"), setting, zNodes);
 
             $('.treeFont').eq(0).click();
-
+            $('.treeFont').eq(0).addClass('onClicks');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             $('#theLoading').modal('hide');

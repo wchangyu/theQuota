@@ -31,6 +31,16 @@
     margin-left: 0px;
 }
 
+#show-details1 .inner-input label {
+    width: 135px;
+    text-align: left;
+    padding-left: 20px;
+    margin-right:10px;
+}
+#show-details1 .inner-input {
+    margin-left: 0px;
+}
+
 /*缴费状态前面的标识*/
 span .pay-not1 {
     display: inline-block;
@@ -38,6 +48,16 @@ span .pay-not1 {
     height: 16px;
     border-radius: 50%;
     background: red;
+    margin-right: 5px;
+    margin-top: 3px;
+}
+
+span .pay-not2 {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: green;
     margin-right: 5px;
     margin-top: 3px;
 }
@@ -50,3 +70,30 @@ span .pay-not0 {
     margin-right: 5px;
     margin-top: 3px;
 }
+#transfer-register .inner-input{
+    margin-left:0px !important;
+}
+
+#dateTables4_info{
+    display:none
+}
+
+/*转账登记中的备注*/
+.adjust-comment span {
+    max-width: 100px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+textarea{
+    line-height:20px !important;
+}
+#dateTables3_info,#dateTables6_info,#dateTables5_info{
+    display: none;
+}
+
+
+

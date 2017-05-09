@@ -18,7 +18,80 @@
     <link rel="stylesheet" href="css/OfficeChargeList.css">
 </head>
 <body>
+    <div class="row">
+    <div class="col-md-12">
+        <div class="out-content">
+            <div class="inner-content">
+                <div class="main-content">
+                    <!--左侧搜索部分-->
+                    <div class="main-content-left" style="width:350px;position:absolute;left:0;top:0;padding-left:25px;padding-right:15px">
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">未结算周期</li>
+                        </ul>
 
+                        <div class="showCompany search-test-inner search-test-inner0 row" style="text-align:center;margin-bottom:20px;">
+
+                            <h4 style="margin-bottom:15px">待选未结算周期列表
+
+                                <button class="top-btn choose-period" data-toggle="modal" data-target="#choose-building" style="margin-left:18px;margin-right:8px;">查询</button>
+
+                            </h4>
+                            <!-- 搜索框结构 -->
+                            <div class="main-content-table" style="overflow: auto;width:100%;">
+                                <table class="table table-striped" id="dateTables0">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!--右侧查询部分-->
+                    <div class="main-content-right"  style="margin-left:350px;">
+
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">账户操作</li>
+                        </ul>
+
+                        <ul class="condition-query">
+
+                            <li>
+                                <button class="top-btn window-btn top-btn1" style="width:180px">导出内部使用列表</button>
+                            </li>
+                            <li>
+                                <button class="top-btn window-btn top-btn2" style="width:180px">导出财务使用列表</button>
+                            </li>
+
+
+                            <div class="clearfix"></div>
+                        </ul>
+
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">结算周期列表</li>
+                        </ul>
+
+                        <div class="main-content-table" style="overflow: auto;width:100%;">
+                            <table class="table table-striped" id="dateTables1" style="">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!--自定义弹窗-->
     <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>

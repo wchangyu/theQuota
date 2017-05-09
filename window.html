@@ -81,6 +81,7 @@
                 myAlter("请求失败！");
             }
         })
+        $('.treeFont').eq(0).addClass('onClicks');
 
         $.ajax({
             type: 'get',
@@ -114,6 +115,8 @@
             }
         });
 
+        contentType: 'application/json',
+                data: JSON.stringify(testData),
 
     </script>
 

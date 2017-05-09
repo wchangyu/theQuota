@@ -121,8 +121,8 @@ $(document).ready(function(){
         async: false,
         timeout: theTimes,
         data:{
-            accountSTStr : "2017-1-1",
-            accountETStr :  "2017-4-19",
+            accountSTStr : "2017-2-1",
+            accountETStr :  "2017-2-28",
             quotaAccountWay : 0,
             userID : userName,
             unitVirtualID : -1
@@ -145,7 +145,16 @@ $(document).ready(function(){
                 myAlter('执行失败，请联系管理员');
                 return false;
             }
+            isWrong = 0;
+            $('.the-wrong').css({
+                display:'none'
+            });
+            theHint = '';
             if(data.validateNumber == 5){
+                isWrong = 1;
+                $('.the-wrong').css({
+                    display:'inline-block'
+                })
                 var html = '';
                 for(var i=0; i<data.f_mtNumberInfos.length; i++){
                     if(i == data.f_mtNumberInfos.length-1){
@@ -156,8 +165,9 @@ $(document).ready(function(){
 
                 }
                 myAlter(html);
-
+                theHint = html;
             }
+
             var arr = data.aboveQuotaChilds;
 
             for(var i=0; i< arr.length; i++){
@@ -181,6 +191,7 @@ $(document).ready(function(){
     });
     //查寻指定日期下的超额用能列表
     $('.top-refer').on('click',function(){
+
         dataArr = [];
         var txt1 = $('.refer-unit-table .startDate').val();
         var txt2 = $('.refer-unit-table .endDate').val();
@@ -204,6 +215,8 @@ $(document).ready(function(){
 
             },
             success: function (data) {
+
+
                 $('#theLoading').modal('hide');
                 console.log(data);
                 if(data.validateNumber == 1){
@@ -214,7 +227,16 @@ $(document).ready(function(){
                     myAlter('执行失败，请联系管理员');
                     return false;
                 }
+                isWrong = 0;
+                $('.the-wrong').css({
+                    display:'none'
+                });
+                theHint = '';
                 if(data.validateNumber == 5){
+                    isWrong = 1;
+                    $('.the-wrong').css({
+                        display:'inline-block'
+                    });
                     var html = '';
                    for(var i=0; i<data.f_mtNumberInfos.length; i++){
                        if(i == data.f_mtNumberInfos.length-1){
@@ -224,6 +246,7 @@ $(document).ready(function(){
                        }
 
                    }
+                    theHint = html;
                     myAlter(html);
 
                 }
@@ -232,6 +255,7 @@ $(document).ready(function(){
                 for(var i=0; i< arr.length; i++){
                         dataArr.push(arr[i]);
                 }
+                _table = $('#dateTables').dataTable();
                 _table.fnClearTable();
                 setData();
                 hiddrenId();
@@ -318,7 +342,7 @@ $(document).ready(function(){
         "paging":false,
         "ordering": false,
         'searching':false,
-        "sScrollY": '260px',
+        "sScrollY": '180px',
         "bPaginate": false,
         "scrollCollapse": true,
         'language': {
@@ -445,13 +469,13 @@ $(document).ready(function(){
         $('.ament-data').eq(1).find('span').html(showData[0].f_EnergyQuota);
 
         //用能量
-        $('.ament-data').eq(2).find('span').html(showData[0].f_EnergyValue);
+        $('.ament-data').eq(2).find('span').html(showData[0].f_EnergyValue.toFixed(2));
 
         //实际用能量
-        $('#show-details').find('.add-input').eq(1).val(showData[0].f_EndResultEnergyValue);
+        $('#show-details').find('.add-input').eq(1).val(showData[0].f_EndResultEnergyValue.toFixed(2));
 
         //超额用能量
-        $('.ament-data').eq(3).find('span').html(showData[0].f_AboveEnergyValue);
+        $('.ament-data').eq(3).find('span').html(showData[0].f_AboveEnergyValue.toFixed(2));
 
         //应缴费用
         $('.ament-data').eq(4).find('span').html(showData[0].f_EnergyShouldPay);
@@ -497,17 +521,17 @@ $(document).ready(function(){
                 $('.ament-data').eq(1).find('span').html(showData[num].f_EnergyQuota);
 
                 //用能量
-                $('.ament-data').eq(2).find('span').html(showData[num].f_EnergyValue);
+                $('.ament-data').eq(2).find('span').html(showData[num].f_EnergyValue.toFixed(2));
 
                 //实际用能量
-                $('#show-details').find('.add-input').eq(1).val(showData[num].f_EndResultEnergyValue);
+                $('#show-details').find('.add-input').eq(1).val(showData[num].f_EndResultEnergyValue.toFixed(2));
 
                 $('#show-details').find('.add-input').eq(0).val(showData[num].f_SpecialRebateEnergy);
 
                 $('#show-details').find('.remarks').val(showData[num].f_SpecialEnergyComment);
 
                 //超额用能量
-                $('.ament-data').eq(3).find('span').html(showData[num].f_AboveEnergyValue);
+                $('.ament-data').eq(3).find('span').html(showData[num].f_AboveEnergyValue.toFixed(2));
 
                 //应缴费用
                 $('.ament-data').eq(4).find('span').html(showData[num].f_EnergyShouldPay);
@@ -632,13 +656,31 @@ $(document).ready(function(){
 
     $('.condition-query .top-btn2').on('click',function(){
 
-        //打开模态框
+        console.log(isWrong);
+
+        if(isWrong == 1){
+           $('#theHint'  ).modal('show');
+            $('#theHint p b').html('二级单位用能信息表生成过程中存在错误，是否继续生成临时超额用能列表');
+
+
+        }else{
+            //打开模态框
+            $('#product-list').modal('show');
+
+            $('#product-list .add-input').eq(0).val(dataArr[0].f_AccountST.split(' ')[0]);
+
+            $('#product-list .add-input').eq(1).val(dataArr[0].f_AccountET.split(' ')[0]);
+        }
+
+
+    });
+
+    $('#theHint .btn-primary').on('click',function(){
         $('#product-list').modal('show');
 
         $('#product-list .add-input').eq(0).val(dataArr[0].f_AccountST.split(' ')[0]);
 
         $('#product-list .add-input').eq(1).val(dataArr[0].f_AccountET.split(' ')[0]);
-
     });
 
     $('#product-list .btn-primary').on('click',function(){
@@ -659,8 +701,16 @@ $(document).ready(function(){
         var txt = $('#product-list .add-input').eq(2).val();
         var startDate = $('#product-list .add-input').eq(0).val();
         var endDate = $('#product-list .add-input').eq(1).val();
+        var theState = 1;
 
         console.log(dataArr[0]);
+        for(var i=0; i<dataArr.length; i++){
+            var state = dataArr[i].f_PayState;
+            if(state == 1 || state == 2){
+                theState = 0;
+                break;
+            }
+        }
 
         $.ajax({
             type: 'post',
@@ -672,8 +722,8 @@ $(document).ready(function(){
                 "f_AccountName": txt,
                 "f_AccountST": startDate,
                 "f_AccountET": endDate,
-                "f_AccountUserID": "string",
-                "f_IsPayFinish": 0,
+                "f_AccountUserID": userName,
+                "f_IsPayFinish": theState,
                 "f_AccountWay": accountWay,
                 "f_IsFinanceFlow": 0,
                 "aboveQuotaChilds": dataArr,
@@ -737,10 +787,28 @@ $(document).ready(function(){
 
     })
 
+    //查看错误信息时
+    $('.openWrong').on('click',function(){
+        myAlter(theHint);
+    });
 
 });
+//点击确定时触发
+$(document).on('keydown',function(e){
+    var theEvent = window.event || e;
+    var code = theEvent.keyCode || theEvent.which;
 
+    if(code == 13){
+        $('.top-refer').click();
+        return false;
+    }
+});
 
+//存放错误信息
+var theHint;
+
+//表示是否存在问题
+var isWrong;
 
 //存放定额结算方式
 var accountWay;

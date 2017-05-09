@@ -19,6 +19,175 @@
 </head>
 <body>
 
+    <div class="row">
+    <div class="col-md-12">
+        <div class="out-content">
+            <div class="inner-content">
+                <div class="main-content">
+                    <!--左侧搜索部分-->
+                    <div class="main-content-left" style="width:350px;position:absolute;left:0;top:0;padding-left:25px;padding-right:15px">
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">查询条件</li>
+                        </ul>
+
+                        <div class="showCompany search-test-inner search-test-inner0 row" style="text-align:center;margin-bottom:20px;">
+
+                            <ul class="condition-query refer-unit-table" style="text-align:center">
+                                <li style="float:none;margin-right:0px;">
+                                    <label for="">单位名称：</label>
+                                    <select name="" id="" class="datatimeblock">
+                                        <option value="-1">全部</option>
+
+                                    </select>
+                                </li>
+
+
+                                <div class="clearfix"></div>
+                            </ul>
+
+                            <h4 style="margin-bottom:15px">待选结算周期列表
+
+                                <button class="top-btn choose-period" data-toggle="modal" data-target="#choose-building" style="margin-left:18px;margin-right:8px;">查询</button>
+
+                            </h4>
+                            <!-- 搜索框结构 -->
+                            <div class="main-content-table" style="overflow: auto;width:100%;">
+                                <table class="table table-striped" id="dateTables0">
+                                    <thead>
+
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!--右侧查询部分-->
+                    <div class="main-content-right"  style="margin-left:350px;">
+
+
+                        <ul class="main-content-header">
+                            <li class="main-content-header-lists0">单位纵向比较列表</li>
+                        </ul>
+
+                        <div class="main-content-table" style="overflow: auto;width:100%;">
+                            <table class="table table-striped" id="dateTables1" style="">
+                                <thead>
+
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!--某二级单位财务登记 查看详情弹窗-->
+    <div class='modal fade' id='show-details1' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='margin:100px auto;min-width:850px;'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">用能信息详情</div>
+                    <div class="row" style="margin-bottom:20px;">
+                        <div class="wrap" style="margin-top:10px">
+                            <div class="tabs2 tabs">
+                                <a href="#" hidefocus="true" class="active">电</a>
+                                <a href="#" hidefocus="true">水</a>
+                                <a href="#" hidefocus="true">气</a>
+                            </div>
+                            <div class="swiper-container" style="min-height:400px;padding-top:20px;">
+                                <!--定额列表-->
+                                <div class="ament-data" style="margin-left:0px;margin-right:30px;">
+                                    <b>用电单价：</b>
+                                    <span>电表11</span>
+                                </div>
+
+                                <div class="ament-data" style="margin-right:30px;">
+                                    <b>定额量：</b>
+                                    <span>电</span>
+                                </div>
+
+                                <div class="ament-data">
+                                    <b>用能量：</b>
+                                    <span>累加</span>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                        <label for="" class="" style="">特殊加减用能量：</label>
+
+                                        <div class="add-input-block"  style="background-color:rgb(235, 235, 228)">
+                                            <input type="text" class="add-input smallEnergy" value="" disabled="disabled">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-sm-12 col-xs-12 inner-input add-sign">
+                                        <label for="" class="" style="">实际用能量：</label>
+                                        <div class="add-input-block" style="background-color:rgb(235, 235, 228)">
+                                            <input type="text" class="add-input actualEnergy" value="" disabled="disabled">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-lg-10 col-sm-12 col-xs-12 inner-input">
+                                        <label for="" class="" style="">备注：</label>
+
+                                        <div class="add-input-block" style="width:70%;background-color:rgb(235, 235, 228)">
+                                            <textarea name="yj" cols="40" rows="3" style="resize:none;width:100%;height:60px" class="add-input remarks" maxlength="100" disabled="disabled"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="ament-data" style="margin-left:0px;margin-right:30px;">
+                                    <b>超额用能量：</b>
+                                    <span>电表11</span>
+                                </div>
+
+                                <div class="ament-data" style="margin-right:30px;">
+                                    <b>应缴费用：</b>
+                                    <span>电</span>
+                                </div>
+
+                                <div class="col-sm-12 col-xs-12 quota-data-bottom" style="">
+
+                                    <table class="table table-striped" id="dateTables2">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--自定义弹窗-->
     <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
         <div class='modal-dialog'style='max-width:700px;margin:150px auto'>
@@ -37,13 +206,13 @@
     </div>
 
 
-
     <!--loading图-->
     <div class='modal fade' id='theLoading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
         <div class='modal-dialog'style='width:92px;height:124px;margin:15% auto;background:url("img/timg1.gif") no-repeat center center;background-size:80px 80px;background-color:none'>
 
         </div>
     </div>
+
     <script src="js/lib/jquery-3.0.0.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/jquery.dataTables.min.js"></script>
