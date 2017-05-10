@@ -116,15 +116,26 @@ $(document).ready(function(){
     dataArr = [];
 
     //查寻指定日期下的超额用能列表
-    $('.top-refer').on('click',function(){
+    $('.main-content .condition-query .top-refer').on('click',function(){
+
+
+        console.log('ok');
 
         dataArr = [];
         var txt1 = $('.refer-unit-table .startDate').val();
         var txt2 = $('.refer-unit-table .endDate').val();
+        if(txt1 == '' || txt2 == ''){
+
+            myAlter('请正确输入时间段后进行查询');
+            return false;
+        }
+
+        $('#theLoading').modal('show');
+
         $.ajax({
             type: 'get',
             url: IP + "/AboveQuota/GetUnitAboveQuotas",
-            async: false,
+            async: true,
             timeout: theTimes,
             data:{
                 accountSTStr : txt1,
@@ -134,7 +145,7 @@ $(document).ready(function(){
                 unitVirtualID : -1
             },
             beforeSend: function () {
-                $('#theLoading').modal('show');
+
             },
 
             complete: function () {

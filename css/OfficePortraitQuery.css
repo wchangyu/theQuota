@@ -24,33 +24,44 @@ table .adjust-comment{
     border:1px solid #111 ;
     border-top:none;
 }
+table span {
+    display: block;
+    height: 21px;
+   line-height:21px;
+}
+font {
+    display: inline-block;
+    height: 16px;
+}
+
 span .pay-not1 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: red;
     margin-right: 5px;
-    margin-top: 3px;
+
 }
 
 span .pay-not2 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: green;
     margin-right: 5px;
-    margin-top: 3px;
+
+
 }
 span .pay-not0 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: black;
     margin-right: 5px;
-    margin-top: 3px;
+
 }
 
 /**查看详情弹窗*!*/
@@ -85,6 +96,7 @@ span .pay-not0 {
 }
 #show-details1 .inner-input {
     margin-left: 0px;
+    margin-bottom:8px;
 }
 #dateTables2_info{
     display: none;

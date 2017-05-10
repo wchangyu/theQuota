@@ -24,10 +24,20 @@ table .adjust-comment{
     border:1px solid #111 ;
     border-top:none;
 }
+table span {
+    display: block;
+    height: 21px;
+    vertical-align: middle;
+}
+font {
+    display: inline-block;
+    height: 16px;
+}
+
 span .pay-not1 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: red;
     margin-right: 5px;
@@ -36,8 +46,8 @@ span .pay-not1 {
 
 span .pay-not2 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: green;
     margin-right: 5px;
@@ -45,8 +55,8 @@ span .pay-not2 {
 }
 span .pay-not0 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: black;
     margin-right: 5px;

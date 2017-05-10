@@ -152,6 +152,7 @@ $(document).ready(function(){
                 seekArr.push(parseInt(dom.eq(i).children().eq(1).html()));
             }
         };
+
        console.log(seekArr);
 
         if(seekArr.length == 0){
@@ -226,6 +227,21 @@ $(document).ready(function(){
             myAlter('当前无数据，无法导出');
             return false;
         }
+        var postString = '';
+        for(var i=0; i<seekArr.length; i++){
+            var postID = parseInt(seekArr[i]);
+
+
+            if(i == seekArr.length -1 ){
+                postString += postID;
+            }else{
+                postString += postID + ',';
+            }
+        }
+        //
+        console.log(postString);
+
+
 
         $.ajax({
             type: 'get',
@@ -233,8 +249,7 @@ $(document).ready(function(){
             async: false,
             timeout: theTimes,
             data:{
-                aboveQuotaMainIDs : seekArr
-
+                aboveQuotaMainIDs: postString
             },
             beforeSend: function () {
                 $('#theLoading').modal('show');
@@ -252,7 +267,7 @@ $(document).ready(function(){
                     return false;
                 };
 
-                window.open(IP + "/AboveQuota/GetAboveQuotaInsideReport?aboveQuotaMainIDs="+ seekArr+"");
+                window.open(IP + "/AboveQuota/GetAboveQuotaInsideReport?aboveQuotaMainIDs="+ postString+"");
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -276,13 +291,23 @@ $(document).ready(function(){
             return false;
         }
 
+        var postString = '';
+
+        $(seekArr).each(function(i,o){
+            if(i == seekArr.length -1){
+                postString += o;
+            }else{
+                postString += o + ','
+            }
+        });
+
         $.ajax({
             type: 'get',
             url: IP + "/AboveQuota/GetAboveQuotaFinanceReport",
             async: false,
             timeout: theTimes,
             data:{
-                aboveQuotaMainIDs : seekArr
+                aboveQuotaMainIDs : postString
 
             },
             beforeSend: function () {
@@ -301,7 +326,7 @@ $(document).ready(function(){
                     return false;
                 };
 
-                window.open(IP + "/AboveQuota/GetAboveQuotaFinanceReport?aboveQuotaMainIDs="+ seekArr+"");
+                window.open(IP + "/AboveQuota/GetAboveQuotaFinanceReport?aboveQuotaMainIDs="+ postString+"");
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

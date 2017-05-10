@@ -279,3 +279,22 @@ b{
     outline: none;
     margin: 0 5px;
 }
+
+td span b{
+    position:absolute;
+    top: 0;
+    left:20%;
+    margin-top:3px !important;
+    margin-right:0 !important;
+}
+td span font{
+    margin-left:10px;
+}
+td span{
+    position:relative;
+    width:120px !important;
+    margin:0 auto;
+}
+table td{
+    vertical-align: middle !important;
+}

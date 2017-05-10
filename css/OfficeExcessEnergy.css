@@ -29,6 +29,7 @@
 }
 #show-details .inner-input {
     margin-left: 0px;
+    margin-bottom:8px;
 }
 
 #show-details1 .inner-input label {
@@ -39,36 +40,49 @@
 }
 #show-details1 .inner-input {
     margin-left: 0px;
+    margin-bottom:8px;
 }
 
+
 /*缴费状态前面的标识*/
+
+table span {
+    display: block;
+    height: 21px;
+    vertical-align: middle;
+}
+font {
+    display: inline-block;
+    height: 16px;
+}
+
 span .pay-not1 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background: red;
     margin-right: 5px;
-    margin-top: 3px;
+    margin-top: 5px;
 }
 
 span .pay-not2 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background: green;
     margin-right: 5px;
-    margin-top: 3px;
+    margin-top: 5px;
 }
 span .pay-not0 {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background: black;
     margin-right: 5px;
-    margin-top: 3px;
+    margin-top: 5px;
 }
 #transfer-register .inner-input{
     margin-left:0px !important;
