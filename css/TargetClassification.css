@@ -6,7 +6,9 @@ body,html,div,dl,dt,dd,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea,p
 li{
     list-style-type: none;
 }
-
+body {
+    padding-right: 0 !important;
+}
 /*外层包裹div*/
 .out-content{
     width: 100%;

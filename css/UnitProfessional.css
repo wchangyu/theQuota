@@ -171,3 +171,6 @@ table th,td{
     filter: alpha(opacity=30);
     opacity: 0.3 !important;
 }
+body {
+    padding-right: 0 !important;
+}

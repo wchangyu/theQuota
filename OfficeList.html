@@ -12,6 +12,8 @@
     <link href="./admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="./css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="css/lib/lanrenzhijia.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-datepicker.css">
+    <link rel="stylesheet" type="text/css" href="css/lib/bootstrap-datepicker.standalone.css">
     <link rel="stylesheet" href="css/OfficeList.css">
 </head>
 <body >
@@ -88,7 +90,7 @@
     </div>
     <!--新增二级单位弹窗-->
     <div class="modal fade " id="add-unit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog add-window" style="min-width:930px;">
+        <div class="modal-dialog add-window" style="min-width:1094px;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -897,42 +899,10 @@
         </div>
     </div>
 
-    <!--单位注销弹窗2-->
-    <div class='modal fade' id='myModal1' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:30%;margin:50px auto'>
-            <div class='modal-content'>
-                <div class='modal-header'>
-                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">此功能暂未开放</div>
-                    <!--<div class="ament-data"><b>仪表名称：</b>-->
-                        <!--<span>*********表</span>-->
-                    <!--</div>-->
-                    <!--<div class="main-content-table" style="padding-left:10px;width:80%">-->
-                        <!--<table class="table table-striped" id="dateTables6">-->
-                            <!--<thead>-->
-                                <!--<td>二级单位</td><td>公摊比例</td>-->
-                            <!--</thead>-->
-                            <!--<tbody>-->
-                                <!--<tr>-->
-                                    <!--<td>水</td><td>20t</td>-->
-                                <!--</tr>-->
-                                <!--<tr>-->
-                                    <!--<td>电</td><td>30kw</td>-->
-                                <!--</tr>-->
-                            <!--</tbody>-->
-                        <!--</table>-->
-                    <!--</div>-->
-                    <div class='modal-footer' style="border:none">
-                        <!--<button type='button' class='btn btn-primary top-btn'>提交更改</button>-->
-                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!--手工调整操作弹窗-->
     <div class='modal fade' id='adjust-deploy' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:40%;margin:5% auto;min-width:650px;'>
+        <div class='modal-dialog'style='width:40%;margin:5% auto;min-width:729px;'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
@@ -1507,11 +1477,11 @@
 
     <!--删除人员类别弹窗-->
     <div class='modal fade' id='remove-people' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+        <div class='modal-dialog'style='width:600px;margin:15% auto'>
             <div class='modal-content'>
                 <div class='modal-header'>
                     <h3 style="margin-bottom:20px">提示</h3>
-                    <p style="font-size:16px">真的要删除数据 <b></b> 吗？</p>
+                    <p style="font-size:20px">真的要删除数据 <b style="color:red"></b> 吗？</p>
                     <p style="margin-top:10px;color:red"><span></span></p>
                     <div class='modal-footer' style="border:none">
                         <button type='button' class='btn btn-primary top-btn'>确定</button>
@@ -1539,12 +1509,224 @@
         </div>
     </div>
 
-    <!--自定义弹窗-->
-    <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-        <div class='modal-dialog'style='width:300px;margin:15% auto'>
+    <!--单位注销中注销时间弹窗-->
+    <div class='modal fade' id='logout-time' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:30%;margin:100px auto;min-width:600px;'>
             <div class='modal-content'>
                 <div class='modal-header'>
-                    <h3 style="margin-bottom:18px">提示</h3>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px">二级单位注销</div>
+                    <div class="row"  style=" margin-right: 0;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="height:250px">
+                            <div class="add-deploy" style="border:none;margin-top:0;height:230px">
+                                <form action="" method="get" class="deploy-form" style="margin-bottom:20px;padding-left:0px;">
+
+
+                                    <div class="row">
+
+                                        <div class="col-lg-12  col-sm-12 col-xs-12 inner-input add-sign" style="margin-bottom:0px">
+                                            <label for="" class="input-label">注销日期：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input chooseDate type-date" value="" placeholder="选择时间" readonly="readonly">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="margin-right:0px">注销原因：</label>
+
+                                            <div class="add-input-block" style="width:70%">
+                                                <textarea name="yj" cols="40" rows="2" style="resize:none;width:90%;height:100px;" maxlength="200" class="add-input"></textarea>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--确定是否进行注销弹窗-->
+    <div class='modal fade' id='logout-sure' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:600px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">提示</h3>
+                    <p style="font-size:16px">二级单位 <b style="color:red"></b> 已结算，确定继续注销吗？</p>
+                    <p style="margin-top:10px;color:red"><span></span></p>
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--单位注销中的设备抄表弹窗-->
+    <div class='modal fade' id='logout-reading' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:1300px;margin:50px auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px;">二级单位注销计量设备抄表</div>
+                    <!--展示表格-->
+                    <div class="row">
+
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="height:550px">
+                            <div class="add-deploy" style="border:none;margin-top:0;min-height:310px">
+                                <form action="" method="get" class="deploy-form" style="margin-bottom:20px;padding-left:20px;">
+
+                                    <div class="row" style="margin-bottom:10px;">
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;">注销日期：</label>
+
+                                            <div class="add-input-block" style="background-color: rgb(235, 235, 228);">
+                                                <input type="text" class="add-input startDates" value="" disabled="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;">结算名称：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </form>
+
+                                <!--展示表格-->
+                                <div class="main-content-table" style="height:auto">
+                                    <h3 class="table-heads" style="text-align:center;margin-bottom:10px;">二级单位计量设备列表</h3>
+                                    <table class="table table-striped" id="dateTables-log0">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--单位注销中的公摊比例弹窗-->
+    <div class='modal fade' id='logout-share' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:1300px;margin:50px auto;'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                    <div class="add-title" style="font-size:24px;line-height:40px;padding:10px;margin-bottom:20px;">二级单位注销补充公摊比例</div>
+                    <!--展示表格-->
+                    <div class="row">
+
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottom-div" style="height:650px">
+                            <div class="add-deploy" style="border:none;margin-top:0;height: auto">
+                                <form action="" method="get" class="deploy-form" style="margin-bottom:20px;padding-left:20px;">
+
+                                    <div class="row" style="margin-bottom:10px;">
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;">注销日期：</label>
+
+                                            <div class="add-input-block" style="background-color: rgb(235, 235, 228);">
+                                                <input type="text" class="add-input startDates" value="" disabled="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-sm-12 col-xs-12 inner-input">
+                                            <label for="" class="input-label" style="width:135px;">结算名称：</label>
+
+                                            <div class="add-input-block">
+                                                <input type="text" class="add-input" value="">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </form>
+
+                                <!--展示表格-->
+                                <div class="main-content-table" style="height:auto">
+                                    <h3 class="table-heads" style="text-align:center;margin-bottom:10px;">二级单位计量设备列表</h3>
+                                    <table class="table table-striped" id="dateTables-log1">
+                                        <thead>
+
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='modal-footer'>
+                        <button type='button' class='btn btn-primary top-btn'>提交更改</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--是否确定注销二级单位弹窗-->
+    <div class='modal fade' id='present-logout' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:560px;margin:100px auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:20px">提示</h3>
+                    <p style="font-size:18px">请在核对所有信息无误后点击确定进行注销操作。 <br/> <span style="color:red;font-size:14px"></span></p>
+                    <div class='modal-footer' style="border:none">
+                        <button type='button' class='btn btn-primary top-btn'>确定</button>
+                        <button type='button' class='btn btn-default' data-dismiss='modal'>取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--自定义弹窗-->
+    <div class='modal fade' id='my-alert' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+        <div class='modal-dialog'style='width:650px;margin:15% auto'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <h3 style="margin-bottom:18px;">提示</h3>
                     <p style="font-size:20px"> <b style="color:red"></b> </p>
 
                     <div class='modal-footer' style="border:none">
@@ -1561,6 +1743,7 @@
 
         </div>
     </div>
+
     <script src="js/lib/jquery-3.0.0.min.js"></script>
     <script src="js/lib/bootstrap.min.js"></script>
     <script src="js/lib/jquery.dataTables.min.js"></script>
@@ -1569,6 +1752,7 @@
     <script src="./button/jszip.min.js"></script>
     <script src="js/lib/vfs_fonts.js"></script>
     <script src="./button/buttons.html5.min.js"></script>
+    <script src="js/lib/bootstrap-datepicker.js"></script>
     <script src="./js/commonIP.js"></script>
     <script src="js/OfficeList.js"></script>
 

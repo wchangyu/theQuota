@@ -171,6 +171,17 @@ function getQuotaState(num){
     }
 }
 
+//获取子账户表示
+function getChildState(num){
+    if(num == 0){
+        return "累加"
+    }else if(num == 1){
+        return '累减'
+    }else if(num == 2){
+        return '公摊'
+    }
+}
+
 //自定义弹窗
 function myAlter(string){
     $('#my-alert').modal('show');

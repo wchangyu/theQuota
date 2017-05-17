@@ -6,6 +6,9 @@ body,html,div,dl,dt,dd,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,input,textarea,p
 li{
     list-style-type: none;
 }
+body {
+    padding-right: 0 !important;
+}
 
 /*外层包裹div*/
 .out-content{
@@ -333,7 +336,7 @@ label {
     margin-left:10px;
 }
 #add-unit .dataTables_scroll{
-    width:80%;
+    width:82%;
    margin:0 auto;
 
 }
@@ -483,4 +486,64 @@ label {
 .modal-backdrop.in {
     filter: alpha(opacity=30);
     opacity: 0.3 !important;
+}
+#dateTables1-1{
+    width:691px !important;
+}
+#dateTables11-1{
+    width:691px !important;
+}
+
+/*选择日期的input框的样式*/
+.chooseDate {
+    cursor: pointer;
+}
+.chooseDate {
+    background: url(../img/times.png) no-repeat 160px center;
+    background-size: auto 80%;
+}
+#dateTables-log0_info,#dateTables-log1_info{
+    display: none;
+}
+
+#dateTables-log0 td,th{
+    font-size:14px;
+}
+#dateTables-log0 td{
+    min-height:45px !important;
+}
+.small-picture {
+    background: url(../img/smallTimes.png) no-repeat 140px center;
+    background-size: auto 70%;
+}
+td label{
+    width:auto !important;
+}
+td input{
+    height:28px;
+    border-radius: 3px;
+}
+.hidden-table{
+    margin-bottom:0px !important;
+    border:1px solid;
+    border-color: rgb(169, 169, 169);
+
+}
+.hidden-table td{
+    border:1px solid ;
+    border-color: rgb(169, 169, 169);
+    background:#ddd;
+}
+
+#dateTables2{
+    width:820px !important;
+}
+#dateTables-log1 .shown td,th{
+    height:40px;
+}
+#dateTables11{
+    width:820px !important;
+}
+#dateTables9{
+    width:820px !important;
 }

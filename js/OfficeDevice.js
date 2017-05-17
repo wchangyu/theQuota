@@ -245,7 +245,7 @@ $(document).ready(function(){
         changeColor();
     });
 
-    changeColor()
+    changeColor();
 
     //头部搜索功能
 
@@ -642,7 +642,7 @@ $(document).ready(function(){
         });
 
         $('#present-message .btn-primary').off('click');
-        $('#present-message .btn-primary').on('click',function(){
+        $('#present-message .btn-primary').one('click',function(){
 
             $.ajax({
                 type: 'post',
@@ -801,7 +801,7 @@ $(document).ready(function(){
         });
 
         $('#present-message .btn-primary').off('click');
-        $('#present-message .btn-primary').on('click',function(){
+        $('#present-message .btn-primary').one('click',function(){
             $.ajax({
                 type: 'post',
                 url: IP + "/UnitMeter/PostAddOrSubtractMeter",
@@ -1139,13 +1139,12 @@ $(document).ready(function(){
 
 
         });
-
         $('#present-message .btn-primary').off('click');
-        $('#present-message .btn-primary').on('click',function(){
+        $('#present-message .btn-primary').one('click',function(){
+
             $.ajax({
                 type: 'post',
                 url: IP + "/UnitMeter/PostApportionMeter",
-                async: false,
                 timeout: theTimes,
                 data:{
                     "pK_Unit": id,
@@ -1162,12 +1161,13 @@ $(document).ready(function(){
                 },
                 success: function (data) {
                     console.log(data);
-                    $('#accum-shared').modal('hide');
                     $('#present-message').modal('hide');
                     if(data.validateNumber == 1){
-                        myAlter('参数错误')
+                        myAlter('参数错误');
+                        return false;
                     }else if(data.validateNumber == 3){
-                        myAlter('执行失败')
+                        myAlter('执行失败');
+                        return false;
                     }else if(data.validateNumber == 5){
                         var html='';
                         var arr = data.meterNumbers;
@@ -1183,8 +1183,10 @@ $(document).ready(function(){
 
                         }
                         myAlter(html + ' 公摊表分配比例超额');
+                        return false;
 
                     }
+                    $('#accum-shared').modal('hide');
                     _table = $('#dateTables').dataTable();
                     _table.fnClearTable();
                     alarmHistory(importantId);
@@ -1194,7 +1196,7 @@ $(document).ready(function(){
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     $('#theLoading').modal('hide');
                     $('#accum-shared').modal('hide');
-                    $('#present-message').modal('hide');
+
                     console.log(textStatus);
 
                     if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
@@ -1371,7 +1373,12 @@ $(document).ready(function(){
                         render:function(data, type, row, meta){
                             if(row.f_ChildAccount == 1){
                                 if(row.cancelMeterSubtract != null){
-                                    return '<span>已绑定累加表（'+ row.cancelMeterSubtract.f_UnitName +'）</span>';
+                                    if(row.cancelMeterSubtract.f_ChildAccount == 0){
+                                        return '<span>已绑定累加表（'+ row.cancelMeterSubtract.f_UnitName +'）</span>';
+                                    }else if(row.cancelMeterSubtract.f_ChildAccount == 2){
+                                        return '<span>已绑定公摊表（'+ row.cancelMeterSubtract.f_UnitName +'）</span>';
+                                    }
+
                                 }else{
                                     return '无'
                                 }
@@ -1451,7 +1458,6 @@ $(document).ready(function(){
             $.ajax({
                 type: 'get',
                 url: IP + "/UnitMeter/GetCancelMeterModels",
-                async: false,
                 timeout: theTimes,
                 data:{
                     "meterGet.pK_Unit": importantId,
@@ -1494,6 +1500,20 @@ $(document).ready(function(){
                             format: 'yyyy-mm-dd'
                         }
                     );
+                    $('.chooseDate').on('focus',function(){
+                        var that = $(this);
+                        setTimeout(function(){
+                            $('.day').one('click',function(){
+                                console.log('ok');
+                                that.blur();
+                                $('.datepicker').css({
+                                    display:'none'
+                                })
+
+                            });
+                        },100)
+
+                    });
                     tableChanges();
 
                 },
@@ -1513,7 +1533,7 @@ $(document).ready(function(){
             $('#cancel-meter .btn-primary').on('click',function(){
 
                 //判断输入是否正确
-                if(!checkedNull1('#cancel-meter') || !CompareDate1('#cancel-meter') || !checkedEndNum('#cancel-meter') || !checkedCycleNum('#cancel-meter')){
+                if(!checkedNull1('#cancel-meter') || !CompareDate1('#cancel-meter') || !checkedEndNum('#cancel-meter') || !checkedCycleNum('#cancel-meter') || !checkedShare('#cancel-meter')){
                     console.log('ii');
                     return false;
                 };
@@ -1525,7 +1545,7 @@ $(document).ready(function(){
 
                 console.log(postData);
                 $('#present-logout .btn-primary').off('click');
-                $('#present-logout .btn-primary').on('click',function(){
+                $('#present-logout .btn-primary').one('click',function(){
                     $.ajax({
                         type: 'post',
                         url: IP + "/UnitMeter/PostCancelMeter",
@@ -2650,14 +2670,18 @@ function tableChange(){
 function tableChanges(){
     $('.wait-push0').on('blur',function(){
         var id = $(this).parents('tr').find('.theHidden').html();
-        var txt = $(this).val();
+        var that = $(this);
+        setTimeout(function(){
+            var txt = that.val();
+            console.log('ok');
+            for(var i=0; i<logoutArr.length; i++){
+                if(id == logoutArr[i].pK_Meter){
 
-        for(var i=0; i<logoutArr.length; i++){
-            if(id == logoutArr[i].pK_Meter){
+                    logoutArr[i].meterEndDate = txt;
 
-                logoutArr[i].meterEndDate = txt;
+                }
             }
-        }
+        },100);
     });
 
     $('.wait-push1').on('blur',function(){
@@ -2755,7 +2779,6 @@ function tableChanges(){
 
         var index = parseInt($(this).index() - 1) / 2;
         var txt = $(this).val();
-        console.log(index);
 
         if(isNaN(txt) || txt < 0 || txt == 0 || txt > 100){
             myAlter('公摊比例输入错误');
@@ -2777,9 +2800,9 @@ function tableChanges(){
                     }
                     console.log(num);
                     if(num > 100){
-                        myAlter('公摊比例总和不能大于100，请重新填写');
-                        $(this).val('');
-                        getFocus1($(this).parents('tr').find('.ratio').eq(0));
+                        //myAlter('公摊比例总和不能大于100，请重新填写');
+                        //$(this).val('');
+                        //getFocus1($(this).parents('tr').find('.ratio').eq(0));
                         return false;
                     }
 
@@ -3478,6 +3501,45 @@ function changeColor(){
             color:'#aaa'
         })
     }
+}
+
+//检验公摊比例
+function checkedShare(dom){
+
+    var num = $(dom).find('.ratio').length;
+
+
+
+    for(var i=0; i<num; i++){
+        var txt = $(dom).find('.ratio').val();
+        if(isNaN(txt) || txt < 0 || txt == 0 || txt > 100){
+            myAlter('公摊比例输入错误');
+            getFocus1($(dom).find('.ratio').eq(i));
+            return false;
+        }
+    }
+
+    var length = $(dom).find('tr:has(.ratio)').length;
+
+    console.log(length);
+
+    for(var j=0; j<length; j++){
+        var total = 0;
+        var shareNum = $(dom).find('tr:has(.ratio)').eq(j).find('.ratio').length;
+        console.log(shareNum);
+        for(var k=0; k<shareNum; k++){
+            total += parseInt($(dom).find('tr:has(.ratio)').eq(j).find('.ratio').eq(k).val());
+            console.log(total);
+            if(total > 100){
+                myAlter('公摊比例总和不能大于100%');
+                getFocus1($(dom).find('tr:has(.ratio)').eq(j).find('.ratio').eq(k));
+                return false;
+            }
+        }
+
+    }
+
+    return true;
 }
 
 

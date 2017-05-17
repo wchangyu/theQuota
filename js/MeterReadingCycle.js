@@ -848,23 +848,29 @@ $('.chooseDate').on('blur',function(){
     var year = mydate.getFullYear();
     var month = (mydate.getMonth()+1);
 
-    var num1 = $(this).val().split('-')[0];
-    var num2 = $(this).val().split('-')[1];
-    if(num1 > year){
-        $('.datepicker').css({
-            display:'none'
-        })
-        myAlter('抄表月份大于当前日期，请重新填写');
-        getFocus1(this);
-        return false;
-    }else if(num1 == year && num2 > month){
-        $('.datepicker').css({
-            display:'none'
-        })
-        myAlter('抄表月份大于当前日期，请重新填写');
-        getFocus1(this);
-        return false;
-    }
+    var that = $(this);
+
+    setTimeout(function(){
+        var num1 = that.val().split('-')[0];
+        var num2 = that.val().split('-')[1];
+
+        if(num1 > year){
+            $('.datepicker').css({
+                display:'none'
+            })
+            myAlter('抄表月份大于当前日期，请重新填写');
+            getFocus1(this);
+            return false;
+        }else if(num1 == year && num2 > month){
+            $('.datepicker').css({
+                display:'none'
+            })
+            myAlter('抄表月份大于当前日期，请重新填写');
+            getFocus1(this);
+            return false;
+        }
+    },200)
+
 });
 
 //获取后台数据

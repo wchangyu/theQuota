@@ -2598,7 +2598,755 @@ $(document).ready(function(){
     });
 
         // Event listener to the two range filtering inputs to redraw on input
-})
+
+    //二级单位注销
+
+
+
+    var tableLog0 = $('#dateTables-log0').DataTable({
+        "autoWidth": false,  //用来启用或禁用自动列的宽度计算
+        //是否分页
+        "destroy": false,//还原初始化了的datatable
+        "paging":false,
+        "ordering": false,
+        'searching':false,
+        "sScrollY": '360px',
+        "bPaginate": false,
+        "scrollCollapse": true,
+        'language': {
+            'emptyTable': '没有数据',
+            'loadingRecords': '加载中...',
+            'processing': '查询中...',
+            'lengthMenu': '每页 _MENU_ 件',
+            'zeroRecords': '没有数据',
+            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+            'search':'搜索:',
+            'paginate': {
+                'first':      '第一页',
+                'last':       '最后一页',
+                'next':       '下一页',
+                'previous':   '上一页'
+            },
+            'infoEmpty': ''
+        },
+        'buttons': [
+
+        ],
+        "dom":'B<"clear">lfrtip',
+        //数据源
+        'columns':[
+            {
+                title:'表名或表号',
+                data:'f_mtNumber'
+
+            },
+            {
+                title:'本行ID',
+                data:'pK_Meter',
+                class:'theHidden'
+
+            },
+            {
+                title:'能耗类型',
+                data:'f_mtEnergyType',
+                render:function(data, type, row, meta){
+                    var energyName = getEnergyType(data);
+                    return energyName;
+                }
+            },
+            {
+                title:'仪表状态',
+                data:'f_mtOnline',
+                render:function(data, type, row, meta){
+                    if(data == 0){
+                        return '手抄表';
+                    }else if(data == 1){
+                        return '在线表'
+                    }
+
+                }
+            },
+            {
+                title:'子账户标识',
+                data:'f_ChildAccount',
+                render:function(data, type, full, meta){
+                    if(data == 0){
+                        return '累加'
+                    }else if(data == 1){
+                        return '累减'
+                    }else if(data ==2){
+                        return '公摊'
+                    }
+
+                }
+
+            },
+            {
+                title:'抄表起始日期',
+                data:'f_ReadET',
+                render:function(data, type, row, meta){
+                    if(row.f_mtOnline == 1){
+                        return '<span class="">'+data+'</span> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<span class="startDate">'+data+'</span> '
+                    }
+
+                }
+
+
+
+            },
+            {
+                title:'抄表起数',
+                data:'f_ReadEndNum',
+                render:function(data, type, row, meta){
+
+                    return '<span class="startNum">'+data+'</span> '
+                }
+
+            },
+            {
+                title:'<span><img src="img/asterisk.png"/></span>抄表结束日期',
+                data:'meterEndDate',
+                class:'adjust-comment',
+                render:function(data, type, row, meta){
+                    if(row.f_mtOnline == 1){
+                        return '<input style="width:160px;" value="'+data+'" disabled="true"> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<input style="width:160px;" class="chooseDate wait-push0 wait-push small-picture endDates" txt="抄表结束日期" value=""> '
+                    }
+                }
+            },
+            {
+                title:'<span><img src="img/asterisk.png"/></span>设备终止读数',
+                data:'meterEndNumber',
+                class:'adjust-comment',
+                render:function(data, type, row, meta){
+                    if(row.f_mtOnline == 1){
+                        return '<input style="width:85px" value="'+data+'" disabled="true"> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<input  style="width:85px" txt="设备终止读数" class="wait-push1 wait-push" value=""> '
+                    }
+                }
+
+            },
+            {
+                title:'<img src="img/asterisk.png"/>圈数',
+                data:'f_CycleNum',
+                class:'adjust-comment',
+                render:function(data, type, row, meta){
+                    if(row.f_mtOnline == 1){
+                        return '<input style="width:45px" value="'+data+'" disabled="true"> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<input  style="width:45px" txt="圈数" class="wait-push2 wait-push" value="0"> '
+                    }
+                }
+
+            },
+            {
+                title:'<img src="img/asterisk.png"/>抄表人',
+                data:'f_ReadPerson',
+                class:'adjust-comment',
+                render:function(data, type, row, meta){
+                    if(row.f_mtOnline == 1){
+                        return '<input style="width:75px" value="" disabled="true"> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<input  style="width:75px" txt="抄表人" class="wait-push3 wait-push" value=""> '
+                    }
+                }
+
+            },
+            {
+                title:'操作',
+                data:null,
+                render:function(data, type, row, meta){
+                    if(row.f_ChildAccount == 1){
+                        if(row.cancelMeterSubtract != null){
+                            return '<span>已绑定累加表（'+ row.cancelMeterSubtract.f_UnitName +'）</span>';
+                        }else{
+                            return '无'
+                        }
+
+                    }else if(row.f_ChildAccount == 0){
+                        if(row.cancelMeterSubtract != null){
+                            var id = 'unit-name'+ row.pK_Meter;
+
+                            return '  <input id="'+id+'" style="width:18px;height:19px;display:inline-block" value="" class="handle" type="checkbox"><br/><label for="'+id+'" style="margin-left:5px;">是否注销累减表<br />（'+ row.cancelMeterSubtract.f_UnitName+'）</label> ';
+                        }else{
+                            return '无'
+                        }
+
+                    }else if(row.f_ChildAccount == 2){
+                        var length = row.cancelMeterApportions.length;
+                        if(length != 0){
+                            var html = '';
+                            for(var i=0 ; i<length; i++){
+                                html+='<label for="unit-name" style="margin-right:5px;text-align:right">'+ row.cancelMeterApportions[i].f_UnitName+':</label><input type="text" txt="公摊比例" style="margin-bottom:4px;height:20px !important;width:45px" class="ratio wait-push" value="'+(row.cancelMeterApportions[i].f_EquallyShared) * 100 +'"><br />';
+                            }
+                            return html
+                        }else{
+                            return '无'
+                        }
+                    }
+                }
+
+            },
+            {
+                title:'量程',
+                data:'f_Range',
+                class:'theHidden',
+                render:function(data, type, row, meta){
+                    if(row.f_mtOnline == 1){
+                        return '<input style="width:85px"  value="'+data+'"> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<input  style="width:85px"   value="'+data+'" class="range"> '
+                    }
+                }
+
+            }
+        ]
+    });
+
+    var logoutID;
+
+    var theComments;
+
+    $('.condition-query .top-btn3').on('click',function(){
+        //判断是否已选中某个二级单位进行操作
+        var dom = $('.onFocus');
+        if(dom.length == 0){
+            myAlter('请选中一行数据进行操作');
+            return false;
+        }
+        var index = $(dom).index() + 1;
+
+         logoutID = dom.find('td').eq(1).html();
+
+        var unit = dom.find('td').eq(2).html();
+
+        //显示输入时间弹窗
+        $('#logout-time').modal('show');
+
+        //提交操作时
+        $('#logout-time .btn-primary').off('click');
+        $('#logout-time .btn-primary').on('click',function(){
+
+            //判断输入是否正确
+            if(!checkedNull('#logout-time') || !checkedDate('#logout-time')){
+                return false;
+            };
+
+            var logoutDate = $('#logout-time .type-date').val();
+
+            var logoutReason =  $('#logout-time textarea').val();
+
+            console.log(logoutDate);
+            $.ajax({
+                type: 'get',
+                url: IP + "/SecondUnit/IsShowMeterRead",
+                async: false,
+                timeout: theTimes,
+                data:{
+                    PK_Unit : logoutID,
+                    unitCancelTime : logoutDate,
+                    unitCancelComment : logoutReason
+                },
+                beforeSend: function () {
+
+                },
+
+                complete: function () {
+
+                },
+                success: function (data) {
+                    $('#theLoading').modal('hide');
+                    console.log(data);
+
+                    logoutObj = data;
+
+                    if(data.validateNumber == 1){
+                        myAlter('参数错误，请联系管理员');
+                        return false;
+                    }
+                    if(data.validateNumber == 3){
+                        myAlter('执行失败，请联系管理员');
+                        return false;
+                    }
+                    if(data.validateNumber == 9){
+                        $('#logout-time').modal('hide');
+                        $('#logout-sure').modal('show');
+                        $('#logout-sure p b').html(unit);
+                        theComments = logoutReason;
+                        return false;
+                    }
+                    if(data.validateNumber == 15){
+                        $('#logout-time').modal('hide');
+                        $('#logout-share').modal('show');
+                        return false;
+                    }
+                    if(data.validateNumber == 99){
+                        $('#logout-time').modal('hide');
+                        $('#logout-reading').modal('show');
+                        return false;
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    $('#theLoading').modal('hide');
+                    console.log(textStatus);
+
+                    if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                        ajaxTimeoutTest.abort();
+                        myAlter("超时");
+                    }
+                    myAlter("请求失败！");
+                }
+            })
+        });
+    });
+
+    //已结算弹窗
+    $('#logout-sure .btn-primary').on('click',function(){
+
+        var testData = {
+
+            PK_Unit: logoutID,
+            UnitCancelComment : theComments,
+            userID : userName
+        };
+
+        $.ajax({
+            type: 'post',
+            url: IP + "/SecondUnit/PostSecondUnitCancel",
+            timeout: theTimes,
+            data: JSON.stringify(testData),
+            beforeSend: function () {
+
+            },
+
+            complete: function () {
+
+            },
+            success: function (data) {
+                $('#theLoading').modal('hide');
+                $('#logout-sure').modal('hide');
+                console.log(data);
+
+                if(data == 3){
+                    myAlter('注销失败，请联系管理员！');
+                    return false;
+                }
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                $('#theLoading').modal('hide');
+                console.log(textStatus);
+
+                if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                    ajaxTimeoutTest.abort();
+                    myAlter("超时");
+                }
+                myAlter("请求失败！");
+            }
+        })
+    });
+
+
+    //未抄表弹窗
+    $('#logout-reading').on('shown.bs.modal', function (){
+
+        //获取计量设备列表
+        readArr = logoutObj.meterReads;
+
+        var date = logoutObj.unitCancelTime;
+
+        var index = $('.onFocus').index() + 1;
+
+        $('#logout-reading .startDates').val(date);
+
+
+        _table = $('#dateTables-log0').dataTable();
+        _table.fnClearTable();
+        setDatas(readArr);
+        hiddrenId();
+
+        tableChanges();
+
+        $('.chooseDate').datepicker(
+            {
+                language:  'zh-CN',
+                todayBtn: 1,
+                todayHighlight: 1,
+                format: 'yyyy-mm-dd'
+            }
+        );
+        $('.chooseDate').on('focus',function(){
+            var that = $(this);
+            setTimeout(function(){
+                $('.day').one('click',function(){
+                    console.log('ok');
+                    that.blur();
+                    $('.datepicker').css({
+                        display:'none'
+                    })
+
+                });
+            },100)
+
+        });
+
+
+
+        $('#logout-reading .btn-primary').off('click');
+        $('#logout-reading .btn-primary').on('click',function(){
+
+            //判断输入是否正确
+            if(!checkedNull('#logout-reading') || !checkedNull1('#logout-reading') || !CompareDate1('#logout-reading') || !checkedEndNum('#logout-reading') || !checkedCycleNum('#logout-reading') || !checkedShare('#logout-reading')){
+                console.log('ii');
+                return false;
+            };
+
+            console.log(readArr);
+
+            $('#present-logout').modal('show');
+            var postData = {};
+            postData.meterReads = readArr;
+            postData.pK_Unit = logoutID;
+            postData.userID = userName;
+            postData.unitCancelTime = logoutObj.unitCancelTime;
+            postData.unitCancelComment = logoutObj.unitCancelComment;
+            postData.unitCancelAccountName = $('#logout-reading .add-input').eq(1).val();
+
+            console.log(postData);
+            $('#present-logout .btn-primary').off('click');
+            $('#present-logout .btn-primary').on('click',function(){
+                $.ajax({
+                    type: 'post',
+                    url: IP + "/SecondUnit/PostUnitCancelMeterAccount",
+                    async: false,
+                    timeout: theTimes,
+                    data:postData,
+                    beforeSend: function () {
+
+                    },
+
+                    complete: function () {
+
+                    },
+                    success: function (data) {
+                        $('#theLoading').modal('hide');
+                        $('#present-logout').modal('hide');
+
+                        console.log(data);
+                        if(data.validateNumber == 5){
+                            var arr = data.f_mtNumberInfos;
+                            var html = '';
+                            for(var i=0; i<arr.length; i++){
+                                html += arr[i].key + '失败 <br /> 原因：' + arr[i].valueStr + '<br />'
+                            }
+                            myAlter(html);
+                            return false;
+                        }
+                        if(data.validateNumber == 1){
+                            myAlter('参数错误，请联系管理员');
+                            return false;
+                        }
+                        if(data.validateNumber == 3){
+                            myAlter('执行失败');
+                            return false;
+                        }
+                        $('#logout-reading').modal('hide');
+                        _table = $('#dateTables').dataTable();
+                        //_table.fnDraw();
+                        jumpNow();
+
+
+                        $('#dateTables tr').eq(index).addClass('onFocus');
+
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('#theLoading').modal('hide');
+                        $('#logout-reading').modal('hide');
+                        $('#present-logout').modal('hide');
+                        console.log(textStatus);
+
+                        if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                            ajaxTimeoutTest.abort();
+                            myAlter("超时");
+                        }
+                        myAlter("请求失败！");
+                    }
+                })
+            });
+
+        });
+    });
+
+    //已抄表弹窗
+    var allData = [];
+
+    var tableLog1 = $('#dateTables-log1').DataTable({
+        "autoWidth": false,  //用来启用或禁用自动列的宽度计算
+        //是否分页
+        "destroy": false,//还原初始化了的datatable
+        "paging":false,
+        "ordering": false,
+        'searching':false,
+        "sScrollY": '460px',
+        "bPaginate": false,
+        "scrollCollapse": true,
+        'language': {
+            'emptyTable': '没有数据',
+            'loadingRecords': '加载中...',
+            'processing': '查询中...',
+            'lengthMenu': '每页 _MENU_ 件',
+            'zeroRecords': '没有数据',
+            'info': '第 _PAGE_ 页 / 总 _PAGES_ 页',
+            'search':'搜索:',
+            'paginate': {
+                'first':      '第一页',
+                'last':       '最后一页',
+                'next':       '下一页',
+                'previous':   '上一页'
+            },
+            'infoEmpty': ''
+        },
+        'buttons': [
+
+        ],
+        "dom":'B<"clear">lfrtip',
+        //数据源
+        'columns':[
+            {
+                title:'表名或表号',
+                data:'f_mtNumber'
+
+            },
+            {
+                title:'本行ID',
+                data:'pK_Meter',
+                class:'theHidden'
+
+            },
+            {
+                title:'能耗类型',
+                data:'f_mtEnergyType',
+                render:function(data, type, row, meta){
+                    var energyName = getEnergyType(data);
+                    return energyName;
+                }
+            },
+            {
+                title:'计量设备状态',
+                data:'f_mtOnline',
+                render:function(data, type, row, meta){
+                    if(data == 0){
+                        return '手抄表';
+                    }else if(data == 1){
+                        return '在线表'
+                    }
+
+                }
+            },
+            {
+                title:'计量区域',
+                data:'f_MeasureArea'
+
+            },
+            {
+                title:'抄表止数',
+                data:'f_ReadEndNum'
+
+            },
+            {
+                title:'抄表结束日期',
+                data:'f_ReadET',
+                render:function(data, type, row, meta){
+                    if(row.f_mtOnline == 1){
+                        return '<span class="">'+data+'</span> '
+                    }else if(row.f_mtOnline == 0){
+                        return '<span class="startDate">'+data+'</span> '
+                    }
+
+                }
+
+            },
+            {
+                title:'操作',
+                "targets": -1,
+                "data": null,
+                'class':'theHidden',
+                "defaultContent": "<button class='btn btn-success details-control'>显示/隐藏详情</button>"
+            }
+        ]
+    });
+    //动态显示/隐藏表格中的内容
+
+
+    $('#logout-share').on('shown.bs.modal', function (){
+
+        //获取计量设备列表
+        readArr = logoutObj.unitEquallyShareds;
+
+        console.log(readArr);
+
+        var date = logoutObj.unitCancelTime;
+
+        var index = $('.onFocus').index() + 1;
+
+        $('#logout-share .startDates').val(date);
+
+
+        _table = $('#dateTables-log1').dataTable();
+        _table.fnClearTable();
+        setDatas(readArr);
+        hiddrenId();
+
+        tableChanges();
+
+        $('#dateTables-log1 tbody').off('click');
+
+        $('#dateTables-log1 tbody').on('click', 'td .details-control', function () {
+
+            var index = 0;
+
+            var showID = $(this).parents('tr').find('td').eq(1).html();
+
+            console.log(showID);
+
+            for(var i=0; i<readArr.length; i++){
+
+                if(showID == readArr[i].pK_Meter){
+
+                    index =  i;
+                    break;
+                }
+            }
+
+            console.log(index);
+            allData = readArr[index].unitEquallyShareds;
+
+            console.log(allData);
+            // ["","",index"","",""];
+            var tr = $(this).closest('tr');  //找到距离按钮最近的行tr;
+            var row =   tableLog1.row( tr );
+            //console.log(row.data())  //araming.json的第一行数据  object{"":"","":"","":""}
+            row.child( format(allData) ).show();
+            tr.addClass('shown');
+
+            //if ( row.child.isShown() ) {
+            //    row.child.hide();
+            //    tr.removeClass('shown');
+            //}
+            //else {
+            //    // Open this row
+            //    row.child( format(allData) ).show();
+            //    tr.addClass('shown');
+            //}
+        } );
+
+        console.log(readArr.length);
+
+        for(var i=0; i<readArr.length; i++){
+            $('#dateTables-log1 tbody .details-control').eq(i).click();
+        }
+
+        tableChange();
+
+        $('#logout-share .btn-primary').off('click');
+        $('#logout-share .btn-primary').on('click',function(){
+
+            //判断输入是否正确
+            if(!checkedNull('#logout-share') || !checkedNull1('#logout-share') || !checkedShare1('#logout-share')){
+                console.log('ii');
+                return false;
+            };
+
+            console.log(readArr);
+
+            $('#present-logout').modal('show');
+            var postData = {};
+            postData.unitCancelEquallyShareds = readArr;
+            postData.pK_Unit = logoutID;
+            postData.userID = userName;
+            postData.unitCancelTime = logoutObj.unitCancelTime;
+            postData.unitCancelComment = logoutObj.unitCancelComment;
+            postData.unitCancelAccountName = $('#logout-reading .add-input').eq(1).val();
+
+            console.log(postData);
+
+            $('#present-logout .btn-primary').off('click');
+            $('#present-logout .btn-primary').one('click',function(){
+                $.ajax({
+                    type: 'post',
+                    url: IP + "/SecondUnit/PostUnitCancelEquallyAccount",
+                    async: false,
+                    timeout: theTimes,
+                    data:postData,
+                    beforeSend: function () {
+
+                    },
+
+                    complete: function () {
+
+                    },
+                    success: function (data) {
+                        $('#theLoading').modal('hide');
+                        $('#present-logout').modal('hide');
+
+                        console.log(data);
+                        if(data.validateNumber == 5){
+                            var arr = data.f_mtNumberInfos;
+                            var html = '';
+                            for(var i=0; i<arr.length; i++){
+                                html += arr[i].key + '失败 <br /> 原因：' + arr[i].valueStr + '<br />'
+                            }
+                            myAlter(html);
+
+                        }
+                        if(data.validateNumber == 1){
+                            myAlter('参数错误，请联系管理员');
+                            return false;
+                        }
+                        if(data.validateNumber == 3){
+                            myAlter('执行失败');
+                            return false;
+                        }
+                        $('#logout-share').modal('hide');
+                        _table = $('#dateTables').dataTable();
+                        //_table.fnDraw();
+                        jumpNow();
+
+
+                        $('#dateTables tr').eq(index).addClass('onFocus');
+
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $('#theLoading').modal('hide');
+                        $('#logout-share').modal('hide');
+                        $('#present-logout').modal('hide');
+                        console.log(textStatus);
+
+                        if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
+                            ajaxTimeoutTest.abort();
+                            myAlter("超时");
+                        }
+                        myAlter("请求失败！");
+                    }
+                })
+            });
+
+        });
+
+
+    });
+});
+
+//存放基本信息
+var logoutObj = {};
+
+var readArr = [];
 
 //弹窗关闭时清空已输入过的信息
 $('.modal-header .close').on('click',function(){
@@ -2611,6 +3359,28 @@ $('.modal').modal({backdrop: 'static',  show:false,});
 $('#quota .btn-primary').on('click',function(){
     console.log('hello');
 });
+
+//动态显示/隐藏表格中的内容
+function format ( d ) {
+    var theader = '<table class="table hidden-table">' +
+        '<thead><tr><td>二级单位</td><td class="theHidden">ID</td><td>建档日期</td><td>建档起数</td><td><img src="img/asterisk.png"/>公摊比例(%)</td><td>变更原因</td></tr></thead>';
+    var theaders = '</table>';
+    var tbodyer = '<tbody>'
+    var tbodyers = '</tbody>';
+    var str = '';
+    for(var i=0;i< d.length;i++){
+        str += '<tr><td>' + d[i].f_UnitName +
+            '<td class="theHidden">' + d[i].pK_UnitMeter +
+            '</td><td>' + d[i].f_FilingDT +
+            '</td><td>' + d[i].f_FilingNumber +
+            '</td><td><input class="ratios wait-push" txt="公摊比例" style="border-radius: 5px;width:140px;" value="'+d[i].f_EquallyShared * 100 +' " />' +
+            '</td><td>' +
+            '<textarea name="yj"  cols="40" rows="2" style="resize:none;"  maxlength="100" class="logout-reason">'+
+            '</textarea></td></tr>'
+    }
+    return theader + tbodyer + str + tbodyers + theaders;
+}
+
 function addFocus(){
     var position = $('#add-unit .btn-primary').focus();
     console.log(position);
@@ -2649,6 +3419,7 @@ function alarmHistory(){
         txt2 = 0;
     }
     dataArr=[];
+    console.log(txt1);
     $.ajax({
         type:'get',
         url:IP + "/SecondUnit/GetSecondUnitByCondition",
@@ -3693,6 +4464,36 @@ function checkedText1(){
     return true;
 }
 
+function checkedNull(dom){
+    var checkNum = $(dom).find('.input-label').length;
+
+    for(var i=0; i< checkNum; i++){
+        if( $(dom).find('.input-label').eq(i).next().find('input').val() == ''){
+            var txt = $(dom).find('.input-label').eq(i).next().find('input').parent().prev().html().split('：')[0];
+
+            console.log(txt);
+            myAlter(txt + " 不能为空")
+            getFocus1($(dom).find('.input-label').eq(i).next().find('input'));
+            return false;
+        };
+        if($(dom).find('.input-label').eq(i).next().find('.add-input-select').find('span').html() == ''){
+            var txt = $(dom).children('.input-label').eq(i).html().split('：')[0];
+            $('#check-text').modal('show');
+            myAlter(txt + " 不能为空")
+            return false;
+        };
+        if( $(dom).find('.input-label').eq(i).next().find('textarea').val() == ''){
+            var txt = $(dom).find('.input-label').eq(i).next().find('textarea').parent().prev().html().split('：')[0];
+
+            console.log(txt);
+            myAlter(txt + " 不能为空")
+            getFocus1($(dom).find('.input-label').eq(i).next().find('textarea'));
+            return false;
+        };
+    }
+    return true;
+}
+
 function checkedText11(){
     var num = $('#alter-unit .input-label').length;
     console.log(num);
@@ -3750,6 +4551,397 @@ function checkedPhone(dom){
     return true;
 }
 
+//判断输入日期是否大于当前日期
+function  checkedDate(dom){
+
+    var d1 = $(dom).find('.type-date').val();
+
+    var mydate = new Date();
+
+    if((new Date(d1.replace(/-/g,"\/"))) > mydate){
+        myAlter('结束日期不能大于当前日期');
+        getFocus1($(dom).find('.type-date'));
+        return false;
+    }
+    return true;
+}
+
+//注销计量设备时 未抄表的情况
+
+function tableChanges(){
+    $('.wait-push0').on('blur',function(){
+        var id = $(this).parents('tr').find('.theHidden').html();
+        var that = $(this);
+        setTimeout(function(){
+            var txt = that.val();
+            console.log('ok');
+            for(var i=0; i<readArr.length; i++){
+                if(id == readArr[i].pK_Meter){
+
+                    readArr[i].meterEndDate = txt;
+
+                    break;
+                }
+            }
+        },100);
+
+    });
+
+    $('.wait-push1').on('blur',function(){
+        var id = $(this).parents('tr').find('.theHidden').html();
+
+        var txt = $(this).val();
+        var startNum = parseFloat($(this).parents('tr').children().eq(6).html());
+        if(isNaN(txt) || txt < 0 || txt == 0){
+            //myAlter('设备终止读数错误');
+            //getFocus1($(this));
+            return false;
+        }else if(parseFloat(txt) < startNum){
+            //myAlter('止数小于起数，请输入圈数');
+            //$(this).parents('tr').find('.wait-push2').val('');
+            //getFocus1($(this).parents('tr').find('.wait-push2'));
+        }
+        for(var i=0; i<readArr.length; i++){
+            if(id == readArr[i].pK_Meter){
+
+                readArr[i].meterEndNumber = txt;
+                break;
+            }
+        }
+    });
+
+    $('.wait-push2').on('blur',function(){
+
+        var id = $(this).parents('tr').find('.theHidden').html();
+
+        var txt = $(this).val();
+
+        if(isNaN(txt) || txt < 0 || txt == 0){
+            //myAlter('圈数输入错误');
+            //getFocus1($(this));
+            return false;
+        }
+        for(var i=0; i<readArr.length; i++){
+            if(id == readArr[i].pK_Meter){
+
+                readArr[i].f_CycleNum = txt;
+                break;
+            }
+        }
+    });
+
+    $('.wait-push3').on('blur',function(){
+
+        var id = $(this).parents('tr').find('.theHidden').html();
+
+        var txt = $(this).val();
+
+        for(var i=0; i<readArr.length; i++){
+            if(id == readArr[i].pK_Meter){
+
+                readArr[i].f_ReadPerson = txt;
+                break;
+            }
+        }
+    });
+
+    $('.wait-push4').on('blur',function(){
+
+        var id = $(this).parents('tr').find('.theHidden').html();
+
+        var txt = $(this).val();
+
+        for(var i=0; i<readArr.length; i++){
+            if(id == readArr[i].pK_Meter){
+
+                readArr[i].f_CancelComment = txt;
+                break;
+            }
+        }
+    });
+
+    $('.handle').on('change',function(){
+        console.log('ok');
+
+        var id = $(this).parents('tr').find('.theHidden').html();
+
+
+
+
+        for(var i=0; i<readArr.length; i++){
+            if(id == readArr[i].pK_Meter){
+                if($(this).is(':checked')) {
+                    readArr[i].isHavingSubtractMeter = 1;
+                }else{
+                    readArr[i].isHavingSubtractMeter = 0;
+                }
+                break;
+            }
+        }
+    });
+
+    $('.ratio').on('blur',function(){
+
+        var id = $(this).parents('tr').find('.theHidden').html();
+        var length = $(this).parents('tr').find('.ratio').length - 1;
+
+        var index = parseInt($(this).index() - 1) / 2;
+        var txt = $(this).val();
+        console.log(index);
+
+        if(isNaN(txt) || txt < 0 || txt == 0 || txt > 100){
+            //myAlter('公摊比例输入错误');
+            //getFocus1($(this));
+            return false;
+        }
+
+        for(var i=0; i<readArr.length; i++){
+            if(id == readArr[i].pK_Meter){
+
+                //var num = 0;
+                //for(var j=0; j<index + 1; j++){
+                //    console.log($(this).parents('tr').find('.ratio').eq(j).val());
+                //
+                //    var num0 = $(this).parents('tr').find('.ratio').eq(j).val();
+                //    console.log(num0);
+                //    num += parseFloat(num0);
+                //    console.log(num);
+                //}
+                //console.log(num);
+                //if(num > 100){
+                //    myAlter('公摊比例总和不能大于100，请重新填写');
+                //    $(this).val('');
+                //    getFocus1($(this).parents('tr').find('.ratio').eq(0));
+                //    return false;
+                //}
+                console.log(readArr[i]);
+
+                readArr[i].cancelMeterApportions[index].f_EquallyShared = (txt / 100);
+                break;
+            }
+        }
+    });
+
+};
+
+//注销计量设备时 已抄表的情况
+function tableChange(){
+
+
+    $('.logout-reason').on('blur',function(){
+
+        var id = $(this).parents('tr').find('.theHidden').html();
+
+        var txt = $(this).val();
+
+        hello : for(var i=0; i<readArr.length; i++){
+             var thisArr = readArr[i].unitEquallyShareds;
+
+            for(var j=0; j<thisArr.length; j++){
+                if(id == thisArr[j].pK_UnitMeter){
+
+                    thisArr[j].f_CancelComment = txt;
+                    break hello;
+                }
+            }
+
+        }
+    });
+
+
+    $('.ratios').on('blur',function(){
+
+        var id = $(this).parents('tr').find('.theHidden').html();
+
+        var txt = $(this).val();
+
+
+        if(isNaN(txt) || txt < 0 || txt == 0 || txt > 100){
+            //myAlter('公摊比例输入错误');
+            //getFocus1($(this));
+            return false;
+        }
+
+        hello : for(var i=0; i<readArr.length; i++){
+            var thisArr = readArr[i].unitEquallyShareds;
+
+            for(var j=0; j<thisArr.length; j++){
+                if(id == thisArr[j].pK_UnitMeter){
+
+                    thisArr[j].f_EquallyShared = txt / 100;
+                    break hello;
+                }
+            }
+
+        }
+    });
+
+};
+
+//单位注销中的必填项
+function checkedNull1(dom){
+    var length = $(dom).find('.wait-push').length;
+    for(var i=0; i<length; i++){
+        if($(dom).find('.wait-push').eq(i).val() == ''){
+
+            console.log('333')
+            var txt = $(dom).find('.wait-push').eq(i).attr('txt');
+            myAlter('请填写对应的'+ txt);
+
+            getFocus1($(dom).find('.wait-push').eq(i));
+
+
+            return false;
+        }
+    }
+    return true;
+}
+
+//检验注销中的开始结束日期是否合理
+function CompareDate1(dom) {
+    var num = $(dom).find('.startDate').length;
+
+    for(var i=0; i<num; i++){
+        var d1 = $(dom).find('.startDate').eq(i).html().split(" ")[0].split("/").join('-');
+        console.log(d1);
+        var d2 = $(dom).find('.endDates').eq(i).val();
+        console.log(d2);
+        if((new Date(d1.replace(/-/g,"\/"))) < (new Date(d2.replace(/-/g,"\/")))){
+
+        }else{
+            myAlter('结束日期必须大于开始日期');
+            getFocus1($(dom).find('.endDates').eq(i));
+            return false;
+        }
+
+
+    }
+    return true;
+
+}
+
+//检验设备终止读数
+function checkedEndNum(dom){
+    var length = $(dom).find('.wait-push1').length;
+    for(var i=0; i<length; i++){
+        var txt = $(dom).find('.wait-push1').eq(i).val();
+        var startNum = $(dom).find('.startNum').eq(i).html();
+        var range = parseFloat( $(dom).find('.range').eq(i).val());
+
+        if(isNaN(txt) || txt < 0){
+
+
+            myAlter('设备终止读数必须为非负数字');
+
+            getFocus1($(dom).find('.wait-push1').eq(i));
+
+
+            return false;
+        }else if(parseFloat(txt) > range){
+            myAlter('设备终止读数必须小于量程');
+
+            getFocus1($(dom).find('.wait-push1').eq(i));
+
+
+            return false;
+        }
+    }
+    return true;
+}
+
+//检验圈数
+function checkedCycleNum(dom){
+    var num = $(dom).find('.wait-push2').length;
+
+    for(var i=0; i<num; i++){
+
+        var txt = $(dom).find('.wait-push2').eq(i).val();
+
+        var endNum = $(dom).find('.wait-push1').eq(i).val();
+        var startNum = $(dom).find('.startNum').eq(i).html();
+
+        if(txt % 1 !== 0 || txt < 0 ){
+            myAlter('圈数必须为非负整数');
+            getFocus1($(dom).find('.wait-push2').eq(i));
+            return false;
+        }else if(parseFloat(endNum) < parseFloat(startNum) && txt < 1){
+            myAlter('止数小于起数，圈数必须大于0');
+
+            getFocus1($(dom).find('.wait-push2').eq(i));
+
+
+            return false;
+        }
+
+    }
+    return true;
+}
+
+//检验未抄表中的公摊比例
+function checkedShare(dom){
+
+    var num = $(dom).find('.ratio').length;
+
+    for(var i=0; i<num; i++){
+        var txt = $(dom).find('.ratio').val();
+        if(isNaN(txt) || txt < 0 || txt == 0 || txt > 100){
+            myAlter('公摊比例输入错误');
+            getFocus1($(dom).find('.ratio').eq(i));
+            return false;
+        }
+    }
+
+    var length = $(dom).find('tr:has(.ratio)').length;
+
+    console.log(length);
+
+    for(var j=0; j<length; j++){
+        var total = 0;
+        var shareNum = $(dom).find('tr:has(.ratio)').eq(j).find('.ratio').length;
+        console.log(shareNum);
+         for(var k=0; k<shareNum; k++){
+             total += parseInt($(dom).find('tr:has(.ratio)').eq(j).find('.ratio').eq(k).val());
+             console.log(total);
+             if(total > 100){
+                 myAlter('公摊比例总和不能大于100%');
+                 getFocus1($(dom).find('tr:has(.ratio)').eq(j).find('.ratio').eq(k));
+                 return false;
+             }
+         }
+
+    }
+
+    return true;
+}
+
+//检验已抄表中的公摊比例
+function checkedShare1(dom){
+
+    var num = $(dom).find('.hidden-table').length;
+    console.log(num);
+    for(var i=0; i<num; i++){
+        var node = $(dom).find('.hidden-table').eq(i).find('tr');
+        var total = 0;
+        for(var j=1; j<node.length; j++){
+            var txt = node.eq(j).find('.ratios').val();
+            console.log(txt);
+            if(isNaN(txt) || txt < 0 || txt == 0 || txt > 100){
+                myAlter('公摊比例输入错误！');
+                getFocus1(node.eq(j).find('.ratios'));
+                return false;
+            }
+            total += parseFloat(txt);
+            if(total > 100){
+                myAlter('公摊比例总和不能大于100%！');
+                getFocus1(node.eq(j).find('.ratios'));
+                return false;
+            }
+        }
+
+    }
+
+    return true;
+}
 
 //当人员类别改变时 对应的单位进行改变
 $('.person-type .add-select-block li').on('click',function(){
@@ -3773,4 +4965,14 @@ function jumpNow(){
         dom.click();
 
 }
+
+//选择日期插件
+$('.chooseDate').datepicker(
+    {
+        language:  'zh-CN',
+        todayBtn: 1,
+        todayHighlight: 1,
+        format: 'yyyy-mm-dd'
+    }
+);
 

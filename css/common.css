@@ -290,11 +290,10 @@ td span b{
 td span font{
     margin-left:10px;
 }
-td span{
-    position:relative;
-    width:120px !important;
-    margin:0 auto;
-}
+
 table td{
     vertical-align: middle !important;
+}
+body {
+    padding-right: 0 !important;
 }

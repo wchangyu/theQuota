@@ -101,3 +101,11 @@ span .pay-not0 {
 #dateTables2_info{
     display: none;
 }
+td span{
+    position:relative;
+    width:120px !important;
+    margin:0 auto;
+}
+body {
+    padding-right: 0 !important;
+}

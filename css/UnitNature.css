@@ -159,7 +159,9 @@ label {
 #dateTables_info{
     display:none;
 }
-
+body {
+    padding-right: 0 !important;
+}
 /*验证表单提示字样式*/
 .hooks{
     background:url("../img/hook.png") no-repeat center center #6bc827;
