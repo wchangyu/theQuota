@@ -685,10 +685,10 @@ $(document).ready(function(){
                 if(data == 0){
                     $('#remove-meter').modal('show');
 
-                    $("#remove-meter h4").html('确定删除 <span style="color:red">'+txt+'</span> ?');
+                    $("#remove-meter p").html('确定删除计量设备 <span style="color:red">'+txt+'</span> 吗?');
                 }else if(data == 1){
                     $('#remove-meter').modal('show');
-                    $('#remove-meter h4').html('已有抄表数据，是否继续删除？')
+                    $('#remove-meter p').html('已有抄表数据，是否继续删除？')
                 }else if(data == 2){
                     $('#remove-meter').modal('hide');
                     myAlter('已关联二级单位，无法删除!');

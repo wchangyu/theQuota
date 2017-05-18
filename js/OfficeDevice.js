@@ -1139,8 +1139,9 @@ $(document).ready(function(){
 
 
         });
+
         $('#present-message .btn-primary').off('click');
-        $('#present-message .btn-primary').one('click',function(){
+        $('#present-message .btn-primary').on('click',function(){
 
             $.ajax({
                 type: 'post',
@@ -1186,6 +1187,7 @@ $(document).ready(function(){
                         return false;
 
                     }
+                    $('#present-message .btn-primary').off('click');
                     $('#accum-shared').modal('hide');
                     _table = $('#dateTables').dataTable();
                     _table.fnClearTable();

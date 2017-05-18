@@ -2835,6 +2835,10 @@ $(document).ready(function(){
         //显示输入时间弹窗
         $('#logout-time').modal('show');
 
+        $('#logout-time').find('.add-input').eq(0).val('');
+        $('#logout-time').find('.add-input').eq(1).val('');
+
+
         //提交操作时
         $('#logout-time .btn-primary').off('click');
         $('#logout-time .btn-primary').on('click',function(){
@@ -2982,7 +2986,7 @@ $(document).ready(function(){
         var index = $('.onFocus').index() + 1;
 
         $('#logout-reading .startDates').val(date);
-
+        $('#logout-reading .add-input').eq(1).val('');
 
         _table = $('#dateTables-log0').dataTable();
         _table.fnClearTable();
@@ -3216,6 +3220,7 @@ $(document).ready(function(){
 
         $('#logout-share .startDates').val(date);
 
+        $('#logout-share .add-input').eq(1).val('');
 
         _table = $('#dateTables-log1').dataTable();
         _table.fnClearTable();
@@ -3291,7 +3296,7 @@ $(document).ready(function(){
             postData.userID = userName;
             postData.unitCancelTime = logoutObj.unitCancelTime;
             postData.unitCancelComment = logoutObj.unitCancelComment;
-            postData.unitCancelAccountName = $('#logout-reading .add-input').eq(1).val();
+            postData.unitCancelAccountName = $('#logout-share .add-input').eq(1).val();
 
             console.log(postData);
 
@@ -4749,7 +4754,7 @@ function tableChange(){
 
     $('.logout-reason').on('blur',function(){
 
-        var id = $(this).parents('tr').find('.theHidden').html();
+        var id = $(this).closest('tr').find('.theHidden').html();
 
         var txt = $(this).val();
 
@@ -4770,7 +4775,7 @@ function tableChange(){
 
     $('.ratios').on('blur',function(){
 
-        var id = $(this).parents('tr').find('.theHidden').html();
+        var id = $(this).closest('tr').find('.theHidden').html();
 
         var txt = $(this).val();
 
@@ -4788,6 +4793,7 @@ function tableChange(){
                 if(id == thisArr[j].pK_UnitMeter){
 
                     thisArr[j].f_EquallyShared = txt / 100;
+                    console.log(readArr);
                     break hello;
                 }
             }
