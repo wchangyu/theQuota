@@ -320,7 +320,7 @@ $(document).ready(function(){
                 }
 
                 $('#add-type').modal('hide');
-                myAlter('执行失败');
+                myAlter(JSON.parse(XMLHttpRequest.responseText).message);
             }
         });
         //完成后清空input框
@@ -552,7 +552,7 @@ $(document).ready(function(){
                     }
                     $('#theLoading').modal('hide');
                     $('#remove-type').modal('hide');
-                    myAlter("请求失败！");
+                    myAlter(JSON.parse(XMLHttpRequest.responseText).message);
 
                 }
             });

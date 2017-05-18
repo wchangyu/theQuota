@@ -156,7 +156,7 @@ $(document).ready(function(){
                     ajaxTimeoutTest.abort();
                     myAlter("超时");
                 }
-                myAlter("请求失败！");
+                myAlter(JSON.parse(XMLHttpRequest.responseText).message);
             }
         });
 

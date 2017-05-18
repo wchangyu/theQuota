@@ -152,7 +152,7 @@ $(document).ready(function(){
 
             error:function (data, textStatus, errorThrown) {
                 var num = data.responseText.split('"')[3];
-                console.log(data.responseText);
+
                     if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                         ajaxTimeoutTest.abort();
                         myAlter("超时");
@@ -288,7 +288,7 @@ $(document).ready(function(){
                         ajaxTimeoutTest.abort();
                         myAlter("超时");
                     }
-                    myAlter("请求失败！");
+                    myAlter(XMLHttpRequest.responseText.split('"')[3]);
                 }
             });
         })

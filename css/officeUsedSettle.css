@@ -12,28 +12,29 @@
 /*缴费状态前面的圆圈*/
 span .pay-not0{
     display: inline-block;
-    width:16px;
-    height:16px;
+    width:14px;
+    height:14px;
     border-radius: 50%;
     background:black;
     margin-right:5px;
-    margin-top:3px;
+    margin-top:5px;
 }
 table span{
     display: block;
     height:21px;
+    line-height: 21px;
     vertical-align:middle;
 }
 
 
 span .pay-not1{
     display: inline-block;
-    width:16px;
-    height:16px;
+    width:14px;
+    height:14px;
     border-radius: 50%;
     background:red;
     margin-right:5px;
-    margin-top:3px;
+    margin-top:5px;
 }
 font{
     display: inline-block;
@@ -84,5 +85,17 @@ font{
 }
 textarea{
     line-height: 20px !important;
+}
+#show-details .inner-input {
+    margin-left: 0px;
+    margin-bottom:8px;
+}
+#dateTables td span{
+    position:relative;
+    width:120px !important;
+    margin:0 auto;
+}
+body {
+    padding-right: 0 !important;
 }
 

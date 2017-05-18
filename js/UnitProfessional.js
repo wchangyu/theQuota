@@ -329,7 +329,7 @@ $(document).ready(function(){
                         myAlter("超时");
                     }
                     $('#remove-people').modal('hide');
-                    myAlter("请求失败！");
+                    myAlter(JSON.parse(XMLHttpRequest.responseText).message);
                 }
             });
         })

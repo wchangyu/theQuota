@@ -535,21 +535,21 @@ $(document).ready(function(){
     });
 
     $('#add-unit .btn-primary').on('click',function(){
-
-        checkedText1();
-        if(!checkedText1()){
-            return false;
-        };
-        checkedText2('#add-unit .first-row');
-        if(!checkedText2('#add-unit .first-row')){
-            return false;
-        };
-        if($('#add-unit .first-row .inner-input').eq(4).find('.add-input').val() != ''){
-            checkedPhone('#add-unit');
-            if(!checkedPhone('#add-unit')){
-                return false;
-            };
-        }
+        //
+        //checkedText1();
+        //if(!checkedText1()){
+        //    return false;
+        //};
+        //checkedText2('#add-unit .first-row');
+        //if(!checkedText2('#add-unit .first-row')){
+        //    return false;
+        //};
+        //if($('#add-unit .first-row .inner-input').eq(4).find('.add-input').val() != ''){
+        //    checkedPhone('#add-unit');
+        //    if(!checkedPhone('#add-unit')){
+        //        return false;
+        //    };
+        //}
 
 
         //生成对应参数
@@ -663,25 +663,33 @@ $(document).ready(function(){
 
                 console.log(data);
 
+
+                if(data == 2){
+                    myAlter('二级单位已存在');
+                    return false;
+                }
+                if(data == 3){
+                    myAlter('执行失败，请联系管理员');
+                    return false;
+                }
                 _table = $('#dateTables').dataTable();
                 ajaxSuccess();
                 $('#add-unit').modal('hide');
                 $('#theLoading').modal('hide');
-                if(data == 2){
-                    myAlter('二级单位已存在')
-                }
 
             },
             error:function (data, textStatus, errorThrown) {
                 //var num = data.responseText.split('"')[3];
                 $('#theLoading').modal('hide');
+                console.log(errorThrown);
                 if(textStatus=='timeout'){//超时,status还有success,error等值的情况
                     ajaxTimeoutTest.abort();
                     myAlter("超时");
                 }
 
                 $('#add-unit').modal('hide');
-                myAlter('执行失败');
+
+                myAlter(JSON.parse(data.responseText).message);
             }
         });
         //完成后清空input框
@@ -2393,7 +2401,7 @@ $(document).ready(function(){
                             ajaxTimeoutTest.abort();
                             myAlter("超时");
                         }
-                        myAlter("请求失败！");
+
                     }
                 });
 
@@ -2899,7 +2907,7 @@ $(document).ready(function(){
                         ajaxTimeoutTest.abort();
                         myAlter("超时");
                     }
-                    myAlter("请求失败！");
+                    myAlter('请求失败');
                 }
             })
         });
@@ -2915,10 +2923,13 @@ $(document).ready(function(){
             userID : userName
         };
 
+        console.log(testData);
+
         $.ajax({
             type: 'post',
             url: IP + "/SecondUnit/PostSecondUnitCancel",
             timeout: theTimes,
+            contentType: 'application/json',
             data: JSON.stringify(testData),
             beforeSend: function () {
 
@@ -2937,16 +2948,24 @@ $(document).ready(function(){
                     return false;
                 }
 
+                _table = $('#dateTables').dataTable();
+                //_table.fnDraw();
+                jumpNow();
+
+
+                $('#dateTables tr').eq(index).addClass('onFocus');
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 $('#theLoading').modal('hide');
+                $('#logout-sure').modal('hide');
                 console.log(textStatus);
 
                 if (textStatus == 'timeout') {//超时,status还有success,error等值的情况
                     ajaxTimeoutTest.abort();
                     myAlter("超时");
                 }
-                myAlter("请求失败！");
+               myAlter(JSON.parse(XMLHttpRequest.responseText).message);
             }
         })
     });
